@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { DiagramSvg } from '../dist/react.js';
-import { frameGeometry, grassStripes, layoutLabels, arrowGeometry, wavyPath, parseDiagram } from '../dist/index.js';
+import { frameGeometry, grassStripes, layoutLabels, arrowGeometry, polyPath, wavyPath, parseDiagram } from '../dist/index.js';
 const vectors=JSON.parse(await readFile(new URL('../fixtures/geometry-vectors.json',import.meta.url),'utf8'));
 const near=(actual,expected,label,tolerance=vectors.floatTolerance)=>assert.ok(Number.isFinite(actual)&&Math.abs(actual-expected)<=tolerance,`${label}: ${actual} != ${expected}`);
 
@@ -48,6 +48,14 @@ test('shared arrow vectors retain bends, repeats, notation, endpoints and finite
  for(const sample of v.waveSamples){near(points[sample.index][0],sample.x,'wave x',.0051);near(points[sample.index][1],sample.y,'wave y',.0051);}
  assert.equal(wavyPath([{x:1,y:1},{x:1,y:1}],.3,2.3),'');
  assert.equal(wavyPath([v.wavePoints[0],v.wavePoints[0],v.wavePoints[1]],.3,2.3),wavyPath(v.wavePoints,.3,2.3));
+});
+
+test('redundant SVG vertices cannot change marker orientation',()=>{
+ const a={x:5,y:5},b={x:5,y:18},g=frameGeometry({shape:'rectangle',length_m:40,width_m:25});
+ for(const kind of ['pass','run','shot','dribble']){
+  assert.equal(arrowGeometry({kind,points:[a,a,b,b,b]},g).d,arrowGeometry({kind,points:[a,b]},g).d,kind);
+ }
+ assert.equal(polyPath([a,a,a]),'M5 5L5 5');
 });
 
 // Read the actual exported SVG primitives, including shadows, without relying on

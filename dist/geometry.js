@@ -65,7 +65,12 @@ export function shade(hex, factor) {
     return `rgb(${channel(16)},${channel(8)},${channel(0)})`;
 }
 export function polyPath(points) {
-    return points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join("");
+    // A zero-length terminal line can rotate an SVG marker to zero degrees in
+    // browsers. Equivalent polylines must have the same drawing instructions.
+    const distinct = points.filter((p, i) => i === 0 || p.x !== points[i - 1].x || p.y !== points[i - 1].y);
+    // Preserve the existing zero-angle marker for an entirely zero-length path.
+    const drawable = distinct.length === 1 && points.length > 1 ? [distinct[0], distinct[0]] : distinct;
+    return drawable.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join("");
 }
 export function wavyPath(points, amplitude, wavelength) {
     let d = "";

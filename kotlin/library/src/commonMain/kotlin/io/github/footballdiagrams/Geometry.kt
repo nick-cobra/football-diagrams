@@ -2,6 +2,7 @@ package io.github.footballdiagrams
 
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.atan2
 import kotlin.math.ceil
 import kotlin.math.hypot
 import kotlin.math.max
@@ -343,6 +344,20 @@ fun arrowPathPoints(arrow: DiagramArrow, geometry: DiagramGeometry): List<Diagra
     } else {
         arrow.points
     }
+
+/** SVG auto-orientation also skips zero-length terminal segments. */
+internal fun arrowHeadAngle(points: List<DiagramPoint>): Float {
+    val tip = points.lastOrNull() ?: return 0f
+    val x = tip.x.toFloat()
+    val y = tip.y.toFloat()
+    for (index in points.size - 2 downTo 0) {
+        val dx = x - points[index].x.toFloat()
+        val dy = y - points[index].y.toFloat()
+        if (dx != 0f || dy != 0f) return atan2(dy, dx)
+    }
+    // With no direction, retain the deterministic zero-angle SVG fallback.
+    return 0f
+}
 
 fun arrowDashIntervals(kind: DiagramArrowKind, geometry: DiagramGeometry): FloatArray? =
     if (kind == DiagramArrowKind.Run) {
