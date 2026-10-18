@@ -4,6 +4,24 @@ An open JSON format for football diagrams, with React SVG and Kotlin/Compose Can
 
 Describe a rectangular playing area, positioned players and equipment, arrows, labels and frames. Use the same document on a website, Android or iOS. The host supplies its own content, storage and controls.
 
+## See it rendered
+
+The same synthetic [equipment and movement document](fixtures/valid/all-kinds.json) rendered on the web and mobile: 13 player/equipment symbols and four movement notations (`pass`, `run`, `dribble`, `shot`). These are real captures from the independent v0.1.0 examples.
+
+### React SVG
+
+<img src="docs/screenshots/react-desktop.png" alt="React example with a 40 by 30 metre pitch, players, equipment, all four movement arrows and a smaller thumbnail of the same frame" width="760" />
+
+The example supplies the surrounding page, frame controls and thumbnail panel; `DiagramSvg` draws the pitch and its contents.
+
+### Kotlin/Compose Canvas
+
+| Android | iOS |
+| --- | --- |
+| <img src="docs/screenshots/compose-android.png" alt="Android Compose Canvas rendering the equipment and movement diagram" width="260" /> | <img src="docs/screenshots/compose-iphone.png" alt="iPhone Compose Canvas rendering the same equipment and movement diagram" width="260" /> |
+
+Captured on an Android emulator and iPhone simulator. `FootballDiagram` draws the diagram; the host app owns the screen, safe-area insets and controls. See the runnable [React](examples/react), [Android](examples/android) and [Compose/iOS](examples/compose) examples.
+
 ## Source release
 
 The initial `v0.1.0` distribution is tagged source. JavaScript includes built ESM and TypeScript declarations; Kotlin is a standalone Gradle project. This release does not require a private repository, application backend, account or application stylesheet. npm-registry and Maven Central publication are separate distribution options, not prerequisites for these instructions.
