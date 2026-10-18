@@ -33,3 +33,5 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew :library:jvmTest :library:testAndroidHostTest :library:compileKotlinIosSimulatorArm64 :library:linkDebugTestIosSimulatorArm64
         working-directory: kotlin
+      - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
+      - run: ./kotlin/gradlew -p examples/android assembleDebug

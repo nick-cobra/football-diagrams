@@ -73,7 +73,9 @@ fun Example() {
 }
 ```
 
-The Kotlin project builds without Node or a JavaScript checkout setup. It targets Android, JVM, iOS device arm64 and iOS Simulator arm64. Initial supported toolchain: JDK 21, Gradle 9.5.1, Kotlin 2.4.20, Compose Multiplatform 1.12.1, Android KMP plugin 9.2.1, Android API 37/minimum 26. Native builds require a compatible installed Xcode. The host owns any Compose theme, navigation and frame controls.
+The Kotlin project builds without Node or a JavaScript checkout setup. It targets Android, JVM, iOS device arm64 and iOS Simulator arm64. Initial supported toolchain: JDK 21, Gradle 9.5.1, Kotlin 2.4.20, Compose Multiplatform 1.12.1, Android KMP plugin 9.2.1, Android API 37/minimum 26. Native builds require a compatible installed Xcode. The host owns any Compose theme, safe-area insets, navigation and frame controls. On iOS, embed it in the host's `ComposeUIViewController`; set `CADisableMinimumFrameDurationOnPhone` to `true` in `Info.plist`, as required by Compose on high-refresh-rate iPhones. Modern UIKit hosts must adopt the scene lifecycle.
+
+Independent source examples are in [`examples/android`](examples/android) and [`examples/compose`](examples/compose). From the repository root, run `kotlin/gradlew -p examples/android assembleDebug` for Android, or `kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64` for a standalone Kotlin consumer and iOS framework. The Compose example includes a UIKit scene host and its required plist entries; an existing Xcode app can use those with the built framework. Neither project needs Node, an API server or an application account.
 
 ## The format
 
