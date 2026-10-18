@@ -30,6 +30,7 @@ private const val MIN_PLAYER_RADIUS_METRES = 0.72f
 private const val PLAYER_RADIUS_DIVISOR = 26f
 private const val MIN_UNIT_METRES = 1.0f
 private const val UNIT_DIVISOR = 20f
+private const val MAX_WAVE_POINTS = 100_000
 
 private object Proportions {
     const val PILL_WIDTH_PER_CHAR = 0.56f
@@ -106,6 +107,10 @@ fun isMover(target: DiagramObject, frame: DiagramFrame, geometry: DiagramGeometr
 }
 
 fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float): List<DiagramPoint> {
+    require(amplitude.isFinite() && wavelength.isFinite() && wavelength > 0f &&
+        points.all { it.x.toFloat().isFinite() && it.y.toFloat().isFinite() }) {
+        "Wave arguments must be finite at drawing precision and wavelength must be positive"
+    }
     val out = mutableListOf<DiagramPoint>()
     for (segment in 0 until points.size - 1) {
         val a = points[segment]
@@ -118,8 +123,7 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
         val uy = dy / length
         val px = -uy
         val py = ux
-        val samples = (length / (wavelength / Proportions.WAVE_SAMPLES_PER_WAVELENGTH)).roundToInt()
-        val steps = max(Proportions.MIN_WAVE_SAMPLES, samples)
+        val steps = waveStepCount(length, wavelength, out.size)
         for (i in 0..steps) {
             val base = (i.toFloat() / steps) * length
             // Ends pinned flat so the arrow still starts and finishes on its
@@ -129,10 +133,21 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
             } else {
                 sin((base / wavelength) * 2f * PI.toFloat()) * amplitude
             }
-            out += DiagramPoint(a.x.toFloat() + ux * base + px * offset, a.y.toFloat() + uy * base + py * offset)
+            val x = a.x.toFloat() + ux * base + px * offset
+            val y = a.y.toFloat() + uy * base + py * offset
+            require(x.isFinite() && y.isFinite()) { "Wave coordinates must remain finite" }
+            out += DiagramPoint(x, y)
         }
     }
     return out
+}
+
+internal fun waveStepCount(length: Float, wavelength: Float, generatedPoints: Int): Int {
+    val samples = length / (wavelength / Proportions.WAVE_SAMPLES_PER_WAVELENGTH)
+    require(samples.isFinite() && samples <= MAX_WAVE_POINTS) { "Wave sampling exceeds $MAX_WAVE_POINTS generated points" }
+    val steps = max(Proportions.MIN_WAVE_SAMPLES, samples.roundToInt())
+    require(generatedPoints + steps + 1 <= MAX_WAVE_POINTS) { "Wave sampling exceeds $MAX_WAVE_POINTS generated points" }
+    return steps
 }
 
 fun gateCones(target: DiagramObject): Pair<DiagramPoint, DiagramPoint> {
