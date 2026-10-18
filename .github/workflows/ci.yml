@@ -1,0 +1,32 @@
+name: Verify
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  javascript:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run demo:build
+      - run: git diff --exit-code -- src/generated dist
+  kotlin:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew :library:jvmTest :library:testAndroidHostTest :library:compileKotlinIosSimulatorArm64 :library:linkDebugTestIosSimulatorArm64
+        working-directory: kotlin

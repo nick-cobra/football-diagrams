@@ -1,0 +1,363 @@
+{
+  "format_version": 1,
+  "title": "Pass and move",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 30,
+    "width_m": 20,
+    "label": "30 \u00d7 20 m"
+  },
+  "frames": [
+    {
+      "id": "setup",
+      "title": "Setup",
+      "caption": "Pass to the supporting player, then run into space.",
+      "objects": [
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "kind": "cone",
+          "x": 1,
+          "y": 1
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 6,
+              "y": 10
+            },
+            {
+              "x": 18,
+              "y": 10
+            }
+          ],
+          "sequence": 1
+        },
+        {
+          "kind": "run",
+          "points": [
+            {
+              "x": 5,
+              "y": 11
+            },
+            {
+              "x": 12,
+              "y": 17
+            }
+          ],
+          "sequence": 2
+        }
+      ],
+      "areas": [
+        {
+          "label": "Receive",
+          "x": 16,
+          "y": 6,
+          "width": 8,
+          "height": 8
+        }
+      ]
+    }
+  ]
+}

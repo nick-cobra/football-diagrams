@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "title": "An empty diagram",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 30,
+    "width_m": 20,
+    "label": "30 \u00d7 20 m"
+  },
+  "frames": []
+}

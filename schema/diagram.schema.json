@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/nick-cobra/football-diagrams/v0.1.0/schema/diagram.schema.json",
+  "title": "Diagram",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "format_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "area": {
+      "$ref": "#/$defs/area"
+    },
+    "frames": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/frame"
+      },
+      "maxItems": 64
+    }
+  },
+  "required": [
+    "format_version",
+    "title",
+    "area",
+    "frames"
+  ],
+  "$defs": {
+    "point": {
+      "title": "Point",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "y": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "area": {
+      "title": "Area",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shape": {
+          "const": "rectangle",
+          "type": "string"
+        },
+        "length_m": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 120
+        },
+        "width_m": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 90
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "shape",
+        "length_m",
+        "width_m"
+      ]
+    },
+    "colour": {
+      "title": "ObjectColour",
+      "type": "string",
+      "enum": [
+        "red",
+        "blue",
+        "yellow",
+        "green",
+        "orange",
+        "white",
+        "teal"
+      ]
+    },
+    "object": {
+      "title": "DiagramObject",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "player",
+            "opponent",
+            "neutral",
+            "coach",
+            "ball",
+            "cone",
+            "flat_marker",
+            "gate",
+            "mini_goal",
+            "goal",
+            "mannequin",
+            "pole",
+            "ladder"
+          ]
+        },
+        "x": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "y": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "colour": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/colour"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "short": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 3
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "number": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 99
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "angle": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": -360,
+              "maximum": 360
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ball": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "x",
+        "y"
+      ]
+    },
+    "arrow": {
+      "title": "DiagramArrow",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "run",
+            "dribble",
+            "shot"
+          ]
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/point"
+          },
+          "minItems": 2,
+          "maxItems": 12
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sequence": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "badge": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/point"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "points"
+      ]
+    },
+    "zone": {
+      "title": "Zone",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "x": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "y": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 120
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 90
+        },
+        "colour": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/colour"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "label",
+        "x",
+        "y",
+        "width",
+        "height"
+      ]
+    },
+    "frame": {
+      "title": "Frame",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "caption": {
+          "type": "string",
+          "maxLength": 400
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/object"
+          },
+          "maxItems": 60
+        },
+        "areas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/zone"
+          },
+          "maxItems": 12
+        },
+        "arrows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/arrow"
+          },
+          "maxItems": 30
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "objects",
+        "arrows"
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "format_version": 1,
+  "title": "Pass and move",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 30,
+    "width_m": 20,
+    "label": "30 \u00d7 20 m"
+  },
+  "frames": [
+    {
+      "id": "setup",
+      "title": "Setup",
+      "caption": "Pass to the supporting player, then run into space.",
+      "objects": [
+        {
+          "kind": "referee",
+          "x": 5,
+          "y": 10,
+          "number": 1,
+          "ball": true
+        },
+        {
+          "kind": "player",
+          "x": 20,
+          "y": 10,
+          "number": 2
+        },
+        {
+          "kind": "cone",
+          "x": 12,
+          "y": 4
+        },
+        {
+          "kind": "gate",
+          "x": 23,
+          "y": 5,
+          "colour": "red"
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 6,
+              "y": 10
+            },
+            {
+              "x": 18,
+              "y": 10
+            }
+          ],
+          "sequence": 1
+        },
+        {
+          "kind": "run",
+          "points": [
+            {
+              "x": 5,
+              "y": 11
+            },
+            {
+              "x": 12,
+              "y": 17
+            }
+          ],
+          "sequence": 2
+        }
+      ],
+      "areas": [
+        {
+          "label": "Receive",
+          "x": 16,
+          "y": 6,
+          "width": 8,
+          "height": 8
+        }
+      ]
+    }
+  ]
+}

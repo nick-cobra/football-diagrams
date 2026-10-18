@@ -1,0 +1,70 @@
+{
+  "name": "football-diagrams",
+  "version": "0.1.0",
+  "description": "An open football diagram format with independent React and Kotlin/Compose renderers.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nick-cobra/football-diagrams.git"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "schema",
+    "fixtures",
+    "FORMAT.md",
+    "kotlin/gradlew",
+    "kotlin/gradlew.bat",
+    "kotlin/gradle/wrapper",
+    "kotlin/settings.gradle.kts",
+    "kotlin/build.gradle.kts",
+    "kotlin/gradle.properties",
+    "kotlin/library/build.gradle.kts",
+    "kotlin/library/src",
+    "LICENSES"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./geometry": {
+      "types": "./dist/geometry.d.ts",
+      "import": "./dist/geometry.js"
+    },
+    "./schema": "./schema/diagram.schema.json"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "build": "npm run generate && tsc -p tsconfig.json",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "demo": "vite examples/react --host 127.0.0.1",
+    "demo:build": "vite build examples/react"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.1 <20"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "ajv": "8.20.0",
+    "esbuild": "0.25.12",
+    "json-schema-to-typescript": "16.0.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.4"
+  }
+}
