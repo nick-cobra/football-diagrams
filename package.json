@@ -46,7 +46,8 @@
     "build": "npm run generate && tsc -p tsconfig.json",
     "test": "npm run build && node --test test/*.test.mjs",
     "demo": "vite examples/react --host 127.0.0.1",
-    "demo:build": "vite build examples/react"
+    "demo:build": "vite build examples/react",
+    "test:browser": "playwright test"
   },
   "peerDependencies": {
     "react": ">=18.3.1 <20"
@@ -57,6 +58,7 @@
     }
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@types/react": "18.3.31",
     "@types/react-dom": "18.3.7",
     "ajv": "8.20.0",
