@@ -12,6 +12,7 @@ object Diagrams {
     private val schema by lazy { JsonSchema.fromDefinition(schemaDefinition) }
 
     fun parse(json: String): Diagram {
+        requireJsonTokens(json)
         val element = codec.parseToJsonElement(json)
         validate(element)
         return codec.decodeFromJsonElement(element)
