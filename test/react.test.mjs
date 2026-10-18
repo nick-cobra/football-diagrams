@@ -74,3 +74,15 @@ test('text is escaped by the renderer', async () => {
   assert.doesNotMatch(html, /<script>/);
   assert.match(html, /&lt;script&gt;/);
 });
+
+test('responsive sizing yields to host CSS and preserves explicit inline styles', async () => {
+  const diagram = await fixture('pass-and-move');
+  const html = renderToStaticMarkup(React.createElement(DiagramSvg, { diagram, className: 'host-diagram' }));
+  assert.match(html, /width="100%"/);
+  assert.match(html, /class="host-diagram"/);
+  assert.doesNotMatch(html, /style=/);
+  const overridden = renderToStaticMarkup(React.createElement(DiagramSvg, {
+    diagram, style: { width: 240, height: 168, display: 'block' },
+  }));
+  assert.match(overridden, /style="width:240px;height:168px;display:block"/);
+});

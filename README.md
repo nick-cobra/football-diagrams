@@ -56,6 +56,15 @@ export function Example() {
 
 `thumbnail` omits shirt/sequence badges and the area label. `className` and `style` belong to the host. Text is rendered as text, with no HTML injection interface. Empty documents and out-of-range frame selections draw nothing. React marker IDs are unique within a shared React root; separate server roots should supply distinct React `identifierPrefix` values.
 
+The SVG defaults to `width="100%"` and derives its natural height from its viewBox. Host CSS (including a supplied class or a parent selector) overrides this presentation attribute; explicit `style` props take normal inline-style precedence. For a fixed-height thumbnail, size both the container and its SVG:
+
+```css
+.thumbnail { width: 355px; height: 168px; }
+.thumbnail svg { display: block; width: 100%; height: 100%; }
+```
+
+The default SVG `preserveAspectRatio` centres the drawing inside that box without stretching it.
+
 Run the independent example with `npm ci && npm run demo`. The command prints its local URL and does not open a browser.
 
 ## Kotlin/Compose
