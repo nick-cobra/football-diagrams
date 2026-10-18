@@ -23,7 +23,8 @@ object Diagrams {
         return element.toString()
     }
 
+    @OptIn(io.github.optimumcode.json.schema.ExperimentalApi::class)
     private fun validate(element: JsonElement) {
-        require(schema.validate(element) { }) { "Invalid Football Diagrams document" }
+        require(schema.validate(element.schemaElement()) { }) { "Invalid Football Diagrams document" }
     }
 }
