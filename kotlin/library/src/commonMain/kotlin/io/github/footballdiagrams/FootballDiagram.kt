@@ -95,21 +95,12 @@ fun FootballDiagram(
 
 private fun DrawScope.drawGrass(geometry: DiagramGeometry, scale: Float) {
     val margin = geometry.marginMetres
-    // Guarded independently of the mapper: a stripe width of zero would never
-    // advance this loop, and an ANR is a far worse failure than a missing
-    // background.
-    if (geometry.stripeWidth <= 0f) return
-    var x = -margin
-    var index = 0
-    while (x < geometry.lengthMetres + margin) {
-        val stripe = minOf(geometry.stripeWidth, geometry.lengthMetres + margin - x)
+    for (stripe in grassStripes(geometry)) {
         drawRect(
-            color = if (index % 2 == 1) GrassLight else GrassDark,
-            topLeft = Offset(x * scale, -margin * scale),
-            size = Size(stripe * scale, geometry.viewportHeight * scale),
+            color = if (stripe.light) GrassLight else GrassDark,
+            topLeft = Offset(stripe.x * scale, -margin * scale),
+            size = Size(stripe.width * scale, geometry.viewportHeight * scale),
         )
-        x += geometry.stripeWidth
-        index += 1
     }
 }
 

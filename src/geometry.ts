@@ -61,11 +61,16 @@ export function frameGeometry(area: Diagram["area"]): FrameGeometry {
 export function grassStripes(geometry: FrameGeometry) {
   const { margin, lengthM, widthM, stripeWidth } = geometry;
   const stripes: { x: number; width: number; fill: string }[] = [];
-  for (let x = -margin; x < lengthM + margin; x += stripeWidth) {
-    const index = Math.round((x + margin) / stripeWidth);
+  // Tiny valid pitches still have a grass margin. Bound work and avoid an
+  // increment too small to change -margin at floating-point precision.
+  const viewportWidth = lengthM + 2 * margin;
+  const step = Math.max(stripeWidth, viewportWidth / 256);
+  const count = Math.min(256, Math.ceil(viewportWidth / step));
+  for (let index = 0; index < count; index += 1) {
+    const x = -margin + index * step;
     stripes.push({
       x,
-      width: Math.min(stripeWidth, lengthM + margin - x),
+      width: Math.min(step, lengthM + margin - x),
       fill: index % 2 ? GRASS_LIGHT : GRASS_DARK,
     });
   }

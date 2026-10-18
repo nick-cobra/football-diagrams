@@ -22,6 +22,8 @@ Optional nullable object labels, colours, numbers, angles, widths and badge posi
 
 Geometry derives the playing grid from its authored metre dimensions and adds an external grass margin. SVG and Canvas are separate renderers with the same notation and proportions; their font rasterisation is platform-specific.
 
+Grass uses six stripes across the pitch and extends into the margin. For very small pitches, the stripe width increases to keep the whole viewport within 256 stripes. This bounded fallback also covers dimensions smaller than drawing precision, without changing the authored document.
+
 Labels use a deterministic bounded candidate search. A densely crowded frame can still have overlapping labels after that search is exhausted. The algorithm does not promise collision-free placement for arbitrary input, nor does it infer player positions or football tactics.
 
 Initial goal nets extend towards positive x from the authored goal-mouth position. Goal rotation is not applied. Gate rotation is supported; the existing ladder glyph remains axis-aligned. A caller should author coordinates with these semantics in mind. Changes to those drawing behaviours are reviewed independently of extracting and adopting the initial renderer.

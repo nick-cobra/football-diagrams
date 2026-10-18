@@ -2,6 +2,7 @@ package io.github.footballdiagrams
 
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.ceil
 import kotlin.math.hypot
 import kotlin.math.max
 import kotlin.math.min
@@ -81,6 +82,18 @@ fun diagramGeometry(area: DiagramArea): DiagramGeometry {
         playerRadius = max(MIN_PLAYER_RADIUS_METRES, length / PLAYER_RADIUS_DIVISOR),
         unit = max(MIN_UNIT_METRES, length / UNIT_DIVISOR),
     )
+}
+
+data class DiagramGrassStripe(val x: Float, val width: Float, val light: Boolean)
+
+/** At most 256 stripes, including the margin around a subpixel-sized pitch. */
+fun grassStripes(geometry: DiagramGeometry): List<DiagramGrassStripe> {
+    val step = max(geometry.stripeWidth, geometry.viewportWidth / 256f)
+    val count = min(256, ceil(geometry.viewportWidth / step).toInt())
+    return List(count) { index ->
+        val x = -geometry.marginMetres + index * step
+        DiagramGrassStripe(x, min(step, geometry.lengthMetres + geometry.marginMetres - x), index % 2 == 1)
+    }
 }
 
 fun isMover(target: DiagramObject, frame: DiagramFrame, geometry: DiagramGeometry): Boolean {
