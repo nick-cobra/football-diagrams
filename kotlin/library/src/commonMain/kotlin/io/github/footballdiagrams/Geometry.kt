@@ -74,10 +74,10 @@ private object Proportions {
 }
 
 fun diagramGeometry(area: DiagramArea): DiagramGeometry {
-    val length = area.lengthMetres
+    val length = area.lengthMetres.toFloat()
     return DiagramGeometry(
         lengthMetres = length,
-        widthMetres = area.widthMetres,
+        widthMetres = area.widthMetres.toFloat(),
         marginMetres = max(MIN_MARGIN_METRES, length * MARGIN_FRACTION),
         playerRadius = max(MIN_PLAYER_RADIUS_METRES, length / PLAYER_RADIUS_DIVISOR),
         unit = max(MIN_UNIT_METRES, length / UNIT_DIVISOR),
@@ -100,7 +100,7 @@ fun isMover(target: DiagramObject, frame: DiagramFrame, geometry: DiagramGeometr
     if (frame.arrows.isEmpty()) return false
     return frame.arrows.any { arrow ->
         val start = arrow.points.first()
-        hypot(start.x - target.x, start.y - target.y) < geometry.playerRadius * Proportions.MOVER_RADIUS_FACTOR
+        hypot(start.x.toFloat() - target.x.toFloat(), start.y.toFloat() - target.y.toFloat()) < geometry.playerRadius * Proportions.MOVER_RADIUS_FACTOR
     }
 }
 
@@ -109,8 +109,8 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
     for (segment in 0 until points.size - 1) {
         val a = points[segment]
         val b = points[segment + 1]
-        val dx = b.x - a.x
-        val dy = b.y - a.y
+        val dx = b.x.toFloat() - a.x.toFloat()
+        val dy = b.y.toFloat() - a.y.toFloat()
         val length = hypot(dx, dy)
         if (length == 0f) continue
         val ux = dx / length
@@ -128,7 +128,7 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
             } else {
                 sin((base / wavelength) * 2f * PI.toFloat()) * amplitude
             }
-            out += DiagramPoint(a.x + ux * base + px * offset, a.y + uy * base + py * offset)
+            out += DiagramPoint(a.x.toFloat() + ux * base + px * offset, a.y.toFloat() + uy * base + py * offset)
         }
     }
     return out
@@ -136,11 +136,11 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
 
 fun gateCones(target: DiagramObject): Pair<DiagramPoint, DiagramPoint> {
     val gap = Proportions.GATE_CONE_GAP
-    val angle = (target.angleDegrees ?: 0f) * PI.toFloat() / Proportions.HALF_TURN_DEGREES
+    val angle = (target.angleDegrees?.toFloat() ?: 0f) * PI.toFloat() / Proportions.HALF_TURN_DEGREES
     val ux = cos(angle)
     val uy = sin(angle)
-    return DiagramPoint(target.x - ux * gap / 2f, target.y - uy * gap / 2f) to
-        DiagramPoint(target.x + ux * gap / 2f, target.y + uy * gap / 2f)
+    return DiagramPoint(target.x.toFloat() - ux * gap / 2f, target.y.toFloat() - uy * gap / 2f) to
+        DiagramPoint(target.x.toFloat() + ux * gap / 2f, target.y.toFloat() + uy * gap / 2f)
 }
 
 enum class DiagramLabelKind { Area, SubArea, Number, Sequence, ObjectLabel, ArrowLabel }
@@ -245,8 +245,8 @@ private fun subAreaLabels(frame: DiagramFrame, geometry: DiagramGeometry): List<
             subArea.id ?: "sub-area-$index",
             DiagramLabelKind.SubArea,
             subArea.label,
-            subArea.x + geometry.unit * Proportions.SUB_AREA_LABEL_INSET,
-            subArea.y + geometry.unit * Proportions.SUB_AREA_LABEL_INSET,
+            subArea.x.toFloat() + geometry.unit * Proportions.SUB_AREA_LABEL_INSET,
+            subArea.y.toFloat() + geometry.unit * Proportions.SUB_AREA_LABEL_INSET,
             fontSize,
         )
     }
@@ -264,8 +264,8 @@ private fun glyphBadges(frame: DiagramFrame, geometry: DiagramGeometry): List<Di
             "object-$index-badge",
             DiagramLabelKind.Number,
             short,
-            target.x - geometry.playerRadius * Proportions.BADGE_OFFSET_X - radius,
-            target.y + geometry.playerRadius * Proportions.BADGE_OFFSET_Y - radius,
+            target.x.toFloat() - geometry.playerRadius * Proportions.BADGE_OFFSET_X - radius,
+            target.y.toFloat() + geometry.playerRadius * Proportions.BADGE_OFFSET_Y - radius,
             radius * badgeFont(short),
             (radius * 2f) to (radius * 2f),
         )
@@ -277,8 +277,8 @@ private fun sequenceBadges(frame: DiagramFrame, geometry: DiagramGeometry): List
         val midpoint = (arrow.points.size - 1) / 2
         val a = arrow.points[midpoint]
         val b = arrow.points.getOrElse(midpoint + 1) { a }
-        val cx = arrow.badge?.x ?: ((a.x + b.x) / 2f)
-        val cy = arrow.badge?.y ?: ((a.y + b.y) / 2f - geometry.unit * Proportions.SEQUENCE_LIFT)
+        val cx = arrow.badge?.x?.toFloat() ?: ((a.x.toFloat() + b.x.toFloat()) / 2f)
+        val cy = arrow.badge?.y?.toFloat() ?: ((a.y.toFloat() + b.y.toFloat()) / 2f - geometry.unit * Proportions.SEQUENCE_LIFT)
         val radius = geometry.unit * Proportions.SEQUENCE_RADIUS
         label(
             "arrow-$index-sequence",
@@ -302,8 +302,8 @@ private fun objectLabels(frame: DiagramFrame, geometry: DiagramGeometry): List<D
             "object-$index-label",
             DiagramLabelKind.ObjectLabel,
             text,
-            target.x - geometry.playerRadius,
-            target.y + geometry.playerRadius * Proportions.MOVER_RADIUS_FACTOR - size.second / 2f,
+            target.x.toFloat() - geometry.playerRadius,
+            target.y.toFloat() + geometry.playerRadius * Proportions.MOVER_RADIUS_FACTOR - size.second / 2f,
             fontSize,
             size,
         )
@@ -319,8 +319,8 @@ private fun arrowLabels(frame: DiagramFrame, geometry: DiagramGeometry): List<Di
             "arrow-$index-label",
             DiagramLabelKind.ArrowLabel,
             text,
-            last.x - geometry.unit,
-            last.y - geometry.unit * Proportions.ARROW_LABEL_LIFT - size.second / 2f,
+            last.x.toFloat() - geometry.unit,
+            last.y.toFloat() - geometry.unit * Proportions.ARROW_LABEL_LIFT - size.second / 2f,
             fontSize,
             size,
         )

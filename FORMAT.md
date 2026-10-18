@@ -18,6 +18,8 @@ Object kinds are `player`, `opponent`, `neutral`, `coach`, `ball`, `cone`, `flat
 
 Optional nullable object labels, colours, numbers, angles, widths and badge positions accept explicit JSON null as well as omission. JSON Schema integers include mathematically equivalent spellings such as `1`, `1.0` and `1e0`; both parsers accept them. Unknown properties, enum values and unsupported versions reject. The schema defines the full string and array bounds.
 
+Parsers retain drawing numbers as IEEE-754 binary64 (`Number` in JavaScript, `Double` in Kotlin), including positive values below the Float range. Values round to binary64 precision at the parser boundary and round-trip at that precision. The format-1 schema is unchanged. Kotlin's drawing-number properties previously used `Float`; source consumers assigning those properties to Float variables must now convert explicitly, and compiled consumers must rebuild. Compose converts to Float only for drawing calculations; a subpixel dimension may draw as zero without changing the stored document or its encoded value. `DiagramArea` and `DiagramPoint` also accept Float constructor arguments for existing callers.
+
 ## Rendering semantics and limits
 
 Geometry derives the playing grid from its authored metre dimensions and adds an external grass margin. SVG and Canvas are separate renderers with the same notation and proportions; their font rasterisation is platform-specific.

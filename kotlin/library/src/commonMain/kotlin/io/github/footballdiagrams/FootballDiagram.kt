@@ -139,13 +139,13 @@ private fun DrawScope.drawSubAreas(frame: DiagramFrame, geometry: DiagramGeometr
         val colour = area.colour?.let { ObjectColours[it] } ?: LinePaint
         drawRect(
             color = colour.copy(alpha = 0.13f),
-            topLeft = Offset(area.x * scale, area.y * scale),
-            size = Size(area.width * scale, area.height * scale),
+            topLeft = Offset(area.x.toFloat() * scale, area.y.toFloat() * scale),
+            size = Size(area.width.toFloat() * scale, area.height.toFloat() * scale),
         )
         drawRect(
             color = colour,
-            topLeft = Offset(area.x * scale, area.y * scale),
-            size = Size(area.width * scale, area.height * scale),
+            topLeft = Offset(area.x.toFloat() * scale, area.y.toFloat() * scale),
+            size = Size(area.width.toFloat() * scale, area.height.toFloat() * scale),
             style = Stroke(
                 width = geometry.unit * 0.1f * scale,
                 pathEffect = PathEffect.dashPathEffect(
@@ -159,13 +159,13 @@ private fun DrawScope.drawSubAreas(frame: DiagramFrame, geometry: DiagramGeometr
 private fun DrawScope.drawCone(at: DiagramPoint, size: Float, colour: Color, unit: Float, scale: Float) {
     drawOval(
         color = Color(0x38000000),
-        topLeft = Offset((at.x - size * 0.78f) * scale, (at.y + size * 0.62f - size * 0.3f) * scale),
+        topLeft = Offset((at.x.toFloat() - size * 0.78f) * scale, (at.y.toFloat() + size * 0.62f - size * 0.3f) * scale),
         size = Size(size * 1.56f * scale, size * 0.6f * scale),
     )
     val path = Path().apply {
-        moveTo(at.x * scale, (at.y - size) * scale)
-        lineTo((at.x + size * 0.8f) * scale, (at.y + size * 0.62f) * scale)
-        lineTo((at.x - size * 0.8f) * scale, (at.y + size * 0.62f) * scale)
+        moveTo(at.x.toFloat() * scale, (at.y.toFloat() - size) * scale)
+        lineTo((at.x.toFloat() + size * 0.8f) * scale, (at.y.toFloat() + size * 0.62f) * scale)
+        lineTo((at.x.toFloat() - size * 0.8f) * scale, (at.y.toFloat() + size * 0.62f) * scale)
         close()
     }
     drawPath(path, colour)
@@ -177,7 +177,7 @@ private fun DrawScope.drawEquipment(target: DiagramObject, geometry: DiagramGeom
     when (target.kind) {
         DiagramObjectKind.Gate -> drawGate(target, colour, geometry, scale)
         DiagramObjectKind.Cone ->
-            drawCone(DiagramPoint(target.x, target.y), geometry.playerRadius * 0.8f, colour, geometry.unit, scale)
+            drawCone(DiagramPoint(target.x.toFloat(), target.y.toFloat()), geometry.playerRadius * 0.8f, colour, geometry.unit, scale)
         DiagramObjectKind.FlatMarker -> drawFlatMarker(target, colour, geometry, scale)
         DiagramObjectKind.Mannequin -> drawMannequin(target, geometry, scale)
         DiagramObjectKind.Pole -> drawPole(target, geometry, scale)
@@ -196,7 +196,7 @@ private fun DrawScope.drawFlatMarker(
     val radius = geometry.playerRadius
     drawOval(
         color = colour,
-        topLeft = Offset((target.x - radius * 0.5f) * scale, (target.y - radius * 0.26f) * scale),
+        topLeft = Offset((target.x.toFloat() - radius * 0.5f) * scale, (target.y.toFloat() - radius * 0.26f) * scale),
         size = Size(radius * scale, radius * 0.52f * scale),
         style = Stroke(width = geometry.unit * 0.16f * scale),
     )
@@ -214,14 +214,14 @@ private fun DrawScope.drawGate(
     // The colour band appears only when the gate's colour is the call.
     if (target.colour != null && target.colour != DiagramColour.Orange) {
         val band = Path().apply {
-            val angle = (target.angleDegrees ?: 0f) * PI.toFloat() / 180f
+            val angle = (target.angleDegrees?.toFloat() ?: 0f) * PI.toFloat() / 180f
             val px = -sin(angle)
             val py = cos(angle)
             val w = radius * 0.9f
-            moveTo((first.x + px * w) * scale, (first.y + py * w) * scale)
-            lineTo((second.x + px * w) * scale, (second.y + py * w) * scale)
-            lineTo((second.x - px * w) * scale, (second.y - py * w) * scale)
-            lineTo((first.x - px * w) * scale, (first.y - py * w) * scale)
+            moveTo((first.x.toFloat() + px * w) * scale, (first.y.toFloat() + py * w) * scale)
+            lineTo((second.x.toFloat() + px * w) * scale, (second.y.toFloat() + py * w) * scale)
+            lineTo((second.x.toFloat() - px * w) * scale, (second.y.toFloat() - py * w) * scale)
+            lineTo((first.x.toFloat() - px * w) * scale, (first.y.toFloat() - py * w) * scale)
             close()
         }
         drawPath(band, Color.White.copy(alpha = 0.55f))
@@ -243,19 +243,19 @@ private fun DrawScope.drawMannequin(
     val h = radius * 2.2f
     drawOval(
         color = Color(0x38000000),
-        topLeft = Offset((target.x - w * 0.75f) * scale, (target.y + h / 2f - w * 0.32f) * scale),
+        topLeft = Offset((target.x.toFloat() - w * 0.75f) * scale, (target.y.toFloat() + h / 2f - w * 0.32f) * scale),
         size = Size(w * 1.5f * scale, w * 0.64f * scale),
     )
     drawRoundRect(
         color = Color(0xFF2B3A4D),
-        topLeft = Offset((target.x - w / 2f) * scale, (target.y - h / 2f) * scale),
+        topLeft = Offset((target.x.toFloat() - w / 2f) * scale, (target.y.toFloat() - h / 2f) * scale),
         size = Size(w * scale, h * scale),
         cornerRadius = androidx.compose.ui.geometry.CornerRadius(w / 2f * scale),
     )
     drawCircle(
         color = Color(0xFF2B3A4D),
         radius = w * 0.42f * scale,
-        center = Offset(target.x * scale, (target.y - h / 2f - w * 0.1f) * scale),
+        center = Offset(target.x.toFloat() * scale, (target.y.toFloat() - h / 2f - w * 0.1f) * scale),
     )
 }
 
@@ -270,14 +270,14 @@ private fun DrawScope.drawPole(
     val radius = geometry.playerRadius
     drawLine(
         color = Color(0xFFF0E13C),
-        start = Offset(target.x * scale, (target.y - radius * 1.2f) * scale),
-        end = Offset(target.x * scale, (target.y + radius * 1.2f) * scale),
+        start = Offset(target.x.toFloat() * scale, (target.y.toFloat() - radius * 1.2f) * scale),
+        end = Offset(target.x.toFloat() * scale, (target.y.toFloat() + radius * 1.2f) * scale),
         strokeWidth = unit * 0.16f * scale,
     )
     drawCircle(
         color = Color(0xFFF0E13C),
         radius = unit * 0.2f * scale,
-        center = Offset(target.x * scale, (target.y - radius * 1.2f) * scale),
+        center = Offset(target.x.toFloat() * scale, (target.y.toFloat() - radius * 1.2f) * scale),
     )
 }
 
@@ -295,16 +295,16 @@ private fun DrawScope.drawLadder(
     val rungColour = Color(0xFFFFD23C)
     drawRect(
         color = rungColour,
-        topLeft = Offset((target.x - w / 2f) * scale, (target.y - h / 2f) * scale),
+        topLeft = Offset((target.x.toFloat() - w / 2f) * scale, (target.y.toFloat() - h / 2f) * scale),
         size = Size(w * scale, h * scale),
         style = Stroke(width = unit * 0.13f * scale),
     )
     for (i in 1..3) {
-        val x = (target.x - w / 2f + w * i / 4f) * scale
+        val x = (target.x.toFloat() - w / 2f + w * i / 4f) * scale
         drawLine(
             color = rungColour,
-            start = Offset(x, (target.y - h / 2f) * scale),
-            end = Offset(x, (target.y + h / 2f) * scale),
+            start = Offset(x, (target.y.toFloat() - h / 2f) * scale),
+            end = Offset(x, (target.y.toFloat() + h / 2f) * scale),
             strokeWidth = unit * 0.13f * scale,
         )
     }
@@ -318,27 +318,27 @@ private fun DrawScope.drawGoal(
     scale: Float,
 ) {
     val unit = geometry.unit
-    val mouth = target.widthMetres ?: if (target.kind == DiagramObjectKind.Goal) 6f else 2.4f
+    val mouth = target.widthMetres?.toFloat() ?: if (target.kind == DiagramObjectKind.Goal) 6f else 2.4f
     val depth = if (target.kind == DiagramObjectKind.Goal) 1.4f else 0.9f
     drawRect(
         color = Color(0xE6FFFFFF),
-        topLeft = Offset(target.x * scale, (target.y - mouth / 2f) * scale),
+        topLeft = Offset(target.x.toFloat() * scale, (target.y.toFloat() - mouth / 2f) * scale),
         size = Size(depth * scale, mouth * scale),
     )
     drawRect(
         color = Ink,
-        topLeft = Offset(target.x * scale, (target.y - mouth / 2f) * scale),
+        topLeft = Offset(target.x.toFloat() * scale, (target.y.toFloat() - mouth / 2f) * scale),
         size = Size(depth * scale, mouth * scale),
         style = Stroke(width = unit * 0.09f * scale),
     )
     val net = Color(0xFF8B97A5)
     for (i in 1..4) {
-        val y = (target.y - mouth / 2f + mouth * i / 5f) * scale
-        drawLine(net, Offset(target.x * scale, y), Offset((target.x + depth) * scale, y), unit * 0.045f * scale)
+        val y = (target.y.toFloat() - mouth / 2f + mouth * i / 5f) * scale
+        drawLine(net, Offset(target.x.toFloat() * scale, y), Offset((target.x.toFloat() + depth) * scale, y), unit * 0.045f * scale)
     }
 }
 private fun DrawScope.drawBall(at: DiagramPoint, radius: Float, unit: Float, scale: Float) {
-    val centre = Offset(at.x * scale, at.y * scale)
+    val centre = Offset(at.x.toFloat() * scale, at.y.toFloat() * scale)
     drawCircle(Color.White, radius * scale, centre)
     drawCircle(Ink, radius * scale, centre, style = Stroke(width = unit * 0.07f * scale))
     drawCircle(Ink, radius * 0.34f * scale, centre)
@@ -368,7 +368,7 @@ private fun DrawScope.drawPerson(
     val unit = geometry.unit
 
     if (target.kind == DiagramObjectKind.Ball) {
-        drawBall(DiagramPoint(target.x, target.y), radius * 0.55f, unit, scale)
+        drawBall(DiagramPoint(target.x.toFloat(), target.y.toFloat()), radius * 0.55f, unit, scale)
         return
     }
     if (!target.kind.isPerson) return
@@ -379,28 +379,28 @@ private fun DrawScope.drawPerson(
 
     drawOval(
         color = Color(0x40000000),
-        topLeft = Offset((target.x - radius * 0.95f) * scale, (target.y + radius * 0.78f - radius * 0.38f) * scale),
+        topLeft = Offset((target.x.toFloat() - radius * 0.95f) * scale, (target.y.toFloat() + radius * 0.78f - radius * 0.38f) * scale),
         size = Size(radius * 1.9f * scale, radius * 0.76f * scale),
     )
     if (isMover(target, frame, geometry)) {
         drawCircle(
             color = Color.White.copy(alpha = 0.85f),
             radius = radius * 1.42f * scale,
-            center = Offset(target.x * scale, target.y * scale),
+            center = Offset(target.x.toFloat() * scale, target.y.toFloat() * scale),
             style = Stroke(width = unit * 0.14f * scale),
         )
     }
     // Shoulders, then head: a person seen from above, not a token.
-    val shoulders = Offset((target.x - radius) * scale, (target.y + radius * 0.18f - radius * 0.66f) * scale)
+    val shoulders = Offset((target.x.toFloat() - radius) * scale, (target.y.toFloat() + radius * 0.18f - radius * 0.66f) * scale)
     val shoulderSize = Size(radius * 2f * scale, radius * 1.32f * scale)
     drawOval(fill, shoulders, shoulderSize)
     drawOval(Color.White, shoulders, shoulderSize, style = Stroke(width = unit * 0.11f * scale))
-    val head = Offset(target.x * scale, (target.y - radius * 0.34f) * scale)
+    val head = Offset(target.x.toFloat() * scale, (target.y.toFloat() - radius * 0.34f) * scale)
     drawCircle(shade(fill, 0.78f), radius * 0.5f * scale, head)
     drawCircle(Color.White, radius * 0.5f * scale, head, style = Stroke(width = unit * 0.09f * scale))
 
     if (target.hasBall) {
-        drawBall(DiagramPoint(target.x + radius * 1.25f, target.y + radius * 0.7f), radius * 0.55f, unit, scale)
+        drawBall(DiagramPoint(target.x.toFloat() + radius * 1.25f, target.y.toFloat() + radius * 0.7f), radius * 0.55f, unit, scale)
     }
 }
 
@@ -413,8 +413,8 @@ private fun DrawScope.drawArrow(
     if (points.size < 2) return
     val width = arrowStrokeWidth(arrow.kind, geometry)
     val path = Path().apply {
-        moveTo(points.first().x * scale, points.first().y * scale)
-        points.drop(1).forEach { lineTo(it.x * scale, it.y * scale) }
+        moveTo(points.first().x.toFloat() * scale, points.first().y.toFloat() * scale)
+        points.drop(1).forEach { lineTo(it.x.toFloat() * scale, it.y.toFloat() * scale) }
     }
     val dash = arrowDashIntervals(arrow.kind, geometry)
         ?.map { it * scale }?.toFloatArray()
@@ -433,18 +433,18 @@ private fun DrawScope.drawArrow(
     // Arrowhead, aimed along the final segment.
     val tip = points.last()
     val previous = points[points.size - 2]
-    val angle = atan2(tip.y - previous.y, tip.x - previous.x)
+    val angle = atan2(tip.y.toFloat() - previous.y.toFloat(), tip.x.toFloat() - previous.x.toFloat())
     val headLength = geometry.unit * (if (arrow.kind == DiagramArrowKind.Shot) 1.1f else 1.4f)
     val spread = 0.42f
     val head = Path().apply {
-        moveTo(tip.x * scale, tip.y * scale)
+        moveTo(tip.x.toFloat() * scale, tip.y.toFloat() * scale)
         lineTo(
-            (tip.x - cos(angle - spread) * headLength) * scale,
-            (tip.y - sin(angle - spread) * headLength) * scale,
+            (tip.x.toFloat() - cos(angle - spread) * headLength) * scale,
+            (tip.y.toFloat() - sin(angle - spread) * headLength) * scale,
         )
         lineTo(
-            (tip.x - cos(angle + spread) * headLength) * scale,
-            (tip.y - sin(angle + spread) * headLength) * scale,
+            (tip.x.toFloat() - cos(angle + spread) * headLength) * scale,
+            (tip.y.toFloat() - sin(angle + spread) * headLength) * scale,
         )
         close()
     }

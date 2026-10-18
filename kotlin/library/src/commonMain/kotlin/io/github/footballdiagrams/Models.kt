@@ -18,11 +18,14 @@ enum class AreaShape { @SerialName("rectangle") Rectangle }
 
 @Serializable
 data class DiagramArea(
-    @SerialName("length_m") val lengthMetres: Float,
-    @SerialName("width_m") val widthMetres: Float,
+    @SerialName("length_m") val lengthMetres: Double,
+    @SerialName("width_m") val widthMetres: Double,
     val label: String? = null,
     val shape: AreaShape = AreaShape.Rectangle,
-)
+) {
+    constructor(lengthMetres: Float, widthMetres: Float, label: String? = null, shape: AreaShape = AreaShape.Rectangle) :
+        this(lengthMetres.toDouble(), widthMetres.toDouble(), label, shape)
+}
 
 @Serializable
 data class DiagramFrame(
@@ -37,14 +40,14 @@ data class DiagramFrame(
 @Serializable
 data class DiagramObject(
     val kind: DiagramObjectKind,
-    val x: Float,
-    val y: Float,
+    val x: Double,
+    val y: Double,
     val colour: DiagramColour? = null,
     val label: String? = null,
     val short: String? = null,
     val number: Int? = null,
-    @SerialName("angle") val angleDegrees: Float? = null,
-    @SerialName("width") val widthMetres: Float? = null,
+    @SerialName("angle") val angleDegrees: Double? = null,
+    @SerialName("width") val widthMetres: Double? = null,
     @SerialName("ball") val hasBall: Boolean = false,
 )
 
@@ -82,10 +85,10 @@ enum class DiagramColour(val wire: String) {
 @Serializable
 data class DiagramSubArea(
     val label: String,
-    val x: Float,
-    val y: Float,
-    val width: Float,
-    val height: Float,
+    val x: Double,
+    val y: Double,
+    val width: Double,
+    val height: Double,
     val id: String? = null,
     val colour: DiagramColour? = null,
 )
@@ -108,4 +111,6 @@ enum class DiagramArrowKind(val wire: String) {
 }
 
 @Serializable
-data class DiagramPoint(val x: Float, val y: Float)
+data class DiagramPoint(val x: Double, val y: Double) {
+    constructor(x: Float, y: Float) : this(x.toDouble(), y.toDouble())
+}

@@ -12,6 +12,7 @@ for (const kind of ['valid', 'invalid']) {
       const json = await readFile(new URL(name, directory), 'utf8');
       if (kind === 'valid') {
         const diagram = parseDiagram(json);
+        if (name.startsWith('numeric-')) assert.deepEqual(diagram, JSON.parse(json));
         assert.deepEqual(parseDiagram(stringifyDiagram(diagram)), diagram);
       } else {
         assert.throws(() => parseDiagram(json));

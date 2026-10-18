@@ -36,7 +36,7 @@ class ConformanceTest {
         val waved = wavyPoints(points, 0.3f, 2.3f)
         assertEquals(points.first(), waved.first())
         assertEquals(points.last(), waved.last())
-        assertTrue(waved.any { it.y != 0f })
+        assertTrue(waved.any { it.y != 0.0 })
         val geometry = diagramGeometry(DiagramArea(30f, 20f))
         assertTrue(arrowDashIntervals(DiagramArrowKind.Run, geometry) != null)
         assertEquals(null, arrowDashIntervals(DiagramArrowKind.Pass, geometry))

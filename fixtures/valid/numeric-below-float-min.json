@@ -1,0 +1,52 @@
+{
+  "format_version": 1,
+  "title": "Numeric below-float-min",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 7e-46,
+    "width_m": 7e-46
+  },
+  "frames": [
+    {
+      "id": "numeric",
+      "title": "Numeric fields",
+      "objects": [
+        {
+          "kind": "goal",
+          "x": 7e-46,
+          "y": -7e-46,
+          "width": 7e-46,
+          "angle": 7e-46
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 7e-46,
+              "y": -7e-46
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "badge": {
+            "x": 7e-46,
+            "y": -7e-46
+          }
+        }
+      ],
+      "areas": [
+        {
+          "label": "Small zone",
+          "x": 7e-46,
+          "y": -7e-46,
+          "width": 7e-46,
+          "height": 7e-46
+        }
+      ]
+    }
+  ]
+}
