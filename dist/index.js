@@ -9,5 +9,8 @@ export function parseDiagram(input) {
     return document;
 }
 export function stringifyDiagram(document) {
-    return JSON.stringify(parseDiagram(document));
+    const encoded = JSON.stringify(parseDiagram(document));
+    // JSON hooks and property enumerability can change the value after validation.
+    parseDiagram(encoded);
+    return encoded;
 }

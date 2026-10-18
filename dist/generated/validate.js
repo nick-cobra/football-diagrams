@@ -31,10 +31,10 @@ var require_ucs2length = __commonJS({
 // validator.js
 var validate = validate20;
 var validator_default = validate20;
-var func1 = require_ucs2length().default;
+var func0 = Object.prototype.hasOwnProperty;
+var func66 = require_ucs2length().default;
 var schema34 = { "title": "DiagramObject", "type": "object", "additionalProperties": false, "properties": { "kind": { "type": "string", "enum": ["player", "opponent", "neutral", "coach", "ball", "cone", "flat_marker", "gate", "mini_goal", "goal", "mannequin", "pole", "ladder"] }, "x": { "type": "number", "minimum": -1e3, "maximum": 1e3 }, "y": { "type": "number", "minimum": -1e3, "maximum": 1e3 }, "colour": { "anyOf": [{ "$ref": "#/$defs/colour" }, { "type": "null" }] }, "label": { "anyOf": [{ "type": "string", "minLength": 1, "maxLength": 120 }, { "type": "null" }] }, "short": { "anyOf": [{ "type": "string", "minLength": 1, "maxLength": 3 }, { "type": "null" }] }, "number": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 99 }, { "type": "null" }] }, "angle": { "anyOf": [{ "type": "number", "minimum": -360, "maximum": 360 }, { "type": "null" }] }, "width": { "anyOf": [{ "type": "number", "exclusiveMinimum": 0, "maximum": 20 }, { "type": "null" }] }, "ball": { "type": "boolean" } }, "required": ["kind", "x", "y"] };
 var schema35 = { "title": "ObjectColour", "type": "string", "enum": ["red", "blue", "yellow", "green", "orange", "white", "teal"] };
-var func10 = Object.prototype.hasOwnProperty;
 function validate22(data, { instancePath = "", parentData, parentDataProperty, rootData = data, dynamicAnchors = {} } = {}) {
     let vErrors = null;
     let errors = 0;
@@ -46,7 +46,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
         evaluated0.items = void 0;
     }
     if (data && typeof data == "object" && !Array.isArray(data)) {
-        if (data.kind === void 0) {
+        if (data.kind === void 0 || !func0.call(data, "kind")) {
             const err0 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "kind" }, message: "must have required property 'kind'" };
             if (vErrors === null) {
                 vErrors = [err0];
@@ -56,7 +56,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.x === void 0) {
+        if (data.x === void 0 || !func0.call(data, "x")) {
             const err1 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "x" }, message: "must have required property 'x'" };
             if (vErrors === null) {
                 vErrors = [err1];
@@ -66,7 +66,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.y === void 0) {
+        if (data.y === void 0 || !func0.call(data, "y")) {
             const err2 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "y" }, message: "must have required property 'y'" };
             if (vErrors === null) {
                 vErrors = [err2];
@@ -76,8 +76,8 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        for (const key0 in data) {
-            if (!func10.call(schema34.properties, key0)) {
+        for (const key0 of Object.keys(data)) {
+            if (!func0.call(schema34.properties, key0)) {
                 const err3 = { instancePath, schemaPath: "#/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key0 }, message: "must NOT have additional properties" };
                 if (vErrors === null) {
                     vErrors = [err3];
@@ -88,7 +88,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.kind !== void 0) {
+        if (data.kind !== void 0 && func0.call(data, "kind")) {
             let data0 = data.kind;
             if (typeof data0 !== "string") {
                 const err4 = { instancePath: instancePath + "/kind", schemaPath: "#/properties/kind/type", keyword: "type", params: { type: "string" }, message: "must be string" };
@@ -111,7 +111,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.x !== void 0) {
+        if (data.x !== void 0 && func0.call(data, "x")) {
             let data1 = data.x;
             if (typeof data1 == "number" && isFinite(data1)) {
                 if (data1 > 1e3 || isNaN(data1)) {
@@ -146,7 +146,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.y !== void 0) {
+        if (data.y !== void 0 && func0.call(data, "y")) {
             let data2 = data.y;
             if (typeof data2 == "number" && isFinite(data2)) {
                 if (data2 > 1e3 || isNaN(data2)) {
@@ -181,7 +181,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.colour !== void 0) {
+        if (data.colour !== void 0 && func0.call(data, "colour")) {
             let data3 = data.colour;
             const _errs9 = errors;
             let valid1 = false;
@@ -243,13 +243,13 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.label !== void 0) {
+        if (data.label !== void 0 && func0.call(data, "label")) {
             let data4 = data.label;
             const _errs16 = errors;
             let valid3 = false;
             const _errs17 = errors;
             if (typeof data4 === "string") {
-                if (func1(data4) > 120) {
+                if (func66(data4) > 120) {
                     const err16 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/anyOf/0/maxLength", keyword: "maxLength", params: { limit: 120 }, message: "must NOT have more than 120 characters" };
                     if (vErrors === null) {
                         vErrors = [err16];
@@ -259,7 +259,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data4) < 1) {
+                if (func66(data4) < 1) {
                     const err17 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/anyOf/0/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err17];
@@ -317,13 +317,13 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.short !== void 0) {
+        if (data.short !== void 0 && func0.call(data, "short")) {
             let data5 = data.short;
             const _errs22 = errors;
             let valid4 = false;
             const _errs23 = errors;
             if (typeof data5 === "string") {
-                if (func1(data5) > 3) {
+                if (func66(data5) > 3) {
                     const err21 = { instancePath: instancePath + "/short", schemaPath: "#/properties/short/anyOf/0/maxLength", keyword: "maxLength", params: { limit: 3 }, message: "must NOT have more than 3 characters" };
                     if (vErrors === null) {
                         vErrors = [err21];
@@ -333,7 +333,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data5) < 1) {
+                if (func66(data5) < 1) {
                     const err22 = { instancePath: instancePath + "/short", schemaPath: "#/properties/short/anyOf/0/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err22];
@@ -391,7 +391,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.number !== void 0) {
+        if (data.number !== void 0 && func0.call(data, "number")) {
             let data6 = data.number;
             const _errs28 = errors;
             let valid5 = false;
@@ -465,7 +465,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.angle !== void 0) {
+        if (data.angle !== void 0 && func0.call(data, "angle")) {
             let data7 = data.angle;
             const _errs34 = errors;
             let valid6 = false;
@@ -539,7 +539,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.width !== void 0) {
+        if (data.width !== void 0 && func0.call(data, "width")) {
             let data8 = data.width;
             const _errs40 = errors;
             let valid7 = false;
@@ -613,7 +613,7 @@ function validate22(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.ball !== void 0) {
+        if (data.ball !== void 0 && func0.call(data, "ball")) {
             if (typeof data.ball !== "boolean") {
                 const err41 = { instancePath: instancePath + "/ball", schemaPath: "#/properties/ball/type", keyword: "type", params: { type: "boolean" }, message: "must be boolean" };
                 if (vErrors === null) {
@@ -651,7 +651,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
         evaluated0.items = void 0;
     }
     if (data && typeof data == "object" && !Array.isArray(data)) {
-        if (data.label === void 0) {
+        if (data.label === void 0 || !func0.call(data, "label")) {
             const err0 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "label" }, message: "must have required property 'label'" };
             if (vErrors === null) {
                 vErrors = [err0];
@@ -661,7 +661,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.x === void 0) {
+        if (data.x === void 0 || !func0.call(data, "x")) {
             const err1 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "x" }, message: "must have required property 'x'" };
             if (vErrors === null) {
                 vErrors = [err1];
@@ -671,7 +671,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.y === void 0) {
+        if (data.y === void 0 || !func0.call(data, "y")) {
             const err2 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "y" }, message: "must have required property 'y'" };
             if (vErrors === null) {
                 vErrors = [err2];
@@ -681,7 +681,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.width === void 0) {
+        if (data.width === void 0 || !func0.call(data, "width")) {
             const err3 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "width" }, message: "must have required property 'width'" };
             if (vErrors === null) {
                 vErrors = [err3];
@@ -691,7 +691,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.height === void 0) {
+        if (data.height === void 0 || !func0.call(data, "height")) {
             const err4 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "height" }, message: "must have required property 'height'" };
             if (vErrors === null) {
                 vErrors = [err4];
@@ -701,7 +701,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        for (const key0 in data) {
+        for (const key0 of Object.keys(data)) {
             if (!(key0 === "id" || key0 === "label" || key0 === "x" || key0 === "y" || key0 === "width" || key0 === "height" || key0 === "colour")) {
                 const err5 = { instancePath, schemaPath: "#/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key0 }, message: "must NOT have additional properties" };
                 if (vErrors === null) {
@@ -713,13 +713,13 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.id !== void 0) {
+        if (data.id !== void 0 && func0.call(data, "id")) {
             let data0 = data.id;
             const _errs3 = errors;
             let valid1 = false;
             const _errs4 = errors;
             if (typeof data0 === "string") {
-                if (func1(data0) > 80) {
+                if (func66(data0) > 80) {
                     const err6 = { instancePath: instancePath + "/id", schemaPath: "#/properties/id/anyOf/0/maxLength", keyword: "maxLength", params: { limit: 80 }, message: "must NOT have more than 80 characters" };
                     if (vErrors === null) {
                         vErrors = [err6];
@@ -729,7 +729,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data0) < 1) {
+                if (func66(data0) < 1) {
                     const err7 = { instancePath: instancePath + "/id", schemaPath: "#/properties/id/anyOf/0/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err7];
@@ -787,10 +787,10 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.label !== void 0) {
+        if (data.label !== void 0 && func0.call(data, "label")) {
             let data1 = data.label;
             if (typeof data1 === "string") {
-                if (func1(data1) > 120) {
+                if (func66(data1) > 120) {
                     const err11 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/maxLength", keyword: "maxLength", params: { limit: 120 }, message: "must NOT have more than 120 characters" };
                     if (vErrors === null) {
                         vErrors = [err11];
@@ -800,7 +800,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data1) < 1) {
+                if (func66(data1) < 1) {
                     const err12 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err12];
@@ -822,7 +822,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.x !== void 0) {
+        if (data.x !== void 0 && func0.call(data, "x")) {
             let data2 = data.x;
             if (typeof data2 == "number" && isFinite(data2)) {
                 if (data2 > 1e3 || isNaN(data2)) {
@@ -857,7 +857,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.y !== void 0) {
+        if (data.y !== void 0 && func0.call(data, "y")) {
             let data3 = data.y;
             if (typeof data3 == "number" && isFinite(data3)) {
                 if (data3 > 1e3 || isNaN(data3)) {
@@ -892,7 +892,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.width !== void 0) {
+        if (data.width !== void 0 && func0.call(data, "width")) {
             let data4 = data.width;
             if (typeof data4 == "number" && isFinite(data4)) {
                 if (data4 > 120 || isNaN(data4)) {
@@ -927,7 +927,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.height !== void 0) {
+        if (data.height !== void 0 && func0.call(data, "height")) {
             let data5 = data.height;
             if (typeof data5 == "number" && isFinite(data5)) {
                 if (data5 > 90 || isNaN(data5)) {
@@ -962,7 +962,7 @@ function validate24(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.colour !== void 0) {
+        if (data.colour !== void 0 && func0.call(data, "colour")) {
             let data6 = data.colour;
             const _errs19 = errors;
             let valid2 = false;
@@ -1051,7 +1051,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
         evaluated0.items = void 0;
     }
     if (data && typeof data == "object" && !Array.isArray(data)) {
-        if (data.kind === void 0) {
+        if (data.kind === void 0 || !func0.call(data, "kind")) {
             const err0 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "kind" }, message: "must have required property 'kind'" };
             if (vErrors === null) {
                 vErrors = [err0];
@@ -1061,7 +1061,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.points === void 0) {
+        if (data.points === void 0 || !func0.call(data, "points")) {
             const err1 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "points" }, message: "must have required property 'points'" };
             if (vErrors === null) {
                 vErrors = [err1];
@@ -1071,7 +1071,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        for (const key0 in data) {
+        for (const key0 of Object.keys(data)) {
             if (!(key0 === "kind" || key0 === "points" || key0 === "label" || key0 === "sequence" || key0 === "badge")) {
                 const err2 = { instancePath, schemaPath: "#/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key0 }, message: "must NOT have additional properties" };
                 if (vErrors === null) {
@@ -1083,7 +1083,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.kind !== void 0) {
+        if (data.kind !== void 0 && func0.call(data, "kind")) {
             let data0 = data.kind;
             if (typeof data0 !== "string") {
                 const err3 = { instancePath: instancePath + "/kind", schemaPath: "#/properties/kind/type", keyword: "type", params: { type: "string" }, message: "must be string" };
@@ -1106,7 +1106,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.points !== void 0) {
+        if (data.points !== void 0 && func0.call(data, "points")) {
             let data1 = data.points;
             if (Array.isArray(data1)) {
                 if (data1.length > 12) {
@@ -1133,7 +1133,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 for (let i0 = 0; i0 < len0; i0++) {
                     let data2 = data1[i0];
                     if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
-                        if (data2.x === void 0) {
+                        if (data2.x === void 0 || !func0.call(data2, "x")) {
                             const err7 = { instancePath: instancePath + "/points/" + i0, schemaPath: "#/$defs/point/required", keyword: "required", params: { missingProperty: "x" }, message: "must have required property 'x'" };
                             if (vErrors === null) {
                                 vErrors = [err7];
@@ -1143,7 +1143,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                             }
                             errors++;
                         }
-                        if (data2.y === void 0) {
+                        if (data2.y === void 0 || !func0.call(data2, "y")) {
                             const err8 = { instancePath: instancePath + "/points/" + i0, schemaPath: "#/$defs/point/required", keyword: "required", params: { missingProperty: "y" }, message: "must have required property 'y'" };
                             if (vErrors === null) {
                                 vErrors = [err8];
@@ -1153,7 +1153,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                             }
                             errors++;
                         }
-                        for (const key1 in data2) {
+                        for (const key1 of Object.keys(data2)) {
                             if (!(key1 === "x" || key1 === "y")) {
                                 const err9 = { instancePath: instancePath + "/points/" + i0, schemaPath: "#/$defs/point/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key1 }, message: "must NOT have additional properties" };
                                 if (vErrors === null) {
@@ -1165,7 +1165,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                                 errors++;
                             }
                         }
-                        if (data2.x !== void 0) {
+                        if (data2.x !== void 0 && func0.call(data2, "x")) {
                             let data3 = data2.x;
                             if (typeof data3 == "number" && isFinite(data3)) {
                                 if (data3 > 1e3 || isNaN(data3)) {
@@ -1200,7 +1200,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                                 errors++;
                             }
                         }
-                        if (data2.y !== void 0) {
+                        if (data2.y !== void 0 && func0.call(data2, "y")) {
                             let data4 = data2.y;
                             if (typeof data4 == "number" && isFinite(data4)) {
                                 if (data4 > 1e3 || isNaN(data4)) {
@@ -1259,13 +1259,13 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.label !== void 0) {
+        if (data.label !== void 0 && func0.call(data, "label")) {
             let data5 = data.label;
             const _errs15 = errors;
             let valid5 = false;
             const _errs16 = errors;
             if (typeof data5 === "string") {
-                if (func1(data5) > 120) {
+                if (func66(data5) > 120) {
                     const err18 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/anyOf/0/maxLength", keyword: "maxLength", params: { limit: 120 }, message: "must NOT have more than 120 characters" };
                     if (vErrors === null) {
                         vErrors = [err18];
@@ -1275,7 +1275,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data5) < 1) {
+                if (func66(data5) < 1) {
                     const err19 = { instancePath: instancePath + "/label", schemaPath: "#/properties/label/anyOf/0/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err19];
@@ -1333,7 +1333,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.sequence !== void 0) {
+        if (data.sequence !== void 0 && func0.call(data, "sequence")) {
             let data6 = data.sequence;
             const _errs21 = errors;
             let valid6 = false;
@@ -1407,13 +1407,13 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                 }
             }
         }
-        if (data.badge !== void 0) {
+        if (data.badge !== void 0 && func0.call(data, "badge")) {
             let data7 = data.badge;
             const _errs27 = errors;
             let valid7 = false;
             const _errs28 = errors;
             if (data7 && typeof data7 == "object" && !Array.isArray(data7)) {
-                if (data7.x === void 0) {
+                if (data7.x === void 0 || !func0.call(data7, "x")) {
                     const err28 = { instancePath: instancePath + "/badge", schemaPath: "#/$defs/point/required", keyword: "required", params: { missingProperty: "x" }, message: "must have required property 'x'" };
                     if (vErrors === null) {
                         vErrors = [err28];
@@ -1423,7 +1423,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (data7.y === void 0) {
+                if (data7.y === void 0 || !func0.call(data7, "y")) {
                     const err29 = { instancePath: instancePath + "/badge", schemaPath: "#/$defs/point/required", keyword: "required", params: { missingProperty: "y" }, message: "must have required property 'y'" };
                     if (vErrors === null) {
                         vErrors = [err29];
@@ -1433,7 +1433,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                for (const key2 in data7) {
+                for (const key2 of Object.keys(data7)) {
                     if (!(key2 === "x" || key2 === "y")) {
                         const err30 = { instancePath: instancePath + "/badge", schemaPath: "#/$defs/point/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key2 }, message: "must NOT have additional properties" };
                         if (vErrors === null) {
@@ -1445,7 +1445,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data7.x !== void 0) {
+                if (data7.x !== void 0 && func0.call(data7, "x")) {
                     let data8 = data7.x;
                     if (typeof data8 == "number" && isFinite(data8)) {
                         if (data8 > 1e3 || isNaN(data8)) {
@@ -1480,7 +1480,7 @@ function validate26(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data7.y !== void 0) {
+                if (data7.y !== void 0 && func0.call(data7, "y")) {
                     let data9 = data7.y;
                     if (typeof data9 == "number" && isFinite(data9)) {
                         if (data9 > 1e3 || isNaN(data9)) {
@@ -1589,7 +1589,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
         evaluated0.items = void 0;
     }
     if (data && typeof data == "object" && !Array.isArray(data)) {
-        if (data.id === void 0) {
+        if (data.id === void 0 || !func0.call(data, "id")) {
             const err0 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "id" }, message: "must have required property 'id'" };
             if (vErrors === null) {
                 vErrors = [err0];
@@ -1599,7 +1599,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.title === void 0) {
+        if (data.title === void 0 || !func0.call(data, "title")) {
             const err1 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "title" }, message: "must have required property 'title'" };
             if (vErrors === null) {
                 vErrors = [err1];
@@ -1609,7 +1609,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.objects === void 0) {
+        if (data.objects === void 0 || !func0.call(data, "objects")) {
             const err2 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "objects" }, message: "must have required property 'objects'" };
             if (vErrors === null) {
                 vErrors = [err2];
@@ -1619,7 +1619,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.arrows === void 0) {
+        if (data.arrows === void 0 || !func0.call(data, "arrows")) {
             const err3 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "arrows" }, message: "must have required property 'arrows'" };
             if (vErrors === null) {
                 vErrors = [err3];
@@ -1629,7 +1629,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        for (const key0 in data) {
+        for (const key0 of Object.keys(data)) {
             if (!(key0 === "id" || key0 === "title" || key0 === "caption" || key0 === "objects" || key0 === "areas" || key0 === "arrows")) {
                 const err4 = { instancePath, schemaPath: "#/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key0 }, message: "must NOT have additional properties" };
                 if (vErrors === null) {
@@ -1641,10 +1641,10 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.id !== void 0) {
+        if (data.id !== void 0 && func0.call(data, "id")) {
             let data0 = data.id;
             if (typeof data0 === "string") {
-                if (func1(data0) > 80) {
+                if (func66(data0) > 80) {
                     const err5 = { instancePath: instancePath + "/id", schemaPath: "#/properties/id/maxLength", keyword: "maxLength", params: { limit: 80 }, message: "must NOT have more than 80 characters" };
                     if (vErrors === null) {
                         vErrors = [err5];
@@ -1654,7 +1654,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data0) < 1) {
+                if (func66(data0) < 1) {
                     const err6 = { instancePath: instancePath + "/id", schemaPath: "#/properties/id/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err6];
@@ -1676,10 +1676,10 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.title !== void 0) {
+        if (data.title !== void 0 && func0.call(data, "title")) {
             let data1 = data.title;
             if (typeof data1 === "string") {
-                if (func1(data1) > 160) {
+                if (func66(data1) > 160) {
                     const err8 = { instancePath: instancePath + "/title", schemaPath: "#/properties/title/maxLength", keyword: "maxLength", params: { limit: 160 }, message: "must NOT have more than 160 characters" };
                     if (vErrors === null) {
                         vErrors = [err8];
@@ -1689,7 +1689,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data1) < 1) {
+                if (func66(data1) < 1) {
                     const err9 = { instancePath: instancePath + "/title", schemaPath: "#/properties/title/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err9];
@@ -1711,10 +1711,10 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.caption !== void 0) {
+        if (data.caption !== void 0 && func0.call(data, "caption")) {
             let data2 = data.caption;
             if (typeof data2 === "string") {
-                if (func1(data2) > 400) {
+                if (func66(data2) > 400) {
                     const err11 = { instancePath: instancePath + "/caption", schemaPath: "#/properties/caption/maxLength", keyword: "maxLength", params: { limit: 400 }, message: "must NOT have more than 400 characters" };
                     if (vErrors === null) {
                         vErrors = [err11];
@@ -1736,7 +1736,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.objects !== void 0) {
+        if (data.objects !== void 0 && func0.call(data, "objects")) {
             let data3 = data.objects;
             if (Array.isArray(data3)) {
                 if (data3.length > 60) {
@@ -1768,7 +1768,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.areas !== void 0) {
+        if (data.areas !== void 0 && func0.call(data, "areas")) {
             let data5 = data.areas;
             if (Array.isArray(data5)) {
                 if (data5.length > 12) {
@@ -1800,7 +1800,7 @@ function validate21(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.arrows !== void 0) {
+        if (data.arrows !== void 0 && func0.call(data, "arrows")) {
             let data7 = data.arrows;
             if (Array.isArray(data7)) {
                 if (data7.length > 30) {
@@ -1859,7 +1859,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
         evaluated0.items = void 0;
     }
     if (data && typeof data == "object" && !Array.isArray(data)) {
-        if (data.format_version === void 0) {
+        if (data.format_version === void 0 || !func0.call(data, "format_version")) {
             const err0 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "format_version" }, message: "must have required property 'format_version'" };
             if (vErrors === null) {
                 vErrors = [err0];
@@ -1869,7 +1869,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.title === void 0) {
+        if (data.title === void 0 || !func0.call(data, "title")) {
             const err1 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "title" }, message: "must have required property 'title'" };
             if (vErrors === null) {
                 vErrors = [err1];
@@ -1879,7 +1879,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.area === void 0) {
+        if (data.area === void 0 || !func0.call(data, "area")) {
             const err2 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "area" }, message: "must have required property 'area'" };
             if (vErrors === null) {
                 vErrors = [err2];
@@ -1889,7 +1889,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        if (data.frames === void 0) {
+        if (data.frames === void 0 || !func0.call(data, "frames")) {
             const err3 = { instancePath, schemaPath: "#/required", keyword: "required", params: { missingProperty: "frames" }, message: "must have required property 'frames'" };
             if (vErrors === null) {
                 vErrors = [err3];
@@ -1899,7 +1899,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
             }
             errors++;
         }
-        for (const key0 in data) {
+        for (const key0 of Object.keys(data)) {
             if (!(key0 === "format_version" || key0 === "title" || key0 === "area" || key0 === "frames")) {
                 const err4 = { instancePath, schemaPath: "#/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key0 }, message: "must NOT have additional properties" };
                 if (vErrors === null) {
@@ -1911,7 +1911,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.format_version !== void 0) {
+        if (data.format_version !== void 0 && func0.call(data, "format_version")) {
             let data0 = data.format_version;
             if (!(typeof data0 == "number" && (!(data0 % 1) && !isNaN(data0)) && isFinite(data0))) {
                 const err5 = { instancePath: instancePath + "/format_version", schemaPath: "#/properties/format_version/type", keyword: "type", params: { type: "integer" }, message: "must be integer" };
@@ -1934,10 +1934,10 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.title !== void 0) {
+        if (data.title !== void 0 && func0.call(data, "title")) {
             let data1 = data.title;
             if (typeof data1 === "string") {
-                if (func1(data1) > 160) {
+                if (func66(data1) > 160) {
                     const err7 = { instancePath: instancePath + "/title", schemaPath: "#/properties/title/maxLength", keyword: "maxLength", params: { limit: 160 }, message: "must NOT have more than 160 characters" };
                     if (vErrors === null) {
                         vErrors = [err7];
@@ -1947,7 +1947,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (func1(data1) < 1) {
+                if (func66(data1) < 1) {
                     const err8 = { instancePath: instancePath + "/title", schemaPath: "#/properties/title/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                     if (vErrors === null) {
                         vErrors = [err8];
@@ -1969,10 +1969,10 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.area !== void 0) {
+        if (data.area !== void 0 && func0.call(data, "area")) {
             let data2 = data.area;
             if (data2 && typeof data2 == "object" && !Array.isArray(data2)) {
-                if (data2.shape === void 0) {
+                if (data2.shape === void 0 || !func0.call(data2, "shape")) {
                     const err10 = { instancePath: instancePath + "/area", schemaPath: "#/$defs/area/required", keyword: "required", params: { missingProperty: "shape" }, message: "must have required property 'shape'" };
                     if (vErrors === null) {
                         vErrors = [err10];
@@ -1982,7 +1982,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (data2.length_m === void 0) {
+                if (data2.length_m === void 0 || !func0.call(data2, "length_m")) {
                     const err11 = { instancePath: instancePath + "/area", schemaPath: "#/$defs/area/required", keyword: "required", params: { missingProperty: "length_m" }, message: "must have required property 'length_m'" };
                     if (vErrors === null) {
                         vErrors = [err11];
@@ -1992,7 +1992,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                if (data2.width_m === void 0) {
+                if (data2.width_m === void 0 || !func0.call(data2, "width_m")) {
                     const err12 = { instancePath: instancePath + "/area", schemaPath: "#/$defs/area/required", keyword: "required", params: { missingProperty: "width_m" }, message: "must have required property 'width_m'" };
                     if (vErrors === null) {
                         vErrors = [err12];
@@ -2002,7 +2002,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                     }
                     errors++;
                 }
-                for (const key1 in data2) {
+                for (const key1 of Object.keys(data2)) {
                     if (!(key1 === "shape" || key1 === "length_m" || key1 === "width_m" || key1 === "label")) {
                         const err13 = { instancePath: instancePath + "/area", schemaPath: "#/$defs/area/additionalProperties", keyword: "additionalProperties", params: { additionalProperty: key1 }, message: "must NOT have additional properties" };
                         if (vErrors === null) {
@@ -2014,7 +2014,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data2.shape !== void 0) {
+                if (data2.shape !== void 0 && func0.call(data2, "shape")) {
                     let data3 = data2.shape;
                     if (typeof data3 !== "string") {
                         const err14 = { instancePath: instancePath + "/area/shape", schemaPath: "#/$defs/area/properties/shape/type", keyword: "type", params: { type: "string" }, message: "must be string" };
@@ -2037,7 +2037,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data2.length_m !== void 0) {
+                if (data2.length_m !== void 0 && func0.call(data2, "length_m")) {
                     let data4 = data2.length_m;
                     if (typeof data4 == "number" && isFinite(data4)) {
                         if (data4 > 120 || isNaN(data4)) {
@@ -2072,7 +2072,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data2.width_m !== void 0) {
+                if (data2.width_m !== void 0 && func0.call(data2, "width_m")) {
                     let data5 = data2.width_m;
                     if (typeof data5 == "number" && isFinite(data5)) {
                         if (data5 > 90 || isNaN(data5)) {
@@ -2107,13 +2107,13 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                         errors++;
                     }
                 }
-                if (data2.label !== void 0) {
+                if (data2.label !== void 0 && func0.call(data2, "label")) {
                     let data6 = data2.label;
                     const _errs17 = errors;
                     let valid3 = false;
                     const _errs18 = errors;
                     if (typeof data6 === "string") {
-                        if (func1(data6) > 120) {
+                        if (func66(data6) > 120) {
                             const err22 = { instancePath: instancePath + "/area/label", schemaPath: "#/$defs/area/properties/label/anyOf/0/maxLength", keyword: "maxLength", params: { limit: 120 }, message: "must NOT have more than 120 characters" };
                             if (vErrors === null) {
                                 vErrors = [err22];
@@ -2123,7 +2123,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                             }
                             errors++;
                         }
-                        if (func1(data6) < 1) {
+                        if (func66(data6) < 1) {
                             const err23 = { instancePath: instancePath + "/area/label", schemaPath: "#/$defs/area/properties/label/anyOf/0/minLength", keyword: "minLength", params: { limit: 1 }, message: "must NOT have fewer than 1 characters" };
                             if (vErrors === null) {
                                 vErrors = [err23];
@@ -2193,7 +2193,7 @@ function validate20(data, { instancePath = "", parentData, parentDataProperty, r
                 errors++;
             }
         }
-        if (data.frames !== void 0) {
+        if (data.frames !== void 0 && func0.call(data, "frames")) {
             let data7 = data.frames;
             if (Array.isArray(data7)) {
                 if (data7.length > 64) {

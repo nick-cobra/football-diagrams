@@ -47,3 +47,5 @@ The published format-1 schema is immutable. A change to accepted document struct
 Library release versions separately describe parser, renderer and packaging changes. A package upgrade alone does not rewrite stored documents. Applications own migrations between explicitly supported format versions.
 
 TypeScript uses ordinary arrays for authored collections; size and minimum-point limits are enforced by `parseDiagram` against the canonical schema. This keeps array construction practical without weakening runtime validation.
+
+For JavaScript object inputs, required fields must be own properties; inherited properties are not part of the JSON object contract. `stringifyDiagram` validates both the supplied values and the actual serialised JSON, including any `toJSON` result. Non-enumerable required fields or hooks producing an invalid document cause serialisation to reject. Hooks producing valid documents follow normal JavaScript serialisation semantics. Non-finite supplied numbers reject before any hook runs.

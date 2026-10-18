@@ -8,7 +8,7 @@ const standalone = standaloneModule.default ?? standaloneModule;
 const schema = JSON.parse(await readFile('schema/diagram.schema.json', 'utf8'));
 const types = await compileFromFile('schema/diagram.schema.json', { ignoreMinAndMaxItems: true, bannerComment: '// Generated from schema/diagram.schema.json. Do not edit.', style: { singleQuote: false } });
 await writeFile('src/generated/types.ts', types);
-const ajv = new Ajv2020({ allErrors: true, strict: true, code: { source: true, esm: true }, inlineRefs: true });
+const ajv = new Ajv2020({ allErrors: true, strict: true, ownProperties: true, code: { source: true, esm: true }, inlineRefs: true });
 const validate = ajv.compile(schema);
 const output = await build({
   stdin: { contents: standalone(ajv, validate), resolveDir: process.cwd(), sourcefile: 'validator.js' },
