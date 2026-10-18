@@ -1,0 +1,52 @@
+{
+  "format_version": 1,
+  "title": "Numeric double-subnormal",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 1e-323,
+    "width_m": 1e-323
+  },
+  "frames": [
+    {
+      "id": "numeric",
+      "title": "Numeric fields",
+      "objects": [
+        {
+          "kind": "goal",
+          "x": 1e-323,
+          "y": -1e-323,
+          "width": 1e-323,
+          "angle": 1e-323
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 1e-323,
+              "y": -1e-323
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "badge": {
+            "x": 1e-323,
+            "y": -1e-323
+          }
+        }
+      ],
+      "areas": [
+        {
+          "label": "Small zone",
+          "x": 1e-323,
+          "y": -1e-323,
+          "width": 1e-323,
+          "height": 1e-323
+        }
+      ]
+    }
+  ]
+}
