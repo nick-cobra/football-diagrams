@@ -79,6 +79,27 @@ test('short object labels survive full and thumbnail presentation',async({page})
   await expect(a.locator('[data-label-kind="number"]')).toHaveCount(0);
 });
 
+test('unrestricted zone IDs do not leave stale labels or rectangles after updates',async({page})=>{
+  const a=page.getByRole('region',{name:'Root a'});
+  await a.getByRole('combobox',{name:'Document',exact:true}).selectOption('6');
+  const labels=a.locator('[data-testid="drill-diagram-v2-labels"] text');
+  const zones=a.locator('rect[stroke-dasharray]');
+  const zoneTexts=Array.from({length:7},(_,i)=>`Zone ${i+1}`);
+  for(let repeat=0;repeat<3;repeat++){
+    await a.getByRole('button',{name:'First frame',exact:true}).click();
+    await a.getByLabel('Thumbnail',{exact:true}).uncheck();
+    await expect(labels).toHaveText(['Pitch',...zoneTexts,'9','1']);
+    await expect(zones).toHaveCount(7);
+    await a.getByLabel('Thumbnail',{exact:true}).check();
+    await expect(labels).toHaveText(zoneTexts);
+    await a.getByRole('button',{name:'Last frame',exact:true}).click();
+    await expect(labels).toHaveCount(0);
+    await expect(zones).toHaveCount(0);
+    await a.getByLabel('Thumbnail',{exact:true}).uncheck();
+    await expect(labels).toHaveText(['Pitch','9']);
+  }
+});
+
 for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-pitch',3,960],['narrow',0,360]]) {
   test(`reviewed rendering: ${name}`,async({page})=>{
     await page.setViewportSize({width,height:900});
