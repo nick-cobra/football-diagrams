@@ -100,6 +100,14 @@ test('unrestricted zone IDs do not leave stale labels or rectangles after update
   }
 });
 
+test('repeated terminal vertices preserve actual SVG arrow pixels',async({page})=>{
+  const a=page.getByRole('region',{name:'Root a'});
+  await a.getByRole('combobox',{name:'Document',exact:true}).selectOption('7');
+  const before=await a.getByRole('img').screenshot({animations:'disabled'});
+  await a.getByRole('button',{name:'Last frame',exact:true}).click();
+  expect(await a.getByRole('img').screenshot({animations:'disabled'})).toEqual(before);
+});
+
 for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-pitch',3,960],['narrow',0,360]]) {
   test(`reviewed rendering: ${name}`,async({page})=>{
     await page.setViewportSize({width,height:900});

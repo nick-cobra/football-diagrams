@@ -32,7 +32,6 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import kotlin.math.PI
-import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -430,10 +429,9 @@ private fun DrawScope.drawArrow(
     }
     drawPath(path, Color.White, style = Stroke(width = width * scale, pathEffect = dash))
 
-    // Arrowhead, aimed along the final segment.
+    // Arrowhead, aimed along the final nonzero segment in drawing precision.
     val tip = points.last()
-    val previous = points[points.size - 2]
-    val angle = atan2(tip.y.toFloat() - previous.y.toFloat(), tip.x.toFloat() - previous.x.toFloat())
+    val angle = arrowHeadAngle(points)
     val headLength = geometry.unit * (if (arrow.kind == DiagramArrowKind.Shot) 1.1f else 1.4f)
     val spread = 0.42f
     val head = Path().apply {

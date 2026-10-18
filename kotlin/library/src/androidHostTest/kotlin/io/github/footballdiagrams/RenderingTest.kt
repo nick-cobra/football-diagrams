@@ -61,6 +61,26 @@ class RenderingTest {
     }
 
     @Test
+    fun repeatingArrowVerticesDoesNotChangeTheirRenderedDirection() = runAndroidComposeUiTest<DiagramTestActivity> {
+        val diagram = fixture("repeated-arrows")
+        val index = mutableStateOf(0)
+        setContent { Box(Modifier.requiredWidth(600.dp)) { FootballDiagram(diagram, index.value) } }
+        val before = onNodeWithContentDescription("Repeated arrows — Original").captureToImage().asAndroidBitmap()
+        index.value = 1
+        waitForIdle()
+        val after = onNodeWithContentDescription("Repeated arrows — Repeated").captureToImage().asAndroidBitmap()
+        for ((name, bitmap) in listOf("original" to before, "repeated" to after)) {
+            File("build/reports/rendering/arrows-$name.png").apply { parentFile?.mkdirs() }.outputStream().use {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }
+        }
+        val expected = pixels(before)
+        val actual = pixels(after)
+        assertEquals(expected.size, actual.size)
+        assertEquals(0, expected.indices.count { expected[it] != actual[it] }, "Repeated vertices must preserve actual arrow pixels")
+    }
+
+    @Test
     fun selectionAndRepeatedRecompositionUpdateTheCanvas() = runAndroidComposeUiTest<DiagramTestActivity> {
         val diagram = mutableStateOf(fixture("multi-frame"))
         val index = mutableStateOf(0)

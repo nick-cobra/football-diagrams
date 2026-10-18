@@ -91,6 +91,16 @@ class GeometryVectorsTest {
     }
 
     @Test
+    fun arrowHeadsUseTheLastNonzeroSegmentAtDrawingPrecision() {
+        for (probe in vectors.getValue("arrowHeads").jsonArray) {
+            val points = Json.decodeFromJsonElement<List<DiagramPoint>>(probe.jsonObject.getValue("points"))
+            val degrees = probe.jsonObject.getValue("degrees").jsonPrimitive.double
+            near(arrowHeadAngle(points), degrees * kotlin.math.PI / 180.0, "head/$points")
+        }
+        assertEquals(0f, arrowHeadAngle(emptyList()))
+    }
+
+    @Test
     fun gateAngleVectorsPreserveConeCentres() {
         for (case in vectors.getValue("gates").jsonArray) {
             val angle = case.jsonObject.getValue("angle").jsonPrimitive.double
