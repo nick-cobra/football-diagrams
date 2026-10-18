@@ -2,6 +2,8 @@
 
 The canonical contract is [`schema/diagram.schema.json`](schema/diagram.schema.json), JSON Schema Draft 2020-12. Validators operate locally; schema references are embedded in both implementations.
 
+Both parsers require JSON syntax, including standard number tokens and escaped control characters inside strings. Decimal spellings such as `+30`, `030`, `.30` and `30.` are invalid JSON, regardless of their numeric meaning.
+
 ## Document
 
 Required fields are `format_version: 1`, `title`, `area` and `frames`. An empty frame list is valid and represents a document without a drawable frame. At most 64 frames are accepted.
