@@ -10,6 +10,13 @@ plugins {
     id("com.android.kotlin.multiplatform.library")
 }
 
+tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
+    if (name == "testAndroidHostTest") {
+        // Robolectric's API 36 FileDescriptor bridge on JDK 21.
+        jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+    }
+}
+
 group = "io.github.nick-cobra"
 version = "0.1.0"
 
@@ -73,6 +80,12 @@ kotlin {
         commonTest {
             kotlin.srcDir(generatedTest)
             dependencies { implementation(kotlin("test")) }
+        }
+        getByName("androidHostTest").dependencies {
+            implementation("androidx.activity:activity-compose:1.13.0")
+            implementation("org.jetbrains.compose.ui:ui-test:1.12.1")
+            implementation("androidx.test.ext:junit:1.3.0")
+            implementation("org.robolectric:robolectric:4.17")
         }
     }
 }

@@ -130,3 +130,5 @@ For a cold-consumer check, install the public Git pin in a new directory and use
 Update the exact Git revision and lockfile together, then run the host's parser, document, render and platform tests. Keep TypeScript and Kotlin consumers on the same reviewed source revision. Roll back both the source pin and its lockfile entry to the previous verified commit, then repeat those checks. The public schema's `format_version` is distinct from the package's release version.
 
 Library source is MIT licensed. The Gradle wrapper retains its Apache-2.0 licence; the generated JavaScript validator includes an Ajv MIT helper (see `LICENSES/`). Synthetic examples are included; no external drill catalogue or user data is bundled.
+
+Detailed automatic Android host image checks, explicit native CI execution and the manual UIKit capture procedure are documented in [Compose rendering proof](docs/testing/compose-rendering.md).

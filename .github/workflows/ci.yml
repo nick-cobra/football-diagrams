@@ -1,5 +1,8 @@
 name: Verify
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
 permissions:
   contents: read
 jobs:
@@ -57,7 +60,23 @@ jobs:
           packages: platform-tools platforms;android-37.0 build-tools;37.0.0
           log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :library:jvmTest :library:testAndroidHostTest :library:compileKotlinIosSimulatorArm64 :library:linkDebugTestIosSimulatorArm64
+      - run: ./gradlew :library:jvmTest :library:testAndroidHostTest
+        working-directory: kotlin
+      - run: node scripts/ci-ios-simulator.mjs
+      - run: ./gradlew :library:iosSimulatorArm64Test --device "$SIMULATOR_UDID"
         working-directory: kotlin
       - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
       - run: ./kotlin/gradlew -p examples/android assembleDebug
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kotlin-execution-and-rendering
+          path: |
+            kotlin/library/build/test-results/
+            kotlin/library/build/reports/rendering/
+          retention-days: 14
+      - name: Remove owned simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: |
+          xcrun simctl shutdown "$SIMULATOR_UDID" || true
+          xcrun simctl delete "$SIMULATOR_UDID"
