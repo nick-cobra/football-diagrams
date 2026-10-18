@@ -25,7 +25,7 @@ export interface Frame {
     /**
      * @maxItems 12
      */
-    areas?: [] | [Zone] | [Zone, Zone] | [Zone, Zone, Zone] | [Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone] | [Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone, Zone];
+    areas?: Zone[];
     /**
      * @maxItems 30
      */
@@ -58,7 +58,7 @@ export interface DiagramArrow {
      * @minItems 2
      * @maxItems 12
      */
-    points: [Point, Point] | [Point, Point, Point] | [Point, Point, Point, Point] | [Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point, Point, Point, Point, Point] | [Point, Point, Point, Point, Point, Point, Point, Point, Point, Point, Point, Point];
+    points: Point[];
     label?: string | null;
     sequence?: number | null;
     badge?: Point | null;

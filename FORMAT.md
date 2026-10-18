@@ -33,3 +33,5 @@ Both renderers draw the selected frame. The React `thumbnail` option removes bad
 The published format-1 schema is immutable. A change to accepted document structure or meaning requires an explicitly versioned format contract and a documented reader/writer compatibility matrix. The initial readers support format 1 and reject unknown versions.
 
 Library release versions separately describe parser, renderer and packaging changes. A package upgrade alone does not rewrite stored documents. Applications own migrations between explicitly supported format versions.
+
+TypeScript uses ordinary arrays for authored collections; size and minimum-point limits are enforced by `parseDiagram` against the canonical schema. This keeps array construction practical without weakening runtime validation.
