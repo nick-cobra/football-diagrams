@@ -28,6 +28,8 @@ Parsers retain drawing numbers as IEEE-754 binary64 (`Number` in JavaScript, `Do
 
 Geometry derives the playing grid from its authored metre dimensions and adds an external grass margin. SVG and Canvas are separate renderers with the same notation and proportions; their font rasterisation is platform-specific.
 
+Drawing is clipped to the renderer's measured viewport, including its grass margin. Off-pitch coordinates remain valid; content outside that viewport does not paint over neighbouring host UI.
+
 Grass uses six stripes across the pitch and extends into the margin. For very small pitches, the stripe width increases to keep the whole viewport within 256 stripes. This bounded fallback also covers dimensions smaller than drawing precision, without changing the authored document.
 
 Labels use a deterministic bounded candidate search. A densely crowded frame can still have overlapping labels after that search is exhausted. The algorithm does not promise collision-free placement for arbitrary input, nor does it infer player positions or football tactics.
