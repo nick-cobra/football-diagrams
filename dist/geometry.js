@@ -138,6 +138,11 @@ function* candidateOffsets(step) {
         yield { x: -step * ring, y: -step * ring };
     }
 }
+function glyphBadgeText(object) {
+    if (!PERSON_KINDS.includes(object.kind))
+        return undefined;
+    return object.number != null ? String(object.number) : (object.short ?? (object.kind === "coach" ? "C" : undefined));
+}
 export function layoutLabels(doc, frame, geometry, options) {
     const thumbnail = options?.thumbnail ?? false;
     const { unit, playerRadius, margin } = geometry;
@@ -168,9 +173,7 @@ export function layoutLabels(doc, frame, geometry, options) {
         push(area.id ?? `sub-area-${index}`, "sub_area", area.label, area.x + unit * 0.3, area.y + unit * 0.3, fontSize, { width, height });
     }
     for (const [index, object] of frame.objects.entries()) {
-        if (!PERSON_KINDS.includes(object.kind))
-            continue;
-        const short = object.number != null ? String(object.number) : (object.short ?? (object.kind === "coach" ? "C" : ""));
+        const short = glyphBadgeText(object);
         if (short && !thumbnail) {
             const radius = unit * 0.58;
             push(`object-${index}-badge`, "number", short, object.x - playerRadius * 0.95 - radius, object.y + playerRadius * 0.8 - radius, radius * (short.length > 1 ? 0.95 : 1.25), { width: radius * 2, height: radius * 2 });
@@ -188,9 +191,10 @@ export function layoutLabels(doc, frame, geometry, options) {
         push(`arrow-${index}-sequence`, "sequence", String(arrow.sequence), cx - radius, cy - radius, unit * 0.9, { width: radius * 2, height: radius * 2 });
     }
     for (const [index, object] of frame.objects.entries()) {
-        // Two characters or fewer already fit inside the glyph's own badge, so a
-        // pill beside it would repeat what the picture says.
-        if (!object.label || object.label.length <= 2)
+        if (!object.label)
+            continue;
+        // Deduplicate only text that this presentation actually draws in a badge.
+        if (!thumbnail && object.label === glyphBadgeText(object))
             continue;
         const fontSize = unit * 0.65;
         const { width, height } = pillBox(object.label, fontSize);

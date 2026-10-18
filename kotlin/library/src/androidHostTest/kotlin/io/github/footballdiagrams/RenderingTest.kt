@@ -44,7 +44,7 @@ class RenderingTest {
                 }
             }
         }
-        for ((name, diagram) in listOf("all-kinds" to fixture("all-kinds"), "labels-zones" to fixture("pass-and-move"), "square" to fixture("square"))) {
+        for ((name, diagram) in listOf("all-kinds" to fixture("all-kinds"), "labels-zones" to fixture("pass-and-move"), "square" to fixture("square"), "short-labels" to fixture("short-labels"))) {
             shown.value = diagram
             waitForIdle()
             val bitmap = onNodeWithContentDescription("${diagram.title} — ${diagram.frames.first().title}").captureToImage().asAndroidBitmap()

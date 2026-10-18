@@ -30,6 +30,8 @@ Grass uses six stripes across the pitch and extends into the margin. For very sm
 
 Labels use a deterministic bounded candidate search. A densely crowded frame can still have overlapping labels after that search is exhausted. The algorithm does not promise collision-free placement for arbitrary input, nor does it infer player positions or football tactics.
 
+Object labels of any accepted length are drawn as pills. A label matching the object's visible shirt/short/coach badge is drawn once in that badge; React thumbnails hide badges and retain the label pill instead. Equipment labels are always retained.
+
 Initial goal nets extend towards positive x from the authored goal-mouth position. Goal rotation is not applied. Gate rotation is supported; the existing ladder glyph remains axis-aligned. A caller should author coordinates with these semantics in mind. Changes to those drawing behaviours are reviewed independently of extracting and adopting the initial renderer.
 
 Both renderers draw the selected frame. The React `thumbnail` option removes badges and the area label for small cards; the initial Compose entry point retains its existing full-diagram label semantics. A matching thumbnail presentation can be selected by a host using its own approved presentation; there is no claim that two distinct host layouts have identical pixels.

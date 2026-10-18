@@ -254,11 +254,7 @@ private fun subAreaLabels(frame: DiagramFrame, geometry: DiagramGeometry): List<
 
 private fun glyphBadges(frame: DiagramFrame, geometry: DiagramGeometry): List<DiagramLabel> =
     frame.objects.mapIndexedNotNull { index, target ->
-        if (!target.kind.isPerson) return@mapIndexedNotNull null
-        val short = target.number?.toString()
-            ?: target.short
-            ?: if (target.kind == DiagramObjectKind.Coach) "C" else null
-        if (short == null) return@mapIndexedNotNull null
+        val short = glyphBadgeText(target) ?: return@mapIndexedNotNull null
         val radius = geometry.unit * Proportions.BADGE_RADIUS
         label(
             "object-$index-badge",
@@ -270,6 +266,11 @@ private fun glyphBadges(frame: DiagramFrame, geometry: DiagramGeometry): List<Di
             (radius * 2f) to (radius * 2f),
         )
     }
+
+private fun glyphBadgeText(target: DiagramObject): String? =
+    if (target.kind.isPerson) {
+        target.number?.toString() ?: target.short ?: if (target.kind == DiagramObjectKind.Coach) "C" else null
+    } else null
 
 private fun sequenceBadges(frame: DiagramFrame, geometry: DiagramGeometry): List<DiagramLabel> =
     frame.arrows.mapIndexedNotNull { index, arrow ->
@@ -293,9 +294,8 @@ private fun sequenceBadges(frame: DiagramFrame, geometry: DiagramGeometry): List
 
 private fun objectLabels(frame: DiagramFrame, geometry: DiagramGeometry): List<DiagramLabel> =
     frame.objects.mapIndexedNotNull { index, target ->
-        // Two characters or fewer already fit in the glyph's own badge, so a pill
-        // beside it would repeat what the picture says.
-        val text = target.label?.takeIf { it.length > 2 } ?: return@mapIndexedNotNull null
+        val text = target.label ?: return@mapIndexedNotNull null
+        if (text == glyphBadgeText(target)) return@mapIndexedNotNull null
         val fontSize = geometry.unit * Proportions.PILL_FONT
         val size = pillSize(text, fontSize)
         label(
