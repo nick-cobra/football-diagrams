@@ -3,6 +3,31 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  browser:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react: ['18.3.1', '19.3.1']
+    env:
+      REACT_VERSION: ${{ matrix.react }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-react-${{ matrix.react }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
   javascript:
     runs-on: ubuntu-latest
     strategy:
