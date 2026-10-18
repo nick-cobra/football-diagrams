@@ -22,6 +22,8 @@ On an Apple Silicon Mac with JDK 21, Xcode and an available iOS 18.5+ simulator,
 node scripts/capture-ios.mjs <owned-simulator-UDID> <evidence-directory>
 ```
 
+On simulators with several displays, the default screenshot display can be inactive even while the app is running. Within the same device lease, inspect `xcrun simctl io <owned-simulator-UDID> enumerate` and pass the active screen's selector as the optional third argument, for example `node scripts/capture-ios.mjs <owned-simulator-UDID> <evidence-directory> 1`. Inspect the resulting image for actual app content; a stable black frame is not rendering evidence. The selected display is recorded in `toolchain.txt`. Omitting this argument retains the ordinary simulator's default behaviour.
+
 Run it once on an ordinary iPhone and again on iPhone Duo when available, otherwise the smallest available iPhone. Inspect `ios.png`: the pitch must contain the 13 symbols and four arrows, text must remain readable, and the host must respect safe-area bounds. The script retains the PNG, built debug app and `toolchain.txt`; retain both capture directories with release-review evidence. It fails rather than selecting another device. A stable PNG hash is only a capture-readiness heuristic and does not approve the image. Release the owned lease after the complete unattended sequence, or retain it for an explicitly requested manual testing session.
 
 This change was exercised locally on iPhone 18 Pro and iPhone Duo with Xcode 27.1/Swift 6.4; screenshots are retained with the task's evidence. The library's initial goal/angle notation is preserved. No native device or iOS image-automation coverage is claimed.
