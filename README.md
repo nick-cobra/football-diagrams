@@ -24,10 +24,10 @@ Captured on an Android emulator and iPhone simulator. `FootballDiagram` draws th
 
 ## Source release
 
-The initial `v0.1.0` distribution is tagged source. JavaScript includes built ESM and TypeScript declarations; Kotlin is a standalone Gradle project. This release does not require a private repository, application backend, account or application stylesheet. npm-registry and Maven Central publication are separate distribution options, not prerequisites for these instructions.
+The `v0.2.0` distribution is tagged source. JavaScript includes built ESM and TypeScript declarations; Kotlin is a standalone Gradle project. This release does not require a private repository, application backend, account or application stylesheet. npm-registry and Maven Central publication are separate distribution options, not prerequisites for these instructions.
 
 ```sh
-npm install github:nick-cobra/football-diagrams#v0.1.0 react
+npm install github:nick-cobra/football-diagrams#v0.2.0 react
 ```
 
 Applications should resolve and pin the full commit in their lockfile. Review the release and dependency update before changing that pin.
@@ -72,7 +72,7 @@ Run the independent example with `npm ci && npm run demo`. The command prints it
 Download the tagged source or check out the exact release commit:
 
 ```sh
-git clone --branch v0.1.0 --depth 1 https://github.com/nick-cobra/football-diagrams.git
+git clone --branch v0.2.0 --depth 1 https://github.com/nick-cobra/football-diagrams.git
 ```
 
 Include its independent Gradle project in the consumer's `settings.gradle.kts`:
@@ -86,7 +86,7 @@ includeBuild("../football-diagrams/kotlin") {
 }
 ```
 
-Add `implementation("io.github.nick-cobra:football-diagrams:0.1.0")` to `commonMain`.
+Add `implementation("io.github.nick-cobra:football-diagrams:0.2.0")` to `commonMain`.
 
 ```kotlin
 import io.github.footballdiagrams.Diagrams
@@ -126,6 +126,8 @@ Native test execution uses the installed simulator tooling. On shared machines, 
 For a cold-consumer check, install the public Git pin in a new directory and use the exported entry points. For Kotlin, include the downloaded tagged project through the documented composite dependency. A sibling development checkout is not release-consumption evidence.
 
 ## Updating and rollback
+
+Version 0.2.0 retains JSON format 1 and its immutable schema. Kotlin drawing-number model properties now use `Double` instead of `Float` to preserve binary64 values. Rebuild compiled consumers; replace Float constructor arguments with Double values (for example, `DiagramObject(kind, x = 5.0, y = 10.0)`) and convert model values explicitly with `.toFloat()` where a drawing API requires it. `DiagramArea` and `DiagramPoint` retain Float constructor overloads. See [the release notes](https://github.com/nick-cobra/football-diagrams/releases/tag/v0.2.0) for parser and renderer fixes.
 
 Update the exact Git revision and lockfile together, then run the host's parser, document, render and platform tests. Keep TypeScript and Kotlin consumers on the same reviewed source revision. Roll back both the source pin and its lockfile entry to the previous verified commit, then repeat those checks. The public schema's `format_version` is distinct from the package's release version.
 
