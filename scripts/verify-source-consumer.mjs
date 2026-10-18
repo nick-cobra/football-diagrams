@@ -61,7 +61,7 @@ try{
   counts[target]={executed,skipped};
  }
  for(const react of ['18.3.1','19.3.1'])execute(process.execPath,[fileURLToPath(new URL('./verify-js-consumer.mjs',import.meta.url)),source,join(evidence,`js-${react}`)],scratch,`js-${react}`,{...process.env,REACT_VERSION:react});
- const report={requestedPin:pin,commit:sha,packageSha256:manifest.sha256,node:process.version,java:run('java',['--version']).trim(),gradle:execute(gradle,['--version'],scratch,'gradle-version'),xcode:run('xcodebuild',['-version']).trim(),simulator:device,tests:counts,android:{assembled:true,sha256:hash(actualApk)},ios:{framework:true,sha256:hash(framework)}};
+ const report={requestedPin:pin,commit:sha,packageSha256:manifest.sha256,consumerToolchain:{kotlin:"2.4.20",compose:"1.12.1",androidPlugin:"9.2.1",compileSdk:37,minSdk:26},node:process.version,java:run('java',['--version']).trim(),gradle:execute(gradle,['--version'],scratch,'gradle-version'),xcode:run('xcodebuild',['-version']).trim(),simulator:device,tests:counts,android:{assembled:true,sha256:hash(actualApk)},ios:{framework:true,sha256:hash(framework)}};
  writeFileSync(join(evidence,'source-results.json'),JSON.stringify(report,null,2)+'\n');
  console.log(`Cold public source ${sha}: JVM/native tests, Android APK, iOS framework and installed JS passed. Evidence: ${evidence}`);
 }finally{rmSync(scratch,{recursive:true,force:true});}

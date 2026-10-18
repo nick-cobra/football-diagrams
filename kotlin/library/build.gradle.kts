@@ -47,6 +47,10 @@ val generateContract by tasks.registering {
             parentFile.mkdirs()
             writeText("package io.github.footballdiagrams\n\ndata class Fixture(val name: String, val valid: Boolean, val json: String)\nval conformanceFixtures = listOf(\n" + fixtures.joinToString(",\n") + "\n)\n")
         }
+        generatedTest.get().file("GeometryVectors.kt").asFile.apply {
+            parentFile.mkdirs()
+            writeText("package io.github.footballdiagrams\n\ninternal val geometryVectorsJson = " + quotedKotlin(fixturesDirectory.asFile.resolve("geometry-vectors.json").readText()) + "\n")
+        }
     }
 }
 

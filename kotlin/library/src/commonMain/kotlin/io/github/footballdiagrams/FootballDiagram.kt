@@ -172,7 +172,7 @@ private fun DrawScope.drawCone(at: DiagramPoint, size: Float, colour: Color, uni
     drawPath(path, Color.White, style = Stroke(width = unit * 0.1f * scale))
 }
 
-private fun DrawScope.drawEquipment(target: DiagramObject, geometry: DiagramGeometry, scale: Float) {
+internal fun DrawScope.drawEquipment(target: DiagramObject, geometry: DiagramGeometry, scale: Float) {
     val colour = target.colour?.let { ObjectColours[it] } ?: ObjectColours.getValue(DiagramColour.Orange)
     when (target.kind) {
         DiagramObjectKind.Gate -> drawGate(target, colour, geometry, scale)
@@ -358,7 +358,7 @@ private fun DrawScope.drawBall(at: DiagramPoint, radius: Float, unit: Float, sca
 private fun shade(colour: Color, factor: Float): Color =
     Color(colour.red * factor, colour.green * factor, colour.blue * factor, colour.alpha)
 
-private fun DrawScope.drawPerson(
+internal fun DrawScope.drawPerson(
     target: DiagramObject,
     frame: DiagramFrame,
     geometry: DiagramGeometry,

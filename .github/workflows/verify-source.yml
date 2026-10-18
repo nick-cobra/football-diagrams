@@ -11,6 +11,7 @@ permissions:
 jobs:
   cold-consumer:
     runs-on: macos-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,7 +27,9 @@ jobs:
           log-accepted-android-sdk-licenses: false
       - uses: gradle/actions/setup-gradle@v4
       - run: node scripts/ci-ios-simulator.mjs
+        timeout-minutes: 8
       - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"
+        timeout-minutes: 25
         env:
           PUBLIC_SOURCE_PIN: ${{ inputs.pin }}
       - uses: actions/upload-artifact@v4
