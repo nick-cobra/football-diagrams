@@ -4,6 +4,8 @@ The canonical contract is [`schema/diagram.schema.json`](schema/diagram.schema.j
 
 Both parsers require JSON syntax, including standard number tokens and escaped control characters inside strings. Decimal spellings such as `+30`, `030`, `.30` and `30.` are invalid JSON, regardless of their numeric meaning.
 
+Serialisers escape unpaired UTF-16 surrogates in accepted string values so UTF-8 storage and transport preserve their code units. Ordinary Unicode characters and valid surrogate pairs retain their normal JSON representation.
+
 ## Document
 
 Required fields are `format_version: 1`, `title`, `area` and `frames`. An empty frame list is valid and represents a document without a drawable frame. At most 64 frames are accepted.
