@@ -132,3 +132,5 @@ Update the exact Git revision and lockfile together, then run the host's parser,
 Library source is MIT licensed. The Gradle wrapper retains its Apache-2.0 licence; the generated JavaScript validator includes an Ajv MIT helper (see `LICENSES/`). Synthetic examples are included; no external drill catalogue or user data is bundled.
 
 Detailed automatic Android host image checks, explicit native CI execution and the manual UIKit capture procedure are documented in [Compose rendering proof](docs/testing/compose-rendering.md).
+
+Actual packed/installed JS and cold public Git/Gradle consumer checks, their toolchain matrix and retained hash/execution reports are documented in [Installed distribution verification](docs/testing/installed-consumers.md).

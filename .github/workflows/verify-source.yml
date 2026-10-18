@@ -1,0 +1,42 @@
+name: Verify immutable source distribution
+on:
+  workflow_dispatch:
+    inputs:
+      pin:
+        description: Existing public full commit SHA or release tag to verify (never publish)
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  cold-consumer:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools platforms;android-37.0 build-tools;37.0.0
+          log-accepted-android-sdk-licenses: false
+      - uses: gradle/actions/setup-gradle@v4
+      - run: node scripts/ci-ios-simulator.mjs
+      - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"
+        env:
+          PUBLIC_SOURCE_PIN: ${{ inputs.pin }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: immutable-source-consumer
+          path: artifacts/source-consumer/
+          retention-days: 30
+      - name: Remove owned simulator
+        if: always() && env.SIMULATOR_UDID != ''
+        run: |
+          xcrun simctl shutdown "$SIMULATOR_UDID" || true
+          xcrun simctl delete "$SIMULATOR_UDID"

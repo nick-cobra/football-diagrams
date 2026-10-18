@@ -6,6 +6,26 @@ on:
 permissions:
   contents: read
 jobs:
+  installed-javascript:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+        react: ['18.3.1', '19.3.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node scripts/verify-js-consumer.mjs
+        env:
+          REACT_VERSION: ${{ matrix.react }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: installed-js-node-${{ matrix.node }}-react-${{ matrix.react }}
+          path: artifacts/js-consumer/
+          retention-days: 14
   javascript:
     runs-on: ubuntu-latest
     strategy:
@@ -41,6 +61,9 @@ jobs:
         working-directory: kotlin
       - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
       - run: ./kotlin/gradlew -p examples/android assembleDebug
+      - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"
+        env:
+          PUBLIC_SOURCE_PIN: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -48,6 +71,7 @@ jobs:
           path: |
             kotlin/library/build/test-results/
             kotlin/library/build/reports/rendering/
+            artifacts/source-consumer/
           retention-days: 14
       - name: Remove owned simulator
         if: always() && env.SIMULATOR_UDID != ''
