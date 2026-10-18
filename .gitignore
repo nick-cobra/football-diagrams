@@ -4,3 +4,5 @@ node_modules/
 **/build/
 local.properties
 examples/react/dist/
+playwright-report/
+test-results/
