@@ -37,6 +37,9 @@ test('visible waves retain their original samples, phase, joins and endpoint dir
    [{x:1,y:1},{x:1,y:1},{x:1000,y:3},{x:1,y:1},{x:1,y:1}],
    [{x:-1000,y:-1000},{x:1000,y:-1000},{x:0,y:0},{x:0,y:0}],
   ];
+  let seed=7391;
+  const coordinate=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/2**32*2000-1000;};
+  for(let i=0;i<20;i++)paths.push(Array.from({length:4},()=>({x:coordinate(),y:coordinate()})));
   for(const input of paths) {
    const arrow={kind:'dribble',points:input};
    const full=points(arrowGeometry(arrow,g).d),bounded=points(renderArrowGeometry(arrow,g).d);

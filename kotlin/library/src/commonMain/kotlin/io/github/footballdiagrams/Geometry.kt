@@ -133,21 +133,21 @@ private fun sampledWavePoints(
         generatedPoints += steps + 1
         var last = -1
         for (range in waveSampleRanges(a.x.toFloat(), a.y.toFloat(), dx, dy, steps, bounds)) {
-          for (i in max(range.first, last + 1)..range.last) {
-            val base = (i.toFloat() / steps) * length
-            // Ends pinned flat so the arrow still starts and finishes on its
-            // stated point, however much the middle waves.
-            val offset = if (i == 0 || i == steps) {
-                0f
-            } else {
-                sin((base / wavelength) * 2f * PI.toFloat()) * amplitude
+            for (i in max(range.first, last + 1)..range.last) {
+                val base = (i.toFloat() / steps) * length
+                // Ends pinned flat so the arrow still starts and finishes on its
+                // stated point, however much the middle waves.
+                val offset = if (i == 0 || i == steps) {
+                    0f
+                } else {
+                    sin((base / wavelength) * 2f * PI.toFloat()) * amplitude
+                }
+                val x = a.x.toFloat() + ux * base + px * offset
+                val y = a.y.toFloat() + uy * base + py * offset
+                require(x.isFinite() && y.isFinite()) { "Wave coordinates must remain finite" }
+                out += DiagramPoint(x, y)
+                last = i
             }
-            val x = a.x.toFloat() + ux * base + px * offset
-            val y = a.y.toFloat() + uy * base + py * offset
-            require(x.isFinite() && y.isFinite()) { "Wave coordinates must remain finite" }
-            out += DiagramPoint(x, y)
-            last = i
-          }
         }
     }
     return out
