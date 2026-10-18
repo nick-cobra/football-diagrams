@@ -34,6 +34,8 @@ Geometry derives the playing grid from its authored metre dimensions and adds an
 
 Drawing is clipped to the renderer's measured viewport, including its grass margin. Off-pitch coordinates remain valid; content outside that viewport does not paint over neighbouring host UI.
 
+Renderers retain the original dribble sample phase and endpoints but omit intermediate samples far outside the viewport. A conservative padding includes waves, strokes, shadows and arrowheads; off-screen runs connect outside that padding. The public full-path geometry helpers continue returning the complete sampled paths. This bounds rendering work by the visible region without changing valid documents or clipping away visible arrow sections.
+
 Grass uses six stripes across the pitch and extends into the margin. For very small pitches, the stripe width increases to keep the whole viewport within 256 stripes. This bounded fallback also covers dimensions smaller than drawing precision, without changing the authored document.
 
 Labels use a deterministic bounded candidate search. A densely crowded frame can still have overlapping labels after that search is exhausted. The algorithm does not promise collision-free placement for arbitrary input, nor does it infer player positions or football tactics.

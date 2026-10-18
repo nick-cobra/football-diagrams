@@ -119,3 +119,11 @@ for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-p
     await expect(a.getByRole('img')).toHaveScreenshot(`${name}.png`,{animations:'disabled',maxDiffPixels:0});
   });
 }
+
+
+test('unchanged arrow geometry is reused while all relevant inputs still invalidate',async({page})=>{
+  const report=await page.evaluate(()=>window.runDiagramCacheProbe());
+  expect(report.initialReads).toBeGreaterThan(0);
+  expect(report.checks.filter(check=>!check.pass)).toEqual([]);
+  expect(report.parentReads).toBe(0);
+});

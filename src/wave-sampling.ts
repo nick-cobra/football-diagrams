@@ -9,13 +9,14 @@ const MAX_WAVE_POINTS = 100_000;
 function sampleRanges(a: Point, dx: number, dy: number, steps: number, bounds?: WaveBounds): [number, number][] {
   if (!bounds) return [[0, steps]];
   let enter = 0, leave = 1;
-  for (const [start, delta, low, high] of [
+  const axes: [number, number, number, number][] = [
     [a.x, dx, bounds.left, bounds.right], [a.y, dy, bounds.top, bounds.bottom],
-  ]) {
+  ];
+  for (const [start, delta, low, high] of axes) {
     if (delta === 0) {
-      if (start! < low! || start! > high!) { enter = 1; leave = 0; break; }
+      if (start < low || start > high) { enter = 1; leave = 0; break; }
     } else {
-      const t0 = (low! - start!) / delta!, t1 = (high! - start!) / delta!;
+      const t0 = (low - start) / delta, t1 = (high - start) / delta;
       enter = Math.max(enter, Math.min(t0, t1));
       leave = Math.min(leave, Math.max(t0, t1));
     }

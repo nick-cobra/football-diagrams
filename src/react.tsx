@@ -38,6 +38,11 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
     [diagram, frame, geometry, thumbnail],
   );
 
+  const arrows = useMemo(
+    () => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry)) : [],
+    [frame?.arrows, geometry],
+  );
+
   if (!frame) return null;
 
   const grass = grassStripes(geometry);
@@ -110,8 +115,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
       </g>
 
       <g>
-        {frame.arrows.map((arrow, index) => {
-          const geo = renderArrowGeometry(arrow, geometry);
+        {arrows.map((geo, index) => {
           const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
           return (
             <g key={`arrow-${index}`} data-arrow-kind={geo.kind}>

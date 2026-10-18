@@ -69,6 +69,7 @@ fun FootballDiagram(
     val frame = diagram.frames.getOrNull(frameIndex) ?: return
     val geometry = remember(diagram.area) { diagramGeometry(diagram.area) }
     val labels = remember(diagram.area, frame) { layoutDiagramLabels(diagram.area, frame, geometry) }
+    val arrows = remember(frame.arrows, geometry) { ArrowDrawingCache(frame.arrows, geometry) }
     val textMeasurer = rememberTextMeasurer()
     val description = "${diagram.title} — ${frame.title}"
 
@@ -87,7 +88,7 @@ fun FootballDiagram(
             drawGrid(geometry, scale)
             drawSubAreas(frame, geometry, scale)
             frame.objects.forEach { drawEquipment(it, geometry, scale) }
-            frame.arrows.forEach { drawArrow(it, geometry, scale) }
+            arrows.atScale(scale).forEach { drawArrow(it, scale) }
             frame.objects.forEach { drawPerson(it, frame, geometry, scale) }
             labels.forEach { drawLabel(it, geometry, scale, textMeasurer) }
         }
@@ -405,50 +406,12 @@ internal fun DrawScope.drawPerson(
     }
 }
 
-private fun DrawScope.drawArrow(
-    arrow: DiagramArrow,
-    geometry: DiagramGeometry,
-    scale: Float,
-) {
-    val points = renderArrowPathPoints(arrow, geometry)
-    if (points.size < 2) return
-    val width = arrowStrokeWidth(arrow.kind, geometry)
-    val path = Path().apply {
-        moveTo(points.first().x.toFloat() * scale, points.first().y.toFloat() * scale)
-        points.drop(1).forEach { lineTo(it.x.toFloat() * scale, it.y.toFloat() * scale) }
-    }
-    val dash = arrowDashIntervals(arrow.kind, geometry)
-        ?.map { it * scale }?.toFloatArray()
-        ?.let { PathEffect.dashPathEffect(it) }
-
-    // Shadow first so a white arrow stays legible over grass.
+private fun DrawScope.drawArrow(arrow: ArrowDrawing, scale: Float) {
     translate(0.12f * scale, 0.16f * scale) {
-        drawPath(
-            path,
-            Color(0x47000000),
-            style = Stroke(width = (width + geometry.unit * 0.1f) * scale, pathEffect = dash),
-        )
+        drawPath(arrow.path, Color(0x47000000), style = arrow.shadowStroke)
     }
-    drawPath(path, Color.White, style = Stroke(width = width * scale, pathEffect = dash))
-
-    // Arrowhead, aimed along the final nonzero segment in drawing precision.
-    val tip = points.last()
-    val angle = arrowHeadAngle(points)
-    val headLength = geometry.unit * (if (arrow.kind == DiagramArrowKind.Shot) 1.1f else 1.4f)
-    val spread = 0.42f
-    val head = Path().apply {
-        moveTo(tip.x.toFloat() * scale, tip.y.toFloat() * scale)
-        lineTo(
-            (tip.x.toFloat() - cos(angle - spread) * headLength) * scale,
-            (tip.y.toFloat() - sin(angle - spread) * headLength) * scale,
-        )
-        lineTo(
-            (tip.x.toFloat() - cos(angle + spread) * headLength) * scale,
-            (tip.y.toFloat() - sin(angle + spread) * headLength) * scale,
-        )
-        close()
-    }
-    drawPath(head, Color.White)
+    drawPath(arrow.path, Color.White, style = arrow.stroke)
+    drawPath(arrow.head, Color.White)
 }
 
 private fun DrawScope.drawLabel(

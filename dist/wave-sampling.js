@@ -6,9 +6,10 @@ function sampleRanges(a, dx, dy, steps, bounds) {
     if (!bounds)
         return [[0, steps]];
     let enter = 0, leave = 1;
-    for (const [start, delta, low, high] of [
+    const axes = [
         [a.x, dx, bounds.left, bounds.right], [a.y, dy, bounds.top, bounds.bottom],
-    ]) {
+    ];
+    for (const [start, delta, low, high] of axes) {
         if (delta === 0) {
             if (start < low || start > high) {
                 enter = 1;
