@@ -1,0 +1,30 @@
+import { mkdtempSync, writeFileSync, existsSync, readFileSync, rmSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { resolve, join } from 'node:path';
+import { pack, run } from './consumers/package.mjs';
+const source=resolve(process.argv[2]||'.');
+const evidence=resolve(process.argv[3]||'artifacts/js-consumer');
+const version=process.env.REACT_VERSION||'18.3.1';
+const reactTypes=version.startsWith('18.')?'18.3.31':'19.3.0';
+const domTypes=version.startsWith('18.')?'18.3.7':'19.3.0';
+const {archive,manifest}=pack(source,evidence);
+const scratch=mkdtempSync(join(tmpdir(),'football-installed-js-'));
+const doc={format_version:1,title:'Installed consumer',area:{shape:'rectangle',length_m:30,width_m:20},frames:[{id:'f',title:'Frame',objects:[{kind:'player',x:5,y:10}],arrows:[]}]};
+try{
+ const core=join(scratch,'core');mkdirSync(core);
+ writeFileSync(join(core,'package.json'),JSON.stringify({name:'core-consumer',private:true,type:'module'}));
+ run('npm',['install','--ignore-scripts','--no-audit','--no-fund','--save-exact',archive],{cwd:core});
+ if(existsSync(join(core,'node_modules/react')))throw new Error('Core-only consumer unexpectedly requires React');
+ const runtime=`import assert from 'node:assert/strict';\nimport {parseDiagram,stringifyDiagram} from 'football-diagrams';\nimport {frameGeometry} from 'football-diagrams/geometry';\nimport schema from 'football-diagrams/schema' with {type:'json'};\nconst diagram=parseDiagram(${JSON.stringify(doc)});\nassert.deepEqual(parseDiagram(stringifyDiagram(diagram)),diagram);\nassert.equal(frameGeometry(diagram.area).lengthM,30);\nassert.equal(schema.properties.format_version.const,1);\n`;
+ writeFileSync(join(core,'consumer.mjs'),runtime);run(process.execPath,['consumer.mjs'],{cwd:core});
+ const react=join(scratch,'react');mkdirSync(react);
+ writeFileSync(join(react,'package.json'),JSON.stringify({name:'react-consumer',private:true,type:'module'}));
+ run('npm',['install','--ignore-scripts','--no-audit','--no-fund','--save-exact',archive,`react@${version}`,`react-dom@${version}`,'typescript@5.9.3',`@types/react@${reactTypes}`,`@types/react-dom@${domTypes}`],{cwd:react});
+ writeFileSync(join(react,'consumer.tsx'),`import React from 'react';\nimport {renderToString} from 'react-dom/server';\nimport {parseDiagram,stringifyDiagram,type Diagram} from 'football-diagrams';\nimport {frameGeometry} from 'football-diagrams/geometry';\nimport {DiagramSvg} from 'football-diagrams/react';\nimport schema from 'football-diagrams/schema' with {type:'json'};\nconst authored:Diagram=${JSON.stringify(doc)};\nconst diagram=parseDiagram(stringifyDiagram(authored));\nconst html=renderToString(<DiagramSvg diagram={diagram} className="consumer" style={{height:168}}/>);\nif(!html.includes('<svg')||frameGeometry(diagram.area).lengthM!==30||schema.properties.format_version.const!==1)throw new Error('Installed exports failed');\n`);
+ writeFileSync(join(react,'tsconfig.json'),JSON.stringify({compilerOptions:{target:'ES2022',module:'NodeNext',moduleResolution:'NodeNext',jsx:'react-jsx',strict:true,resolveJsonModule:true,outDir:'out',skipLibCheck:false},include:['consumer.tsx']}));
+ run(process.execPath,[join(react,'node_modules/typescript/bin/tsc'),'-p','tsconfig.json'],{cwd:react});
+ run(process.execPath,['out/consumer.js'],{cwd:react});
+ const report={packageSha256:manifest.sha256,node:process.version,npm:run('npm',['--version']).trim(),react:version,reactTypes,typescript:'5.9.3',executed:{coreWithoutReact:true,publicExports:true,reactSsr:true,typecheck:true}};
+ writeFileSync(join(evidence,'js-results.json'),JSON.stringify(report,null,2)+'\n');
+ console.log(`Installed JS consumers passed: Node ${process.version}, React ${version}; evidence ${evidence}`);
+}finally{rmSync(scratch,{recursive:true,force:true});}

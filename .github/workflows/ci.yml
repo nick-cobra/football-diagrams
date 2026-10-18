@@ -32,6 +32,26 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 14
+  installed-javascript:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22, 24]
+        react: ['18.3.1', '19.3.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node scripts/verify-js-consumer.mjs
+        env:
+          REACT_VERSION: ${{ matrix.react }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: installed-js-node-${{ matrix.node }}-react-${{ matrix.react }}
+          path: artifacts/js-consumer/
+          retention-days: 14
   javascript:
     runs-on: ubuntu-latest
     strategy:
@@ -50,6 +70,7 @@ jobs:
       - run: git diff --exit-code -- src/generated dist
   kotlin:
     runs-on: macos-latest
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -64,10 +85,17 @@ jobs:
       - run: ./gradlew :library:jvmTest :library:testAndroidHostTest
         working-directory: kotlin
       - run: node scripts/ci-ios-simulator.mjs
+        timeout-minutes: 8
       - run: ./gradlew :library:iosSimulatorArm64Test --device "$SIMULATOR_UDID"
+        timeout-minutes: 20
         working-directory: kotlin
+      - run: node scripts/assert-test-execution.mjs kotlin/library/build/test-results/jvmTest kotlin/library/build/test-results/testAndroidHostTest kotlin/library/build/test-results/iosSimulatorArm64Test
       - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
       - run: ./kotlin/gradlew -p examples/android assembleDebug
+      - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"
+        timeout-minutes: 20
+        env:
+          PUBLIC_SOURCE_PIN: ${{ github.event.pull_request.head.sha || github.sha }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -75,6 +103,7 @@ jobs:
           path: |
             kotlin/library/build/test-results/
             kotlin/library/build/reports/rendering/
+            artifacts/source-consumer/
           retention-days: 14
       - name: Remove owned simulator
         if: always() && env.SIMULATOR_UDID != ''
