@@ -1,0 +1,110 @@
+{
+  "format_version": 1,
+  "title": "Key collisions",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 30,
+    "width_m": 20,
+    "label": "Pitch"
+  },
+  "frames": [
+    {
+      "id": "zones",
+      "title": "Zones",
+      "objects": [
+        {
+          "kind": "player",
+          "x": 8,
+          "y": 8,
+          "number": 9
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 8,
+              "y": 8
+            },
+            {
+              "x": 15,
+              "y": 15
+            }
+          ],
+          "sequence": 1
+        }
+      ],
+      "areas": [
+        {
+          "id": "object-0-badge",
+          "label": "Zone 1",
+          "x": 2,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "id": "duplicate",
+          "label": "Zone 2",
+          "x": 5,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "id": "duplicate",
+          "label": "Zone 3",
+          "x": 8,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "id": "area",
+          "label": "Zone 4",
+          "x": 11,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "id": "arrow-0-sequence",
+          "label": "Zone 5",
+          "x": 14,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "label": "Zone 6",
+          "x": 17,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "id": "sub-area-5",
+          "label": "Zone 7",
+          "x": 20,
+          "y": 2,
+          "width": 2,
+          "height": 2
+        }
+      ]
+    },
+    {
+      "id": "removed",
+      "title": "Removed",
+      "objects": [
+        {
+          "kind": "player",
+          "x": 8,
+          "y": 8,
+          "number": 9
+        }
+      ],
+      "arrows": []
+    }
+  ]
+}

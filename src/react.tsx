@@ -90,7 +90,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
 
       {(frame.areas ?? []).map((area, index) => (
         <rect
-          key={`sub-area-${area.id ?? index}`}
+          key={`sub-area-${index}`}
           x={area.x}
           y={area.y}
           width={area.width}
@@ -151,8 +151,10 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
       </g>
 
       <g data-testid="drill-diagram-v2-labels">
-        {labels.map((label) => (
-          <LabelGlyph key={label.id} label={label} />
+        {/* Authored IDs may repeat or match generated IDs. These drawing-only
+            siblings use their layout positions for internal React identity. */}
+        {labels.map((label, index) => (
+          <LabelGlyph key={`${label.kind}-${index}`} label={label} />
         ))}
       </g>
     </svg>
