@@ -89,6 +89,7 @@ jobs:
       - run: ./gradlew :library:iosSimulatorArm64Test --device "$SIMULATOR_UDID"
         timeout-minutes: 20
         working-directory: kotlin
+      - run: node scripts/assert-test-execution.mjs kotlin/library/build/test-results/jvmTest kotlin/library/build/test-results/testAndroidHostTest kotlin/library/build/test-results/iosSimulatorArm64Test
       - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
       - run: ./kotlin/gradlew -p examples/android assembleDebug
       - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"

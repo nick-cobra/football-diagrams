@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pack, run, hash } from './consumers/package.mjs';
+import { executedTests } from './consumers/test-results.mjs';
 const [pin,device,output='artifacts/source-consumer']=process.argv.slice(2);
 if(!/^(?:[a-f\d]{40}|v\d+\.\d+\.\d+(?:-[\w.-]+)?)$/.test(pin||''))throw new Error('Supply an immutable public Git commit SHA or release tag. This command never creates a tag or release.');
 if(!device || device==='booted')throw new Error('Supply an explicitly owned/leased iOS simulator UDID.');
@@ -17,6 +18,15 @@ const execute=(command,args,cwd,label,env=process.env)=>{
 const quote=value=>JSON.stringify(value).replaceAll('$','\\$');
 try{
  execute('git',['clone','--quiet','--no-local','https://github.com/nick-cobra/football-diagrams.git',source],scratch,'clone');
+ // A public fork PR head can be reachable only through the upstream pull ref,
+ // rather than an advertised branch fetched by clone. Fetch it explicitly when needed.
+ if(/^[a-f\d]{40}$/.test(pin)) {
+  try { run('git',['cat-file','-e',`${pin}^{commit}`],{cwd:source}); }
+  catch {
+   const pullHead=(process.env.GITHUB_REF||'').replace(/\/merge$/,'/head');
+   execute('git',['fetch','--quiet','--no-tags','origin',/^refs\/pull\/\d+\/head$/.test(pullHead)?pullHead:pin],source,'fetch-pin');
+  }
+ }
  const sha=run('git',['rev-parse',`${pin}^{commit}`],{cwd:source}).trim();
  execute('git',['checkout','--quiet','--detach',sha],source,'checkout');
  const {archive,manifest}=pack(source,evidence);
@@ -50,15 +60,10 @@ try{
  const counts={};
  for(const target of ['jvmTest','iosSimulatorArm64Test']){
   const directory=join(consumer,'build/test-results',target);mkdirSync(join(evidence,target),{recursive:true});
-  let executed=0,skipped=0;
   for(const file of readdirSync(directory).filter(name=>name.endsWith('.xml'))){
-   const xml=readFileSync(join(directory,file),'utf8');
-   executed+=(xml.match(/<testcase\b/g)||[]).length;
-   skipped+=(xml.match(/<skipped\b/g)||[]).length;
    cpSync(join(directory,file),join(evidence,target,file));
   }
-  if(executed===0||skipped!==0)throw new Error(`${target} did not actually execute supported tests (${executed} cases, ${skipped} skipped)`);
-  counts[target]={executed,skipped};
+  counts[target]=executedTests(directory);
  }
  for(const react of ['18.3.1','19.3.1'])execute(process.execPath,[fileURLToPath(new URL('./verify-js-consumer.mjs',import.meta.url)),source,join(evidence,`js-${react}`)],scratch,`js-${react}`,{...process.env,REACT_VERSION:react});
  const report={requestedPin:pin,commit:sha,packageSha256:manifest.sha256,consumerToolchain:{kotlin:"2.4.20",compose:"1.12.1",androidPlugin:"9.2.1",compileSdk:37,minSdk:26},node:process.version,java:run('java',['--version']).trim(),gradle:execute(gradle,['--version'],scratch,'gradle-version'),xcode:run('xcodebuild',['-version']).trim(),simulator:device,tests:counts,android:{assembled:true,sha256:hash(actualApk)},ios:{framework:true,sha256:hash(framework)}};
