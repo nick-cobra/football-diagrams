@@ -35,13 +35,44 @@ test('serialization validates the actual JSON after non-enumerable and toJSON be
   const base=await read('../fixtures/valid/pass-and-move.json');
   const hook=(value,result)=>Object.assign(Object.create(Object.defineProperty({},'toJSON',{value:()=>result})),value);
   const hiddenTitle={...base};Object.defineProperty(hiddenTitle,'title',{enumerable:false});
-  const invalid=[hiddenTitle,hook(base,{}),hook(base,undefined),{...base,area:hook(base.area,null)}];
+  assert.throws(()=>parseDiagram(hiddenTitle),/Invalid Football Diagrams document/);
+  assert.throws(()=>stringifyDiagram(hiddenTitle),/Invalid Football Diagrams document/);
+  const invalid=[hook(base,{}),hook(base,undefined),{...base,area:hook(base.area,null)}];
   for(const document of invalid){
     assert.doesNotThrow(()=>parseDiagram(document));
     assert.throws(()=>stringifyDiagram(document),/Invalid Football Diagrams document/);
   }
   const encoded={...base,title:'Encoded by hook'};
   assert.deepEqual(parseDiagram(stringifyDiagram(hook(base,encoded))),encoded);
+});
+
+test('object parsing isolates inherited optional values without mutating the source',async()=>{
+  const base=await read('../fixtures/valid/pass-and-move.json');
+  const prototype={label:{invalid:true},short:123,colour:123,width:NaN,ball:true};
+  const object=Object.assign(Object.create(prototype),{kind:'player',x:5,y:5});
+  base.frames[0].objects=[object];
+  base.frames[0]=Object.assign(Object.create({areas:'not an array'}),base.frames[0]);
+  delete base.frames[0].areas;
+  base.area=Object.assign(Object.create({label:{invalid:true}}),base.area);
+  delete base.area.label;
+  const parsed=parseDiagram(base);
+  assert.deepEqual(parsed.frames[0].objects[0],{kind:'player',x:5,y:5});
+  assert.equal(parsed.frames[0].areas,undefined);
+  assert.equal(parsed.area.label,undefined);
+  assert.equal(Object.getPrototypeOf(object),prototype);
+  assert.deepEqual(parseDiagram(stringifyDiagram(base)),parsed);
+  parsed.frames[0].objects[0].x=99;
+  assert.equal(object.x,5);
+});
+
+test('parsing snapshots data without invoking serialization hooks',async()=>{
+  const base=await read('../fixtures/valid/pass-and-move.json');
+  let called=0;
+  Object.defineProperty(base,'toJSON',{value(){called++;return {...base,title:'Encoded'};}});
+  assert.deepEqual(parseDiagram(base),{...base});
+  assert.equal(called,0);
+  assert.equal(parseDiagram(stringifyDiagram(base)).title,'Encoded');
+  assert.equal(called,1);
 });
 
 test('serialization rejects original non-finite values even when toJSON would hide them',async()=>{
