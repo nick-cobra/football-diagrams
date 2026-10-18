@@ -53,7 +53,8 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
       data-frame-id={frame.id}
       data-thumbnail={thumbnail ? "true" : undefined}
       className={className}
-      style={{ width: "100%", height: "auto", ...style }}
+      width="100%"
+      style={style}
     >
       <defs>
         <ArrowMarker id={arrowMarker} size={5.4} />
