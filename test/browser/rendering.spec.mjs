@@ -69,6 +69,16 @@ test('host CSS contains square thumbnails, natural aspect and explicit inline si
   box=await img.boundingBox();expect(box.width).toBe(200);expect(box.height).toBe(100);
 });
 
+test('short object labels survive full and thumbnail presentation',async({page})=>{
+  const a=page.getByRole('region',{name:'Root a'});
+  await a.getByRole('combobox',{name:'Document',exact:true}).selectOption('5');
+  await expect(a.locator('[data-label-kind="object"] text')).toHaveText(['A','GK','😀','GK','GK']);
+  await expect(a.locator('[data-label-kind="number"] text')).toHaveText(['C','7','P']);
+  await a.getByLabel('Thumbnail',{exact:true}).check();
+  await expect(a.locator('[data-label-kind="object"] text')).toHaveText(['A','GK','😀','GK','7','GK']);
+  await expect(a.locator('[data-label-kind="number"]')).toHaveCount(0);
+});
+
 for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-pitch',3,960],['narrow',0,360]]) {
   test(`reviewed rendering: ${name}`,async({page})=>{
     await page.setViewportSize({width,height:900});

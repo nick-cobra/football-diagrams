@@ -549,5 +549,185 @@
       81,
       15
     ]
-  }
+  },
+  "objectLabels": [
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "A"
+      },
+      "fullPills": [
+        "A"
+      ],
+      "fullBadges": [],
+      "thumbnailPills": [
+        "A"
+      ]
+    },
+    {
+      "object": {
+        "kind": "cone",
+        "x": 5,
+        "y": 5,
+        "label": "GK"
+      },
+      "fullPills": [
+        "GK"
+      ],
+      "fullBadges": [],
+      "thumbnailPills": [
+        "GK"
+      ]
+    },
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "GK",
+        "short": "GK"
+      },
+      "fullPills": [],
+      "fullBadges": [
+        "GK"
+      ],
+      "thumbnailPills": [
+        "GK"
+      ]
+    },
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "GK",
+        "short": "P"
+      },
+      "fullPills": [
+        "GK"
+      ],
+      "fullBadges": [
+        "P"
+      ],
+      "thumbnailPills": [
+        "GK"
+      ]
+    },
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "7",
+        "number": 7
+      },
+      "fullPills": [],
+      "fullBadges": [
+        "7"
+      ],
+      "thumbnailPills": [
+        "7"
+      ]
+    },
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "GK",
+        "number": 7
+      },
+      "fullPills": [
+        "GK"
+      ],
+      "fullBadges": [
+        "7"
+      ],
+      "thumbnailPills": [
+        "GK"
+      ]
+    },
+    {
+      "object": {
+        "kind": "coach",
+        "x": 5,
+        "y": 5,
+        "label": "C"
+      },
+      "fullPills": [],
+      "fullBadges": [
+        "C"
+      ],
+      "thumbnailPills": [
+        "C"
+      ]
+    },
+    {
+      "object": {
+        "kind": "coach",
+        "x": 5,
+        "y": 5,
+        "label": "GK"
+      },
+      "fullPills": [
+        "GK"
+      ],
+      "fullBadges": [
+        "C"
+      ],
+      "thumbnailPills": [
+        "GK"
+      ]
+    },
+    {
+      "object": {
+        "kind": "goal",
+        "x": 5,
+        "y": 5,
+        "label": "😀"
+      },
+      "fullPills": [
+        "😀"
+      ],
+      "fullBadges": [],
+      "thumbnailPills": [
+        "😀"
+      ]
+    },
+    {
+      "object": {
+        "kind": "player",
+        "x": 5,
+        "y": 5,
+        "label": "ABC",
+        "short": "ABC"
+      },
+      "fullPills": [],
+      "fullBadges": [
+        "ABC"
+      ],
+      "thumbnailPills": [
+        "ABC"
+      ]
+    },
+    {
+      "object": {
+        "kind": "cone",
+        "x": 5,
+        "y": 5,
+        "label": "A",
+        "short": "A",
+        "number": 1
+      },
+      "fullPills": [
+        "A"
+      ],
+      "fullBadges": [],
+      "thumbnailPills": [
+        "A"
+      ]
+    }
+  ]
 }

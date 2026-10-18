@@ -38,6 +38,24 @@ class GeometryVectorsTest {
     }
 
     @Test
+    fun shortLabelsOnlyDeduplicateAnIdenticalVisibleBadge() {
+        val area = DiagramArea(20.0, 20.0)
+        for (probe in vectors.getValue("objectLabels").jsonArray) {
+            val row = probe.jsonObject
+            val target = Json.decodeFromJsonElement<DiagramObject>(row.getValue("object"))
+            val frame = DiagramFrame("label", "Label", listOf(target), emptyList())
+            val labels = layoutDiagramLabels(area, frame, diagramGeometry(area))
+            val pills = labels.filter { it.kind == DiagramLabelKind.ObjectLabel }
+            assertEquals(row.getValue("fullPills").jsonArray.map { it.jsonPrimitive.content }, pills.map { it.text }, "$target")
+            assertEquals(row.getValue("fullBadges").jsonArray.map { it.jsonPrimitive.content }, labels.filter { it.isBadge }.map { it.text }, "$target")
+            for (pill in pills) {
+                near(pill.width, pill.text.length * 0.364 + 0.975, "short pill width")
+                near(pill.height, 1.0075, "short pill height")
+            }
+        }
+    }
+
+    @Test
     fun sharedArrowsKeepNotationBendsRepeatsAndWaveEndpoints() {
         val v = vectors.getValue("arrows").jsonObject
         val g = diagramGeometry(Json.decodeFromJsonElement<DiagramArea>(v.getValue("area")))

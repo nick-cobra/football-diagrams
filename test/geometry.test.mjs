@@ -24,6 +24,18 @@ test('shared label positions include badge overrides, a collision and thumbnail 
  assert.ok(layoutLabels(doc,doc.frames[0],g,{thumbnail:true}).every(l=>!['area','number','sequence'].includes(l.kind)));
 });
 
+test('shared short-label vectors retain text unless an identical badge is visible',()=>{
+ const area={shape:'rectangle',length_m:20,width_m:20},g=frameGeometry(area);
+ for(const probe of vectors.objectLabels)for(const thumbnail of [false,true]){
+  const frame={id:'label',title:'Label',objects:[probe.object],arrows:[]};
+  const labels=layoutLabels({area},frame,g,{thumbnail});
+  const pills=labels.filter(l=>l.kind==='object');
+  assert.deepEqual(pills.map(l=>l.text),thumbnail?probe.thumbnailPills:probe.fullPills,JSON.stringify(probe.object));
+  assert.deepEqual(labels.filter(l=>l.kind==='number').map(l=>l.text),thumbnail?[]:probe.fullBadges);
+  for(const pill of pills){near(pill.width,pill.text.length*.364+.975,'short pill width');near(pill.height,1.0075,'short pill height');}
+ }
+});
+
 test('shared arrow vectors retain bends, repeats, notation, endpoints and finite waves',()=>{
  const v=vectors.arrows,g=frameGeometry(v.area);
  for(const[kind,stroke]of Object.entries(v.stroke)){

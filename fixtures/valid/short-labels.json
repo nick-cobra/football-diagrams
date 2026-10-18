@@ -1,0 +1,56 @@
+{
+  "format_version": 1,
+  "title": "Short labels",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 40,
+    "width_m": 30
+  },
+  "frames": [
+    {
+      "id": "short",
+      "title": "Short labels",
+      "objects": [
+        {
+          "kind": "player",
+          "x": 5,
+          "y": 5,
+          "label": "A"
+        },
+        {
+          "kind": "cone",
+          "x": 15,
+          "y": 5,
+          "label": "GK"
+        },
+        {
+          "kind": "goal",
+          "x": 25,
+          "y": 5,
+          "label": "😀"
+        },
+        {
+          "kind": "coach",
+          "x": 5,
+          "y": 17,
+          "label": "GK"
+        },
+        {
+          "kind": "player",
+          "x": 15,
+          "y": 17,
+          "label": "7",
+          "number": 7
+        },
+        {
+          "kind": "player",
+          "x": 25,
+          "y": 17,
+          "label": "GK",
+          "short": "P"
+        }
+      ],
+      "arrows": []
+    }
+  ]
+}

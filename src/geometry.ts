@@ -202,6 +202,11 @@ export interface LayoutLabelsOptions {
   thumbnail?: boolean;
 }
 
+function glyphBadgeText(object: DiagramObject): string | undefined {
+  if (!(PERSON_KINDS as readonly string[]).includes(object.kind)) return undefined;
+  return object.number != null ? String(object.number) : (object.short ?? (object.kind === "coach" ? "C" : undefined));
+}
+
 export function layoutLabels(
   doc: Pick<Diagram, "area">,
   frame: Frame,
@@ -257,8 +262,7 @@ export function layoutLabels(
   }
 
   for (const [index, object] of frame.objects.entries()) {
-    if (!(PERSON_KINDS as readonly string[]).includes(object.kind)) continue;
-    const short = object.number != null ? String(object.number) : (object.short ?? (object.kind === "coach" ? "C" : ""));
+    const short = glyphBadgeText(object);
     if (short && !thumbnail) {
       const radius = unit * 0.58;
       push(
@@ -293,9 +297,9 @@ export function layoutLabels(
   }
 
   for (const [index, object] of frame.objects.entries()) {
-    // Two characters or fewer already fit inside the glyph's own badge, so a
-    // pill beside it would repeat what the picture says.
-    if (!object.label || object.label.length <= 2) continue;
+    if (!object.label) continue;
+    // Deduplicate only text that this presentation actually draws in a badge.
+    if (!thumbnail && object.label === glyphBadgeText(object)) continue;
     const fontSize = unit * 0.65;
     const { width, height } = pillBox(object.label, fontSize);
     push(
