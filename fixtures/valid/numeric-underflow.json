@@ -1,0 +1,52 @@
+{
+  "format_version": 1,
+  "title": "Numeric underflow",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 1e-50,
+    "width_m": 1e-50
+  },
+  "frames": [
+    {
+      "id": "numeric",
+      "title": "Numeric fields",
+      "objects": [
+        {
+          "kind": "goal",
+          "x": 1e-50,
+          "y": -1e-50,
+          "width": 1e-50,
+          "angle": 1e-50
+        }
+      ],
+      "arrows": [
+        {
+          "kind": "pass",
+          "points": [
+            {
+              "x": 1e-50,
+              "y": -1e-50
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "badge": {
+            "x": 1e-50,
+            "y": -1e-50
+          }
+        }
+      ],
+      "areas": [
+        {
+          "label": "Small zone",
+          "x": 1e-50,
+          "y": -1e-50,
+          "width": 1e-50,
+          "height": 1e-50
+        }
+      ]
+    }
+  ]
+}
