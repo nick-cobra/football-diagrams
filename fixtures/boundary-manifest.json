@@ -1,0 +1,3355 @@
+[
+  {
+    "id": "boundary-root-type-wrong-0",
+    "valid": false,
+    "constraint": "#/type",
+    "field": "/",
+    "file": "invalid/boundary-root-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-root-type-wrong-1",
+    "valid": false,
+    "constraint": "#/type",
+    "field": "/",
+    "file": "invalid/boundary-root-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-root-type-wrong-2",
+    "valid": false,
+    "constraint": "#/type",
+    "field": "/",
+    "file": "invalid/boundary-root-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-root-type-wrong-3",
+    "valid": false,
+    "constraint": "#/type",
+    "field": "/",
+    "file": "invalid/boundary-root-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-root-type-wrong-4",
+    "valid": false,
+    "constraint": "#/type",
+    "field": "/",
+    "file": "invalid/boundary-root-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-root-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/additionalProperties",
+    "field": "/",
+    "file": "invalid/boundary-root-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-format_version-required-format_version",
+    "valid": false,
+    "constraint": "#/required",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-required-format_version.json"
+  },
+  {
+    "id": "boundary-title-required-title",
+    "valid": false,
+    "constraint": "#/required",
+    "field": "/title",
+    "file": "invalid/boundary-title-required-title.json"
+  },
+  {
+    "id": "boundary-area-required-area",
+    "valid": false,
+    "constraint": "#/required",
+    "field": "/area",
+    "file": "invalid/boundary-area-required-area.json"
+  },
+  {
+    "id": "boundary-frames-required-frames",
+    "valid": false,
+    "constraint": "#/required",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-required-frames.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-0",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-1",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-2",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-3",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-4",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-format_version-type-wrong-5",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-wrong-5.json"
+  },
+  {
+    "id": "boundary-format_version-const-valid",
+    "valid": true,
+    "constraint": "#/properties/format_version/const",
+    "field": "/format_version",
+    "file": "valid/boundary-format_version-const-valid.json"
+  },
+  {
+    "id": "boundary-format_version-const-invalid",
+    "valid": false,
+    "constraint": "#/properties/format_version/const",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-const-invalid.json"
+  },
+  {
+    "id": "boundary-format_version-type-fractional",
+    "valid": false,
+    "constraint": "#/properties/format_version/type",
+    "field": "/format_version",
+    "file": "invalid/boundary-format_version-type-fractional.json"
+  },
+  {
+    "id": "boundary-title-type-wrong-0",
+    "valid": false,
+    "constraint": "#/properties/title/type",
+    "field": "/title",
+    "file": "invalid/boundary-title-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-title-type-wrong-1",
+    "valid": false,
+    "constraint": "#/properties/title/type",
+    "field": "/title",
+    "file": "invalid/boundary-title-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-title-type-wrong-2",
+    "valid": false,
+    "constraint": "#/properties/title/type",
+    "field": "/title",
+    "file": "invalid/boundary-title-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-title-type-wrong-3",
+    "valid": false,
+    "constraint": "#/properties/title/type",
+    "field": "/title",
+    "file": "invalid/boundary-title-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-title-type-wrong-4",
+    "valid": false,
+    "constraint": "#/properties/title/type",
+    "field": "/title",
+    "file": "invalid/boundary-title-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-title-minLength-bound",
+    "valid": true,
+    "constraint": "#/properties/title/minLength",
+    "field": "/title",
+    "file": "valid/boundary-title-minLength-bound.json"
+  },
+  {
+    "id": "boundary-title-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/properties/title/minLength",
+    "field": "/title",
+    "file": "valid/boundary-title-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-title-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/properties/title/minLength",
+    "field": "/title",
+    "file": "valid/boundary-title-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-title-minLength-outside",
+    "valid": false,
+    "constraint": "#/properties/title/minLength",
+    "field": "/title",
+    "file": "invalid/boundary-title-minLength-outside.json"
+  },
+  {
+    "id": "boundary-title-maxLength-bound",
+    "valid": true,
+    "constraint": "#/properties/title/maxLength",
+    "field": "/title",
+    "file": "valid/boundary-title-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-title-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/properties/title/maxLength",
+    "field": "/title",
+    "file": "valid/boundary-title-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-title-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/properties/title/maxLength",
+    "field": "/title",
+    "file": "valid/boundary-title-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-title-maxLength-outside",
+    "valid": false,
+    "constraint": "#/properties/title/maxLength",
+    "field": "/title",
+    "file": "invalid/boundary-title-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-area-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/area/type",
+    "field": "/area",
+    "file": "invalid/boundary-area-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-area-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/area/type",
+    "field": "/area",
+    "file": "invalid/boundary-area-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-area-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/area/type",
+    "field": "/area",
+    "file": "invalid/boundary-area-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-area-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/area/type",
+    "field": "/area",
+    "file": "invalid/boundary-area-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-area-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/area/type",
+    "field": "/area",
+    "file": "invalid/boundary-area-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-area-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/area/additionalProperties",
+    "field": "/area",
+    "file": "invalid/boundary-area-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-area-shape-required-shape",
+    "valid": false,
+    "constraint": "#/$defs/area/required",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-required-shape.json"
+  },
+  {
+    "id": "boundary-area-length_m-required-length_m",
+    "valid": false,
+    "constraint": "#/$defs/area/required",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-required-length_m.json"
+  },
+  {
+    "id": "boundary-area-width_m-required-width_m",
+    "valid": false,
+    "constraint": "#/$defs/area/required",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-required-width_m.json"
+  },
+  {
+    "id": "boundary-area-shape-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/type",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-area-shape-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/type",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-area-shape-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/type",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-area-shape-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/type",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-area-shape-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/type",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-area-shape-const-valid",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/shape/const",
+    "field": "/area/shape",
+    "file": "valid/boundary-area-shape-const-valid.json"
+  },
+  {
+    "id": "boundary-area-shape-const-invalid",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/shape/const",
+    "field": "/area/shape",
+    "file": "invalid/boundary-area-shape-const-invalid.json"
+  },
+  {
+    "id": "boundary-area-length_m-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/type",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-area-length_m-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/type",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-area-length_m-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/type",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-area-length_m-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/type",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-area-length_m-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/type",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-area-length_m-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/length_m/maximum",
+    "field": "/area/length_m",
+    "file": "valid/boundary-area-length_m-maximum-bound.json"
+  },
+  {
+    "id": "boundary-area-length_m-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/maximum",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-maximum-outside.json"
+  },
+  {
+    "id": "boundary-area-length_m-exclusiveMinimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/length_m/exclusiveMinimum",
+    "field": "/area/length_m",
+    "file": "valid/boundary-area-length_m-exclusiveMinimum-bound.json"
+  },
+  {
+    "id": "boundary-area-length_m-exclusiveMinimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/length_m/exclusiveMinimum",
+    "field": "/area/length_m",
+    "file": "invalid/boundary-area-length_m-exclusiveMinimum-outside.json"
+  },
+  {
+    "id": "boundary-area-width_m-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/type",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-area-width_m-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/type",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-area-width_m-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/type",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-area-width_m-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/type",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-area-width_m-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/type",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-area-width_m-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/width_m/maximum",
+    "field": "/area/width_m",
+    "file": "valid/boundary-area-width_m-maximum-bound.json"
+  },
+  {
+    "id": "boundary-area-width_m-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/maximum",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-maximum-outside.json"
+  },
+  {
+    "id": "boundary-area-width_m-exclusiveMinimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/width_m/exclusiveMinimum",
+    "field": "/area/width_m",
+    "file": "valid/boundary-area-width_m-exclusiveMinimum-bound.json"
+  },
+  {
+    "id": "boundary-area-width_m-exclusiveMinimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/width_m/exclusiveMinimum",
+    "field": "/area/width_m",
+    "file": "invalid/boundary-area-width_m-exclusiveMinimum-outside.json"
+  },
+  {
+    "id": "boundary-area-label-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/optional",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-optional-absent.json"
+  },
+  {
+    "id": "boundary-area-label-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-anyOf-null.json"
+  },
+  {
+    "id": "boundary-area-label-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/type",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-area-label-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/type",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-area-label-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/type",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-area-label-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/type",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-area-label-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/minLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-minLength-bound.json"
+  },
+  {
+    "id": "boundary-area-label-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/minLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-area-label-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/minLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-area-label-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/minLength",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-minLength-outside.json"
+  },
+  {
+    "id": "boundary-area-label-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/maxLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-area-label-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/maxLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-area-label-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/maxLength",
+    "field": "/area/label",
+    "file": "valid/boundary-area-label-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-area-label-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/area/properties/label/anyOf/0/maxLength",
+    "field": "/area/label",
+    "file": "invalid/boundary-area-label-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-type-wrong-0",
+    "valid": false,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-type-wrong-1",
+    "valid": false,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-type-wrong-2",
+    "valid": false,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-type-wrong-3",
+    "valid": false,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-type-wrong-4",
+    "valid": false,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-maxItems-bound",
+    "valid": true,
+    "constraint": "#/properties/frames/maxItems",
+    "field": "/frames",
+    "file": "valid/boundary-frames-maxItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-maxItems-outside",
+    "valid": false,
+    "constraint": "#/properties/frames/maxItems",
+    "field": "/frames",
+    "file": "invalid/boundary-frames-maxItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-type-empty",
+    "valid": true,
+    "constraint": "#/properties/frames/type",
+    "field": "/frames",
+    "file": "valid/boundary-frames-type-empty.json"
+  },
+  {
+    "id": "boundary-frames-0-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/type",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/type",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/type",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/type",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/type",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/frame/additionalProperties",
+    "field": "/frames/0",
+    "file": "invalid/boundary-frames-0-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-id-required-id",
+    "valid": false,
+    "constraint": "#/$defs/frame/required",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-required-id.json"
+  },
+  {
+    "id": "boundary-frames-0-title-required-title",
+    "valid": false,
+    "constraint": "#/$defs/frame/required",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-required-title.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-required-objects",
+    "valid": false,
+    "constraint": "#/$defs/frame/required",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-required-objects.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-required-arrows",
+    "valid": false,
+    "constraint": "#/$defs/frame/required",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-required-arrows.json"
+  },
+  {
+    "id": "boundary-frames-0-id-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/type",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-id-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/type",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-id-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/type",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-id-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/type",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-id-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/type",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-id-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/minLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/minLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/minLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/minLength",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-id-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/maxLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/maxLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/id/maxLength",
+    "field": "/frames/0/id",
+    "file": "valid/boundary-frames-0-id-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-id-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/id/maxLength",
+    "field": "/frames/0/id",
+    "file": "invalid/boundary-frames-0-id-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-title-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/type",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-title-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/type",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-title-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/type",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-title-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/type",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-title-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/type",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-title-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/minLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/minLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/minLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/minLength",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-title-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/maxLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/maxLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/title/maxLength",
+    "field": "/frames/0/title",
+    "file": "valid/boundary-frames-0-title-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-title-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/title/maxLength",
+    "field": "/frames/0/title",
+    "file": "invalid/boundary-frames-0-title-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/caption/optional",
+    "field": "/frames/0/caption",
+    "file": "valid/boundary-frames-0-caption-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/type",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/type",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/type",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/type",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/type",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/caption/maxLength",
+    "field": "/frames/0/caption",
+    "file": "valid/boundary-frames-0-caption-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/caption/maxLength",
+    "field": "/frames/0/caption",
+    "file": "valid/boundary-frames-0-caption-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/caption/maxLength",
+    "field": "/frames/0/caption",
+    "file": "valid/boundary-frames-0-caption-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-caption-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/caption/maxLength",
+    "field": "/frames/0/caption",
+    "file": "invalid/boundary-frames-0-caption-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-maxItems-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/objects/maxItems",
+    "field": "/frames/0/objects",
+    "file": "valid/boundary-frames-0-objects-maxItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-maxItems-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/objects/maxItems",
+    "field": "/frames/0/objects",
+    "file": "invalid/boundary-frames-0-objects-maxItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-type-empty",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/objects/type",
+    "field": "/frames/0/objects",
+    "file": "valid/boundary-frames-0-objects-type-empty.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/object/type",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/type",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/type",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/type",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/type",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/object/additionalProperties",
+    "field": "/frames/0/objects/0",
+    "file": "invalid/boundary-frames-0-objects-0-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-required-kind",
+    "valid": false,
+    "constraint": "#/$defs/object/required",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-required-kind.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-required-x",
+    "valid": false,
+    "constraint": "#/$defs/object/required",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-required-x.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-required-y",
+    "valid": false,
+    "constraint": "#/$defs/object/required",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-required-y.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/type",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/type",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/type",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/type",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/type",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-player",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-player.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-opponent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-opponent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-neutral",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-neutral.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-coach",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-coach.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-ball",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-ball.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-cone",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-cone.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-flat_marker",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-flat_marker.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-gate",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-gate.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-mini_goal",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-mini_goal.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-goal",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-goal.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-mannequin",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-mannequin.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-pole",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-pole.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-ladder",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "valid/boundary-frames-0-objects-0-kind-enum-ladder.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-kind-enum-invalid",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/kind/enum",
+    "field": "/frames/0/objects/0/kind",
+    "file": "invalid/boundary-frames-0-objects-0-kind-enum-invalid.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/type",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/type",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/type",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/type",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/type",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/x/minimum",
+    "field": "/frames/0/objects/0/x",
+    "file": "valid/boundary-frames-0-objects-0-x-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/minimum",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/x/maximum",
+    "field": "/frames/0/objects/0/x",
+    "file": "valid/boundary-frames-0-objects-0-x-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-x-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/x/maximum",
+    "field": "/frames/0/objects/0/x",
+    "file": "invalid/boundary-frames-0-objects-0-x-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/type",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/type",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/type",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/type",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/type",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/y/minimum",
+    "field": "/frames/0/objects/0/y",
+    "file": "valid/boundary-frames-0-objects-0-y-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/minimum",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/y/maximum",
+    "field": "/frames/0/objects/0/y",
+    "file": "valid/boundary-frames-0-objects-0-y-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-y-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/y/maximum",
+    "field": "/frames/0/objects/0/y",
+    "file": "invalid/boundary-frames-0-objects-0-y-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/colour/optional",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/colour/anyOf",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/objects/0/colour",
+    "file": "invalid/boundary-frames-0-objects-0-colour-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/objects/0/colour",
+    "file": "invalid/boundary-frames-0-objects-0-colour-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/objects/0/colour",
+    "file": "invalid/boundary-frames-0-objects-0-colour-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/objects/0/colour",
+    "file": "invalid/boundary-frames-0-objects-0-colour-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-red",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-red.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-blue",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-blue.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-yellow",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-yellow.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-green",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-green.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-orange",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-orange.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-white",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-white.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-teal",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "valid/boundary-frames-0-objects-0-colour-enum-teal.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-colour-enum-invalid",
+    "valid": false,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/objects/0/colour",
+    "file": "invalid/boundary-frames-0-objects-0-colour-enum-invalid.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/optional",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/type",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/type",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/type",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/type",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "valid/boundary-frames-0-objects-0-label-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-label-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/label",
+    "file": "invalid/boundary-frames-0-objects-0-label-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/optional",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/type",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/type",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/type",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/type",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/minLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "valid/boundary-frames-0-objects-0-short-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-short-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/short/anyOf/0/maxLength",
+    "field": "/frames/0/objects/0/short",
+    "file": "invalid/boundary-frames-0-objects-0-short-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/number/optional",
+    "field": "/frames/0/objects/0/number",
+    "file": "valid/boundary-frames-0-objects-0-number-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/number/anyOf",
+    "field": "/frames/0/objects/0/number",
+    "file": "valid/boundary-frames-0-objects-0-number-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-wrong-5",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-wrong-5.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/minimum",
+    "field": "/frames/0/objects/0/number",
+    "file": "valid/boundary-frames-0-objects-0-number-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/minimum",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/number",
+    "file": "valid/boundary-frames-0-objects-0-number-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-number-type-fractional",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/number/anyOf/0/type",
+    "field": "/frames/0/objects/0/number",
+    "file": "invalid/boundary-frames-0-objects-0-number-type-fractional.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/angle/optional",
+    "field": "/frames/0/objects/0/angle",
+    "file": "valid/boundary-frames-0-objects-0-angle-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/angle/anyOf",
+    "field": "/frames/0/objects/0/angle",
+    "file": "valid/boundary-frames-0-objects-0-angle-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/type",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/type",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/type",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/type",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/minimum",
+    "field": "/frames/0/objects/0/angle",
+    "file": "valid/boundary-frames-0-objects-0-angle-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/minimum",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/angle",
+    "file": "valid/boundary-frames-0-objects-0-angle-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-angle-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/angle/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/angle",
+    "file": "invalid/boundary-frames-0-objects-0-angle-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/width/optional",
+    "field": "/frames/0/objects/0/width",
+    "file": "valid/boundary-frames-0-objects-0-width-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/width/anyOf",
+    "field": "/frames/0/objects/0/width",
+    "file": "valid/boundary-frames-0-objects-0-width-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/type",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/type",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/type",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/type",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/width",
+    "file": "valid/boundary-frames-0-objects-0-width-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/maximum",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-exclusiveMinimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/exclusiveMinimum",
+    "field": "/frames/0/objects/0/width",
+    "file": "valid/boundary-frames-0-objects-0-width-exclusiveMinimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-width-exclusiveMinimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/width/anyOf/0/exclusiveMinimum",
+    "field": "/frames/0/objects/0/width",
+    "file": "invalid/boundary-frames-0-objects-0-width-exclusiveMinimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/object/properties/ball/optional",
+    "field": "/frames/0/objects/0/ball",
+    "file": "valid/boundary-frames-0-objects-0-ball-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/ball/type",
+    "field": "/frames/0/objects/0/ball",
+    "file": "invalid/boundary-frames-0-objects-0-ball-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/ball/type",
+    "field": "/frames/0/objects/0/ball",
+    "file": "invalid/boundary-frames-0-objects-0-ball-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/ball/type",
+    "field": "/frames/0/objects/0/ball",
+    "file": "invalid/boundary-frames-0-objects-0-ball-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/ball/type",
+    "field": "/frames/0/objects/0/ball",
+    "file": "invalid/boundary-frames-0-objects-0-ball-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-objects-0-ball-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/object/properties/ball/type",
+    "field": "/frames/0/objects/0/ball",
+    "file": "invalid/boundary-frames-0-objects-0-ball-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/areas/optional",
+    "field": "/frames/0/areas",
+    "file": "valid/boundary-frames-0-areas-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-maxItems-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/areas/maxItems",
+    "field": "/frames/0/areas",
+    "file": "valid/boundary-frames-0-areas-maxItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-maxItems-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/areas/maxItems",
+    "field": "/frames/0/areas",
+    "file": "invalid/boundary-frames-0-areas-maxItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-type-empty",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/areas/type",
+    "field": "/frames/0/areas",
+    "file": "valid/boundary-frames-0-areas-type-empty.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/type",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/type",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/type",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/type",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/type",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/zone/additionalProperties",
+    "field": "/frames/0/areas/0",
+    "file": "invalid/boundary-frames-0-areas-0-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-required-label",
+    "valid": false,
+    "constraint": "#/$defs/zone/required",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-required-label.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-required-x",
+    "valid": false,
+    "constraint": "#/$defs/zone/required",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-required-x.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-required-y",
+    "valid": false,
+    "constraint": "#/$defs/zone/required",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-required-y.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-required-width",
+    "valid": false,
+    "constraint": "#/$defs/zone/required",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-required-width.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-required-height",
+    "valid": false,
+    "constraint": "#/$defs/zone/required",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-required-height.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/optional",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/type",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/type",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/type",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/type",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/minLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/minLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/minLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/minLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/maxLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/maxLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/maxLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "valid/boundary-frames-0-areas-0-id-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-id-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/id/anyOf/0/maxLength",
+    "field": "/frames/0/areas/0/id",
+    "file": "invalid/boundary-frames-0-areas-0-id-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/type",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/type",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/type",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/type",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/type",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/minLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/minLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/minLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/minLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/maxLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/maxLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/label/maxLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "valid/boundary-frames-0-areas-0-label-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-label-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/label/maxLength",
+    "field": "/frames/0/areas/0/label",
+    "file": "invalid/boundary-frames-0-areas-0-label-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/type",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/type",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/type",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/type",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/type",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/x/minimum",
+    "field": "/frames/0/areas/0/x",
+    "file": "valid/boundary-frames-0-areas-0-x-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/minimum",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/x/maximum",
+    "field": "/frames/0/areas/0/x",
+    "file": "valid/boundary-frames-0-areas-0-x-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-x-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/x/maximum",
+    "field": "/frames/0/areas/0/x",
+    "file": "invalid/boundary-frames-0-areas-0-x-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/type",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/type",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/type",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/type",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/type",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/y/minimum",
+    "field": "/frames/0/areas/0/y",
+    "file": "valid/boundary-frames-0-areas-0-y-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/minimum",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/y/maximum",
+    "field": "/frames/0/areas/0/y",
+    "file": "valid/boundary-frames-0-areas-0-y-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-y-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/y/maximum",
+    "field": "/frames/0/areas/0/y",
+    "file": "invalid/boundary-frames-0-areas-0-y-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/type",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/type",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/type",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/type",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/type",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/width/maximum",
+    "field": "/frames/0/areas/0/width",
+    "file": "valid/boundary-frames-0-areas-0-width-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/maximum",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-exclusiveMinimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/width/exclusiveMinimum",
+    "field": "/frames/0/areas/0/width",
+    "file": "valid/boundary-frames-0-areas-0-width-exclusiveMinimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-width-exclusiveMinimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/width/exclusiveMinimum",
+    "field": "/frames/0/areas/0/width",
+    "file": "invalid/boundary-frames-0-areas-0-width-exclusiveMinimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/type",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/type",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/type",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/type",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/type",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/height/maximum",
+    "field": "/frames/0/areas/0/height",
+    "file": "valid/boundary-frames-0-areas-0-height-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/maximum",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-exclusiveMinimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/height/exclusiveMinimum",
+    "field": "/frames/0/areas/0/height",
+    "file": "valid/boundary-frames-0-areas-0-height-exclusiveMinimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-height-exclusiveMinimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/zone/properties/height/exclusiveMinimum",
+    "field": "/frames/0/areas/0/height",
+    "file": "invalid/boundary-frames-0-areas-0-height-exclusiveMinimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/colour/optional",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/zone/properties/colour/anyOf",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/areas/0/colour",
+    "file": "invalid/boundary-frames-0-areas-0-colour-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/areas/0/colour",
+    "file": "invalid/boundary-frames-0-areas-0-colour-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/areas/0/colour",
+    "file": "invalid/boundary-frames-0-areas-0-colour-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/colour/type",
+    "field": "/frames/0/areas/0/colour",
+    "file": "invalid/boundary-frames-0-areas-0-colour-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-red",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-red.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-blue",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-blue.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-yellow",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-yellow.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-green",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-green.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-orange",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-orange.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-white",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-white.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-teal",
+    "valid": true,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "valid/boundary-frames-0-areas-0-colour-enum-teal.json"
+  },
+  {
+    "id": "boundary-frames-0-areas-0-colour-enum-invalid",
+    "valid": false,
+    "constraint": "#/$defs/colour/enum",
+    "field": "/frames/0/areas/0/colour",
+    "file": "invalid/boundary-frames-0-areas-0-colour-enum-invalid.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-maxItems-bound",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/arrows/maxItems",
+    "field": "/frames/0/arrows",
+    "file": "valid/boundary-frames-0-arrows-maxItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-maxItems-outside",
+    "valid": false,
+    "constraint": "#/$defs/frame/properties/arrows/maxItems",
+    "field": "/frames/0/arrows",
+    "file": "invalid/boundary-frames-0-arrows-maxItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-type-empty",
+    "valid": true,
+    "constraint": "#/$defs/frame/properties/arrows/type",
+    "field": "/frames/0/arrows",
+    "file": "valid/boundary-frames-0-arrows-type-empty.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/arrow/type",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/arrow/type",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/arrow/type",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/arrow/type",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/arrow/type",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/arrow/additionalProperties",
+    "field": "/frames/0/arrows/0",
+    "file": "invalid/boundary-frames-0-arrows-0-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-required-kind",
+    "valid": false,
+    "constraint": "#/$defs/arrow/required",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-required-kind.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-required-points",
+    "valid": false,
+    "constraint": "#/$defs/arrow/required",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-required-points.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/type",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/type",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/type",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/type",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/type",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-enum-pass",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/kind/enum",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "valid/boundary-frames-0-arrows-0-kind-enum-pass.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-enum-run",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/kind/enum",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "valid/boundary-frames-0-arrows-0-kind-enum-run.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-enum-dribble",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/kind/enum",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "valid/boundary-frames-0-arrows-0-kind-enum-dribble.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-enum-shot",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/kind/enum",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "valid/boundary-frames-0-arrows-0-kind-enum-shot.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-kind-enum-invalid",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/kind/enum",
+    "field": "/frames/0/arrows/0/kind",
+    "file": "invalid/boundary-frames-0-arrows-0-kind-enum-invalid.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/type",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/type",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/type",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/type",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/type",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-minItems-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/points/minItems",
+    "field": "/frames/0/arrows/0/points",
+    "file": "valid/boundary-frames-0-arrows-0-points-minItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-minItems-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/minItems",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-minItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-maxItems-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/points/maxItems",
+    "field": "/frames/0/arrows/0/points",
+    "file": "valid/boundary-frames-0-arrows-0-points-maxItems-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-maxItems-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/points/maxItems",
+    "field": "/frames/0/arrows/0/points",
+    "file": "invalid/boundary-frames-0-arrows-0-points-maxItems-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/point/additionalProperties",
+    "field": "/frames/0/arrows/0/points/0",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-required-x",
+    "valid": false,
+    "constraint": "#/$defs/point/required",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-required-x.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-required-y",
+    "valid": false,
+    "constraint": "#/$defs/point/required",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-required-y.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/x/minimum",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "valid/boundary-frames-0-arrows-0-points-0-x-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/minimum",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/x/maximum",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "valid/boundary-frames-0-arrows-0-points-0-x-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-x-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/maximum",
+    "field": "/frames/0/arrows/0/points/0/x",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-x-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/y/minimum",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "valid/boundary-frames-0-arrows-0-points-0-y-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/minimum",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/y/maximum",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "valid/boundary-frames-0-arrows-0-points-0-y-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-points-0-y-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/maximum",
+    "field": "/frames/0/arrows/0/points/0/y",
+    "file": "invalid/boundary-frames-0-arrows-0-points-0-y-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/optional",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/type",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/type",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/type",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/type",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-minLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-minLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-minLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-minLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-minLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-minLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-minLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/minLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-minLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-maxLength-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-maxLength-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-maxLength-unicode-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-maxLength-unicode-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-maxLength-astral-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "valid/boundary-frames-0-arrows-0-label-maxLength-astral-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-label-maxLength-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/label/anyOf/0/maxLength",
+    "field": "/frames/0/arrows/0/label",
+    "file": "invalid/boundary-frames-0-arrows-0-label-maxLength-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/sequence/optional",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "valid/boundary-frames-0-arrows-0-sequence-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "valid/boundary-frames-0-arrows-0-sequence-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-wrong-5",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-wrong-5.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/minimum",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "valid/boundary-frames-0-arrows-0-sequence-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/minimum",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/maximum",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "valid/boundary-frames-0-arrows-0-sequence-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/maximum",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-sequence-type-fractional",
+    "valid": false,
+    "constraint": "#/$defs/arrow/properties/sequence/anyOf/0/type",
+    "field": "/frames/0/arrows/0/sequence",
+    "file": "invalid/boundary-frames-0-arrows-0-sequence-type-fractional.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-optional-absent",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/badge/optional",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "valid/boundary-frames-0-arrows-0-badge-optional-absent.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-anyOf-null",
+    "valid": true,
+    "constraint": "#/$defs/arrow/properties/badge/anyOf",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "valid/boundary-frames-0-arrows-0-badge-anyOf-null.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/type",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-additionalProperties-unknown",
+    "valid": false,
+    "constraint": "#/$defs/point/additionalProperties",
+    "field": "/frames/0/arrows/0/badge",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-additionalProperties-unknown.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-required-x",
+    "valid": false,
+    "constraint": "#/$defs/point/required",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-required-x.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-required-y",
+    "valid": false,
+    "constraint": "#/$defs/point/required",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-required-y.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/type",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/x/minimum",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "valid/boundary-frames-0-arrows-0-badge-x-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/minimum",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/x/maximum",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "valid/boundary-frames-0-arrows-0-badge-x-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-x-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/x/maximum",
+    "field": "/frames/0/arrows/0/badge/x",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-x-maximum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-type-wrong-0",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-type-wrong-0.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-type-wrong-1",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-type-wrong-1.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-type-wrong-2",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-type-wrong-2.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-type-wrong-3",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-type-wrong-3.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-type-wrong-4",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/type",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-type-wrong-4.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-minimum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/y/minimum",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "valid/boundary-frames-0-arrows-0-badge-y-minimum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-minimum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/minimum",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-minimum-outside.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-maximum-bound",
+    "valid": true,
+    "constraint": "#/$defs/point/properties/y/maximum",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "valid/boundary-frames-0-arrows-0-badge-y-maximum-bound.json"
+  },
+  {
+    "id": "boundary-frames-0-arrows-0-badge-y-maximum-outside",
+    "valid": false,
+    "constraint": "#/$defs/point/properties/y/maximum",
+    "field": "/frames/0/arrows/0/badge/y",
+    "file": "invalid/boundary-frames-0-arrows-0-badge-y-maximum-outside.json"
+  }
+]
