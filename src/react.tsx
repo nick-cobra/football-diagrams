@@ -1,5 +1,7 @@
 "use client";
 
+import { renderArrowGeometry } from "./rendering-geometry.js";
+
 import { useId, useMemo, type CSSProperties } from "react";
 import type { Diagram, Frame, DiagramObject } from "./generated/types.js";
 import {
@@ -7,7 +9,6 @@ import {
   LINE_PAINT,
   OUTSIDE_WASH,
   PERSON_KINDS,
-  arrowGeometry,
   frameGeometry,
   grassStripes,
   isMover,
@@ -110,7 +111,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
 
       <g>
         {frame.arrows.map((arrow, index) => {
-          const geo = arrowGeometry(arrow, geometry);
+          const geo = renderArrowGeometry(arrow, geometry);
           const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
           return (
             <g key={`arrow-${index}`} data-arrow-kind={geo.kind}>

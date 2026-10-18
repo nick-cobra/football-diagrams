@@ -410,7 +410,7 @@ private fun DrawScope.drawArrow(
     geometry: DiagramGeometry,
     scale: Float,
 ) {
-    val points = arrowPathPoints(arrow, geometry)
+    val points = renderArrowPathPoints(arrow, geometry)
     if (points.size < 2) return
     val width = arrowStrokeWidth(arrow.kind, geometry)
     val path = Path().apply {

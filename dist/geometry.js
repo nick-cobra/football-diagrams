@@ -1,3 +1,4 @@
+import { sampleWave } from "./wave-sampling.js";
 export const GRASS_LIGHT = "#5aa25a";
 export const GRASS_DARK = "#529952";
 export const OUTSIDE_WASH = "rgba(12,42,12,0.20)";
@@ -72,42 +73,11 @@ export function polyPath(points) {
     const drawable = distinct.length === 1 && points.length > 1 ? [distinct[0], distinct[0]] : distinct;
     return drawable.map((p, i) => `${i === 0 ? "M" : "L"}${p.x} ${p.y}`).join("");
 }
-const MAX_WAVE_POINTS = 100_000;
 export function wavyPath(points, amplitude, wavelength) {
-    if (!Number.isFinite(amplitude) || !Number.isFinite(wavelength) || wavelength <= 0 ||
-        !points.every(p => Number.isFinite(p.x) && Number.isFinite(p.y))) {
-        throw new RangeError("Wave arguments must be finite and wavelength must be positive");
-    }
     let d = "";
-    let count = 0;
-    for (let segment = 0; segment < points.length - 1; segment += 1) {
-        const a = points[segment];
-        const b = points[segment + 1];
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const length = Math.hypot(dx, dy);
-        if (length === 0)
-            continue;
-        const ux = dx / length;
-        const uy = dy / length;
-        const px = -uy;
-        const py = ux;
-        const steps = Math.max(10, Math.round(length / (wavelength / 6)));
-        if (!Number.isFinite(steps) || count + steps + 1 > MAX_WAVE_POINTS) {
-            throw new RangeError(`Wave sampling exceeds ${MAX_WAVE_POINTS} generated points`);
-        }
-        count += steps + 1;
-        for (let i = 0; i <= steps; i += 1) {
-            const base = (i / steps) * length;
-            // Pin the ends flat so the arrow starts and finishes on its stated point.
-            const offset = i === 0 || i === steps ? 0 : Math.sin((base / wavelength) * 2 * Math.PI) * amplitude;
-            const x = a.x + ux * base + px * offset;
-            const y = a.y + uy * base + py * offset;
-            if (!Number.isFinite(x) || !Number.isFinite(y))
-                throw new RangeError("Wave coordinates must remain finite");
-            d += `${d === "" ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`;
-        }
-    }
+    sampleWave(points, amplitude, wavelength, (x, y) => {
+        d += `${d === "" ? "M" : "L"}${x.toFixed(2)} ${y.toFixed(2)}`;
+    });
     return d;
 }
 export function arrowGeometry(arrow, geometry) {
