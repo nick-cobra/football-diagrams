@@ -1,8 +1,8 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, copyFileSync, existsSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
-const [device, destination]=process.argv.slice(2);
-if(!device || !destination)throw new Error('Usage: node scripts/capture-ios.mjs <explicit-owned-simulator-UDID> <output-directory>. Coordinate/lease the device first.');
+const [device, destination, display]=process.argv.slice(2);
+if(!device || !destination)throw new Error('Usage: node scripts/capture-ios.mjs <explicit-owned-simulator-UDID> <output-directory> [display-selector]. Coordinate/lease the device first.');
 const output=resolve(destination);
 mkdirSync(output,{recursive:true});
 const app=join(output,'FootballDiagramsDemo.app');
@@ -28,12 +28,12 @@ let previous='';
 for(let attempt=0;attempt<10;attempt++){
  await new Promise(resolve=>setTimeout(resolve,1000));
  const file=join(output,'ios.png');
- run('xcrun',['simctl','io',device,'screenshot',file]);
+ run('xcrun',['simctl','io',device,'screenshot',...(display?[`--display=${display}`]:[]),file]);
  const {readFileSync}=await import('node:fs');
  const {createHash}=await import('node:crypto');
  const hash=createHash('sha256').update(readFileSync(file)).digest('hex');
  if(hash===previous)break;
  previous=hash;
 }
-writeFileSync(join(output,'toolchain.txt'),[capture('xcodebuild',['-version']),capture('xcrun',['swift','--version']),`Device: ${device} ${selected.name}`].join('\n')+'\n');
+writeFileSync(join(output,'toolchain.txt'),[capture('xcodebuild',['-version']),capture('xcrun',['swift','--version']),`Device: ${device} ${selected.name}`,`Display: ${display || 'simctl default (requires visual inspection)'}`].join('\n')+'\n');
 console.log(`Inspect ${join(output,'ios.png')} for real content, safe areas and clipping. A stable screenshot alone is not a visual approval.`);

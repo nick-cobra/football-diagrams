@@ -12,7 +12,7 @@ kotlin {
         }
     }
     sourceSets {
-        commonMain.dependencies { implementation("io.github.nick-cobra:football-diagrams:0.1.0") }
+        commonMain.dependencies { implementation("io.github.nick-cobra:football-diagrams:0.2.0") }
         jvmTest.dependencies { implementation(kotlin("test")) }
     }
 }
