@@ -12,6 +12,8 @@ import kotlinx.serialization.json.*
  * Keep the validator's integer fast path lexical: kotlinx.serialization's
  * longOrNull can coerce a nonzero exponent such as 5e-324 to Long zero.
  * Scientific/fractional numbers instead use binary64, as in JavaScript.
+ * Integer classification also sees that binary64 value, so a decimal literal
+ * rounding to an integer has the same meaning in both parsers.
  * The schema and decoded/encoded JSON are never rewritten by this adapter.
  */
 internal fun JsonElement.schemaElement(): AbstractElement = when (this) {
@@ -37,7 +39,7 @@ private class SchemaArray(private val json: JsonArray) : ArrayElement {
 }
 
 private class SchemaPrimitive(private val json: JsonPrimitive) : PrimitiveElement {
-    override val content get() = json.content
+    override val content get() = doubleOrNull?.toString() ?: json.content
     override val isString get() = json.isString
     override val isNull get() = json is JsonNull
     override val isBoolean get() = !isString && json.booleanOrNull != null
