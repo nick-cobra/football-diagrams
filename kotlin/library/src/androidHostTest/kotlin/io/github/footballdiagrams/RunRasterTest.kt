@@ -5,6 +5,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.unit.Density
@@ -71,6 +72,15 @@ class RunRasterTest {
         val fullyVisible = clippedRunPath(positive, 1f, g, 1e8f, 1e8f, 1000)
         assertTrue(fullyVisible.intervalFactor > 1f)
         assertTrue(fullyVisible.dashCountBound <= 1000)
+        val visibleArrows = List(30) { DiagramArrow(DiagramArrowKind.Run, positive) }
+        val cached = ArrowDrawingCache(visibleArrows, g).atScale(1f, 1e8f, 1e8f).first()
+        val expectedEffect = PathEffect.dashPathEffect(arrowDashIntervals(DiagramArrowKind.Run, g)!!
+            .map { it * fullyVisible.intervalFactor }.toFloatArray())
+        val budgeted = cached.copy(path = fullyVisible.path,
+            stroke = androidx.compose.ui.graphics.drawscope.Stroke(width = cached.stroke.width, pathEffect = expectedEffect),
+            shadowStroke = androidx.compose.ui.graphics.drawscope.Stroke(width = cached.shadowStroke.width, pathEffect = expectedEffect))
+        kotlin.test.assertContentEquals(pixels(budgeted, 360, g, 1f), pixels(cached, 360, g, 1f),
+            "Cache must apply the frame budget to fully visible distant paths")
         for ((width, height) in listOf(6.6f to 6.6f, 2400f to 6.6f, 6.6f to 2400f, 1e8f to 6.6f)) {
             for (points in inputs) {
                 val result = clippedRunPath(points, 1f, g, width, height, 1000)
