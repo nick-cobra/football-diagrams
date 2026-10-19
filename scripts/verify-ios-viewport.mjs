@@ -26,18 +26,34 @@ try {
  let exited=false;
  child=spawn('xcrun',['simctl','launch','--console',device,bundle],{stdio:['ignore',log,log]});
  child.on('exit',()=>{exited=true});
- const deadline=Date.now()+90000;let rows=[];
+ const deadline=Date.now()+90000;let rows=[];const captures=new Set();
  while(Date.now()<deadline) {
   if(existsSync(report))rows=JSON.parse(readFileSync(report,'utf8'));
+  const current=rows.at(-1);
+  if(current?.capture) {
+   const key=`${current.mode}-${current.capture}`;
+   if(!captures.has(key)) {
+    xr('simctl','io',device,'screenshot',join(evidence,`${current.capture}-${current.mode}.png`));
+    captures.add(key);
+    writeFileSync(join(container,`Documents/capture-${key}.ack`),'captured');
+   }
+  }
   if(rows.at(-1)?.complete || rows.some(r=>r.error) || exited)break;
   await new Promise(r=>setTimeout(r,500));
  }
  if(existsSync(join(container,'Documents')))cpSync(join(container,'Documents'),evidence,{recursive:true});
- if(rows.at(-1)?.complete!==true || rows.filter(r=>r.restoredPixelsMatch).length!==4)throw Error(`Native viewport regression failed; inspect ${evidence}`);
+ if(rows.at(-1)?.complete!==true || captures.size!==8)throw Error(`Native viewport regression failed; inspect ${evidence}`);
+ for(let mode=0;mode<4;mode++) {
+  execFileSync('swift',[resolve('scripts/ios-viewport/Compare.swift'),join(evidence,`before-${mode}.png`),join(evidence,`after-${mode}.png`)],{stdio:'inherit'});
+ }
+ writeFileSync(join(evidence,'result.json'),JSON.stringify({cases:4,restoredPixelsMatch:true})+'\n');
  console.log('Native viewport: four real-component cases survived initial/transition zero sizes and restored identical pixels.');
 } finally {
  try{xr('simctl','terminate',device,bundle)}catch{}
- if(child && child.exitCode===null)await new Promise(r=>child.once('exit',r));
+ if(child && child.exitCode===null && child.signalCode===null) {
+  await Promise.race([new Promise(r=>child.once('exit',r)),new Promise(r=>setTimeout(r,3000))]);
+  if(child.exitCode===null && child.signalCode===null)child.kill();
+ }
  try{xr('simctl','uninstall',device,bundle)}catch{}
  closeSync(log);rmSync(root,{recursive:true,force:true});
 }
