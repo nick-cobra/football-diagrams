@@ -151,3 +151,10 @@ test('actual glyphs fit badges and every pill kind through font loading and resi
 test('authored equipment preserves mouth axes, complete nets and gate endpoints in both versions',async({page})=>{
   expect(await page.evaluate(()=>window.runDiagramEquipmentProbe())).toEqual([]);
 });
+
+test('isolated maximum-length pills stay inside the viewport through fonts and resizing',async({page})=>{
+  const {reports,hydrationErrors}=await page.evaluate(()=>window.runDiagramPillViewportProbe());
+  expect(hydrationErrors).toEqual([]);
+  expect(reports).toHaveLength(49);
+  expect(reports.filter(row=>!row.textRetained||!row.textInside||!row.backgroundInside)).toEqual([]);
+});

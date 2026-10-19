@@ -1,0 +1,24 @@
+{
+  "format_version": 1,
+  "title": "Viewport",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 20,
+    "width_m": 20
+  },
+  "frames": [
+    {
+      "id": "f",
+      "title": "Setup",
+      "objects": [
+        {
+          "kind": "player",
+          "x": 10,
+          "y": 10,
+          "label": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+        }
+      ],
+      "arrows": []
+    }
+  ]
+}
