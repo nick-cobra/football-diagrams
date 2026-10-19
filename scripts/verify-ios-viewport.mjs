@@ -1,5 +1,6 @@
 // Requires an explicitly owned simulator. Local SDK execution must hold its lease.
-import {execFileSync,spawn} from 'node:child_process';
+import {execFileSync,spawn,spawnSync} from 'node:child_process';
+import {captureInitialDiagram} from './lib/viewport-capture.mjs';
 import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,existsSync,cpSync,rmSync,openSync,closeSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {resolve,join} from 'node:path';
@@ -21,6 +22,8 @@ try {
  execFileSync('plutil',['-convert','xml1',join(app,'Info.plist')]);
  xr('swiftc','-O','-parse-as-library','-sdk',sdk,'-target','arm64-apple-ios17.0-simulator','-F',framework,'-framework','FootballDiagramsDemo',resolve('scripts/ios-viewport/ViewportHost.swift'),'-o',join(app,'ViewportHost'));
  execFileSync('codesign',['--force','--sign','-',app],{stdio:'inherit'});
+ const readiness=join(root,'has-diagram');
+ xr('swiftc','-O',resolve('scripts/ios-viewport/HasDiagram.swift'),'-o',readiness);
  xr('simctl','install',device,app);
  const container=xr('simctl','get_app_container',device,bundle,'data');
  const report=join(container,'Documents/viewport.json');
@@ -34,7 +37,18 @@ try {
   if(current?.capture) {
    const key=`${current.mode}-${current.capture}`;
    if(!captures.has(key)) {
-    xr('simctl','io',device,'screenshot',join(evidence,`${current.capture}-${current.mode}.png`));
+    const screenshot=join(evidence,`${current.capture}-${current.mode}.png`);
+    const capture=()=>{xr('simctl','io',device,'screenshot',screenshot);return screenshot};
+    if(current.capture==='before') {
+     await captureInitialDiagram({deadline,capture,
+      isPainted:path=>{
+       const result=spawnSync(readiness,[path],{encoding:'utf8'});
+       if(result.error)throw result.error;
+       if(result.status!==0 && result.status!==2)throw Error(`First-paint probe failed: ${result.stderr}`);
+       return result.status===0;
+      },
+      preserveRejected:path=>cpSync(path,join(evidence,`unpainted-${current.mode}.png`))});
+    } else capture();
     captures.add(key);
     writeFileSync(join(container,`Documents/capture-${key}.ack`),'captured');
    }

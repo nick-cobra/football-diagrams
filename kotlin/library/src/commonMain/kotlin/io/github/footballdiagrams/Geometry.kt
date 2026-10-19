@@ -75,12 +75,16 @@ private object Proportions {
     const val HALF_TURN_DEGREES = 180f
 }
 
-fun diagramGeometry(area: DiagramArea): DiagramGeometry {
+fun diagramGeometry(area: DiagramArea): DiagramGeometry = diagramGeometry(area, 0f)
+
+/** A bounded presentation margin; the authored playing area stays unchanged. */
+fun diagramGeometry(area: DiagramArea, marginMetres: Float): DiagramGeometry {
+    require(marginMetres.isFinite() && marginMetres in 0f..120f) { "Rendering margin must be finite and between 0 and 120 metres" }
     val length = area.lengthMetres.toFloat()
     return DiagramGeometry(
         lengthMetres = length,
         widthMetres = area.widthMetres.toFloat(),
-        marginMetres = max(MIN_MARGIN_METRES, length * MARGIN_FRACTION),
+        marginMetres = max(max(MIN_MARGIN_METRES, length * MARGIN_FRACTION), marginMetres),
         playerRadius = max(MIN_PLAYER_RADIUS_METRES, length / PLAYER_RADIUS_DIVISOR),
         unit = max(MIN_UNIT_METRES, length / UNIT_DIVISOR),
     )

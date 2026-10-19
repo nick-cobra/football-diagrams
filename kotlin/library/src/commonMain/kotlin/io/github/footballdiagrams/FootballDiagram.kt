@@ -70,7 +70,17 @@ fun FootballDiagram(
     diagram: Diagram,
     frameIndex: Int,
     modifier: Modifier = Modifier,
+) = FootballDiagram(diagram, frameIndex, modifier, marginMetres = 0f)
+
+/** Explicit bounded grass margin; pitch and symbol dimensions stay authored. */
+@Composable
+fun FootballDiagram(
+    diagram: Diagram,
+    frameIndex: Int,
+    modifier: Modifier = Modifier,
+    marginMetres: Float,
 ) {
+    val geometry = remember(diagram.area, marginMetres) { diagramGeometry(diagram.area, marginMetres) }
     val frame = diagram.frames.getOrNull(frameIndex) ?: return
     // Painting and label placement depend on content, not frame metadata.
     // Keep their captured frame stable through caption/title changes; accessibility
@@ -78,7 +88,6 @@ fun FootballDiagram(
     val drawingFrame = remember(frame.objects, frame.arrows, frame.areas) {
         frame.copy(id = "", title = "", caption = "")
     }
-    val geometry = remember(diagram.area) { diagramGeometry(diagram.area) }
     val labels = rememberDiagramLabels(diagram.area, drawingFrame, geometry)
     val arrows = rememberArrowDrawingCache(frame.arrows, geometry)
     val textMeasurer = rememberDiagramTextMeasurer(labels)

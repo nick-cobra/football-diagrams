@@ -89,6 +89,28 @@ class RunRasterTest {
             }
         }
     }
+    @Test fun maximumDisplayMarginKeepsNativeDashExpansionBounded() {
+        for (area in listOf(DiagramArea(1e-50, 1e-50), DiagramArea(120.0, 90.0))) {
+            val g = diagramGeometry(area, 120f)
+            val points = List(12) { DiagramPoint(if (it % 2 == 0) -1000.0 else 1000.0, 0.0) }
+            val scale = g.pixelsPerMetre(334f, 334f)
+            val clipped = clippedRunPath(points, scale, g, g.viewportWidth, g.viewportHeight, 1000)
+            assertTrue(clipped.dashCountBound <= 1000)
+            for (kind in listOf(DiagramArrowKind.Run, DiagramArrowKind.Dribble)) {
+                val drawings = ArrowDrawingCache(List(30) { DiagramArrow(kind, points) }, g).atScale(scale)
+                assertEquals(30, drawings.size)
+                val bitmap = Bitmap.createBitmap(334, 334, Bitmap.Config.ARGB_8888)
+                try {
+                    CanvasDrawScope().draw(Density(1f), LayoutDirection.Ltr, Canvas(android.graphics.Canvas(bitmap)), Size(334f, 334f)) {
+                        translate(g.marginMetres * scale, g.marginMetres * scale) { drawings.forEach { drawArrow(it, scale) } }
+                    }
+                    val actual = IntArray(334 * 334).also { bitmap.getPixels(it, 0, 334, 0, 0, 334, 334) }
+                    assertTrue(actual.any { it != 0 }, "The full constrained frame must still paint")
+                } finally { bitmap.recycle() }
+            }
+        }
+    }
+
     @Test fun maximumRunRasterEvidence() {
         val g = diagramGeometry(DiagramArea(1.0, 1.0))
         val scale = g.pixelsPerMetre(360f, 360f)

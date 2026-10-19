@@ -44,10 +44,13 @@ export interface FrameGeometry {
   stripeWidth: number;
 }
 
-export function frameGeometry(area: Diagram["area"]): FrameGeometry {
+export function frameGeometry(area: Diagram["area"], marginMetres = 0): FrameGeometry {
+  if (!Number.isFinite(marginMetres) || marginMetres < 0 || marginMetres > 120) {
+    throw new RangeError("Rendering margin must be finite and between 0 and 120 metres");
+  }
   const lengthM = area.length_m;
   const widthM = area.width_m;
-  const margin = Math.max(2.8, lengthM * 0.09);
+  const margin = Math.max(2.8, lengthM * 0.09, marginMetres);
   return {
     lengthM,
     widthM,

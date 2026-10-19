@@ -135,3 +135,25 @@ versions. The default Kotlin constructor still selects format 1; explicit
 callers retain format-1 geometry; use `gateCones(target, formatVersion)` when
 inspecting a versioned document. This development version is an immutable-source
 integration prerequisite; it is not a tag, package publication or release.
+
+## Explicit display margin
+
+Hosts may request a uniform grass margin with React's `marginMetres` prop or
+Compose's explicit `FootballDiagram(diagram, frameIndex, marginMetres = 16f)`
+overload. Matching helpers are `frameGeometry(area, 16)` and
+`diagramGeometry(area, 16f)`. Omission or zero keeps the default margin of
+max(2.8m, 9% of pitch length); a request only increases that margin.
+
+Requests must be finite, between 0 and 120 metres inclusive. Invalid values reject
+before drawing (`RangeError` in JavaScript, `IllegalArgumentException` in Kotlin).
+The authored pitch, equipment dimensions, coordinates and format meaning stay
+unchanged. The library does not infer a camera from remote coordinates. Choose
+one bounded margin per document when frame-to-frame camera stability is needed.
+The original Kotlin geometry/composable signatures remain available.
+
+This presentation option retains component clipping, at most 256 grass stripes
+and the active-frame geometry/dash budgets above. Larger margins reveal more of
+the existing scene within the host's measured pixel bounds; they do not allocate
+a canvas or path proportional to arbitrary remote coordinates. Source consumers
+must pin an immutable reviewed revision of the unreleased development build;
+this option does not imply a release or a stored-document migration.

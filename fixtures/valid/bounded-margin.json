@@ -1,0 +1,46 @@
+{
+  "format_version": 2,
+  "title": "Bounded touchline framing",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 40,
+    "width_m": 30
+  },
+  "frames": [
+    {
+      "id": "f",
+      "title": "Setup",
+      "objects": [
+        {
+          "kind": "coach",
+          "x": 50,
+          "y": 15,
+          "short": "R",
+          "ball": true
+        },
+        {
+          "kind": "coach",
+          "x": -10,
+          "y": 15,
+          "short": "L",
+          "ball": true
+        },
+        {
+          "kind": "coach",
+          "x": 20,
+          "y": 37.5,
+          "short": "B",
+          "ball": true
+        },
+        {
+          "kind": "coach",
+          "x": 20,
+          "y": -7.5,
+          "short": "T",
+          "ball": true
+        }
+      ],
+      "arrows": []
+    }
+  ]
+}
