@@ -6,6 +6,22 @@ Both parsers require JSON syntax, including standard number tokens and escaped c
 
 Serialisers escape unpaired UTF-16 surrogates in accepted string values so UTF-8 storage and transport preserve their code units. Ordinary Unicode characters and valid surrogate pairs retain their normal JSON representation.
 
+## JSON transport resource envelope
+
+Before constructing a JSON tree, both parsers limit string inputs to **8 Mi UTF-16
+code units**, **262,144 tokens** and **32 nested containers**. Tokens count opening
+containers, strings (including keys), numbers and literals; separators and closing
+containers do not count. Brackets inside strings are not containers. Inputs outside
+this envelope reject with `RangeError` in JavaScript or `SerializationException`
+in Kotlin, rather than risking stack exhaustion or excessive intermediate trees.
+
+This is a parser transport budget, separate from the unchanged format-1 schema.
+A fully populated canonical v1 document, including maximum escaped string lengths,
+fits the envelope and is regression-tested in both languages. Excessive whitespace
+or exceptionally long equivalent numeric spellings can exceed the transport limit;
+callers must bound incoming payloads before parsing them. Ordinary numeric and
+Unicode semantics remain unchanged.
+
 ## Document
 
 Required fields are `format_version: 1`, `title`, `area` and `frames`. An empty frame list is valid and represents a document without a drawable frame. At most 64 frames are accepted.
@@ -55,3 +71,15 @@ Library release versions separately describe parser, renderer and packaging chan
 TypeScript uses ordinary arrays for authored collections; size and minimum-point limits are enforced by `parseDiagram` against the canonical schema. This keeps array construction practical without weakening runtime validation.
 
 For JavaScript object inputs, required fields must be own enumerable properties; inherited properties are not part of the JSON object contract. `parseDiagram` returns a validated plain data snapshot without custom prototypes or inherited optional values, leaving the source untouched and without invoking `toJSON`. `stringifyDiagram` validates both the supplied data and the actual serialised JSON, including any `toJSON` result. Non-enumerable required fields or hooks producing an invalid document cause serialisation to reject. Hooks producing valid documents follow normal JavaScript serialisation semantics. Non-finite supplied numbers reject before any hook runs.
+
+### Renderer geometry budget
+
+Renderers allocate at most 30,000 dribble sample vertices across the active frame,
+shared equally among its dribble arrows. They count visible samples before
+allocating paths. If a constrained or extremely letterboxed viewport would exceed
+that allocation, they double the rendered wavelength until the paths fit. This
+reduces wave detail under resource pressure; authored points, amplitude, arrow
+kind and original endpoint neighbours (and therefore arrowhead direction) remain.
+Ordinary diagrams retain their exact original samples. The public geometry helpers
+still return the complete authored waveform and keep their existing 100,000-point
+per-path guard. No schema or stored document is changed by rendering detail levels.
