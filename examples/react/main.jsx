@@ -5,9 +5,10 @@ import { parseDiagram } from '../../dist/index.js';
 import movement from '../../fixtures/valid/multi-frame.json';
 import equipment from '../../fixtures/valid/all-kinds.json';
 import authoredEquipment from '../../fixtures/valid/authored-equipment-v2.json';
+import longPill from '../../fixtures/valid/long-pill-viewport.json';
 import './style.css';
 
-const documents = [parseDiagram(movement), parseDiagram(equipment), parseDiagram(authoredEquipment)];
+const documents = [parseDiagram(movement), parseDiagram(equipment), parseDiagram(authoredEquipment), parseDiagram(longPill)];
 
 function Example() {
   const [documentIndex, setDocumentIndex] = useState(0);

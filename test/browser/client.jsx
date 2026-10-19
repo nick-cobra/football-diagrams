@@ -31,3 +31,6 @@ document.body.append(labelButton,labelOutput);
 
 import { runEquipmentProbe } from './equipment-probe.jsx';
 window.runDiagramEquipmentProbe=runEquipmentProbe;
+
+import { runPillViewportProbe } from './pill-viewport-probe.jsx';
+window.runDiagramPillViewportProbe=runPillViewportProbe;

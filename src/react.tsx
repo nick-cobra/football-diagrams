@@ -197,7 +197,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
         ))}
       </g>
 
-      <LabelLayer labels={labels} presentation={{ className, style }} />
+      <LabelLayer labels={labels} geometry={geometry} presentation={{ className, style }} />
     </svg>
   );
 }
