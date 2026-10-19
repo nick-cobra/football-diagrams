@@ -17,6 +17,8 @@ internal data class ArrowDrawing(val path: Path, val head: Path, val stroke: Str
  * only the most recent scaled drawing; resizing cannot accumulate a size history.
  * Text, host style and accessibility remain outside this geometry-only cache. */
 internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
+    private val dashBudget = 30_000 / max(1, arrows.count { it.kind == DiagramArrowKind.Run })
+    private val wavePointBudget = 30_000 / max(1, arrows.count { it.kind == DiagramArrowKind.Dribble })
     private var sources: List<ArrowSourceDrawing> = emptyList()
     private var cachedWidth = Float.NaN
     private var cachedHeight = Float.NaN
@@ -25,7 +27,7 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
     private var drawings: List<ArrowDrawing> = emptyList()
 
     fun atScale(scale: Float, viewportWidth: Float = geometry.viewportWidth, viewportHeight: Float = geometry.viewportHeight): List<ArrowDrawing> {
-        if (scale <= 0f) return emptyList()
+        if (!scale.isFinite() || scale <= 0f) return emptyList()
         // The measured Canvas may have a different aspect under host constraints.
         // Round excess extents to units; the half-unit error fits inside padding.
         fun extent(actual: Float, nominal: Float) = nominal +
@@ -51,10 +53,11 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         val width: Float,
         val shadowWidth: Float,
         val dash: FloatArray?,
+        val runPoints: List<DiagramPoint>?,
     )
 
     private fun prepareSource(arrow: DiagramArrow, viewportWidth: Float, viewportHeight: Float): ArrowSourceDrawing? {
-        val points = renderArrowPathPoints(arrow, geometry, viewportWidth, viewportHeight)
+        val points = renderArrowPathPoints(arrow, geometry, viewportWidth, viewportHeight, wavePointBudget)
         if (points.size < 2) return null
         val path = Path().apply {
             moveTo(points.first().x.toFloat(), points.first().y.toFloat())
@@ -76,7 +79,11 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
             close()
         }
         val width = arrowStrokeWidth(arrow.kind, geometry)
-        return ArrowSourceDrawing(path, head, width, width + geometry.unit * 0.1f, arrowDashIntervals(arrow.kind, geometry))
+        return ArrowSourceDrawing(path, head, width, width + geometry.unit * 0.1f, arrowDashIntervals(arrow.kind, geometry),
+            if (arrow.kind == DiagramArrowKind.Run && arrow.points.any {
+                it.x < -geometry.marginMetres || it.y < -geometry.marginMetres ||
+                    it.x > geometry.viewportWidth - geometry.marginMetres || it.y > geometry.viewportHeight - geometry.marginMetres
+            }) arrow.points else null)
     }
 
     private fun buildDrawings(scale: Float): List<ArrowDrawing> {
@@ -85,10 +92,11 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         // sampled points. Fresh scaled Paths preserve previous draw identities.
         fun scaled(path: Path) = Path().apply { addPath(path); transform(matrix) }
         return sources.map { source ->
+            val run = source.runPoints?.let { clippedRunPath(it, scale, geometry, cachedWidth, cachedHeight, dashBudget) }
             val dash = source.dash?.let { intervals ->
-                PathEffect.dashPathEffect(FloatArray(intervals.size) { intervals[it] * scale })
+                PathEffect.dashPathEffect(FloatArray(intervals.size) { intervals[it] * scale * (run?.intervalFactor ?: 1f) })
             }
-            ArrowDrawing(scaled(source.path), scaled(source.head),
+            ArrowDrawing(run?.path ?: scaled(source.path), scaled(source.head),
                 Stroke(width = source.width * scale, pathEffect = dash),
                 Stroke(width = source.shadowWidth * scale, pathEffect = dash))
         }

@@ -12,7 +12,7 @@ export function renderingViewport(geometry, widthPx, heightPx) {
     return { widthM: extent(widthPx / scale, widthM), heightM: extent(heightPx / scale, heightM) };
 }
 /** Renderer-only reduction; the public geometry helpers retain full paths. */
-export function renderArrowGeometry(arrow, geometry, viewport = renderingViewport(geometry)) {
+export function renderArrowGeometry(arrow, geometry, viewport = renderingViewport(geometry), pointBudget = 30_000) {
     if (arrow.kind !== 'dribble')
         return arrowGeometry(arrow, geometry);
     const { unit, margin, lengthM, widthM } = geometry;
@@ -26,6 +26,11 @@ export function renderArrowGeometry(arrow, geometry, viewport = renderingViewpor
     sampleWave(arrow.points, unit * 0.3, unit * 2.3, (x, y) => {
         d += `${d === '' ? 'M' : 'L'}${x.toFixed(2)} ${y.toFixed(2)}`;
     }, { left: -margin - extraX - padding, top: -margin - extraY - padding,
-        right: lengthM + margin + extraX + padding, bottom: widthM + margin + extraY + padding });
+        right: lengthM + margin + extraX + padding, bottom: widthM + margin + extraY + padding }, pointBudget);
     return { kind: arrow.kind, d, strokeWidth: unit * 0.24, dashArray: undefined, markerEnd: 'arrow' };
+}
+/** At most 30,000 wave vertices across the active frame, including unique paths. */
+export function renderFrameArrows(arrows, geometry, viewport = renderingViewport(geometry)) {
+    const budget = Math.floor(30_000 / Math.max(1, arrows.filter(a => a.kind === 'dribble').length));
+    return arrows.map(a => renderArrowGeometry(a, geometry, viewport, budget));
 }

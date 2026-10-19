@@ -1,3 +1,4 @@
+import { checkJsonResources } from "./json-limits.js";
 import validate from "./generated/validate.js";
 import type { Diagram } from "./generated/types.js";
 
@@ -18,6 +19,7 @@ function ownData(value: unknown, parents = new WeakSet<object>()): unknown {
 
 /** Decode the versioned document contract before passing external data to a renderer. */
 export function parseDiagram(input: unknown): Diagram {
+  if (typeof input === "string") checkJsonResources(input);
   const document: unknown = typeof input === "string" ? JSON.parse(input) : input;
   if (!validate(document)) throw new TypeError("Invalid Football Diagrams document");
   if (typeof input === "string") return document as Diagram;

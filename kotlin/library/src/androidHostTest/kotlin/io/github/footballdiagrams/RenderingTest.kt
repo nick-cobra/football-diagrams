@@ -5,11 +5,13 @@ import android.graphics.BitmapFactory
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.v2.runAndroidComposeUiTest
 import androidx.compose.ui.unit.Density
@@ -106,6 +108,36 @@ class RenderingTest {
         index.value = 0
         waitForIdle()
         onAllNodes(hasContentDescription("Pass and move — Setup") or hasContentDescription("Pass and move — Move")).assertCountEquals(0)
+    }
+
+    @Test
+    fun initialAndTransitionZeroSizesRestoreTheSamePixels() = runAndroidComposeUiTest<DiagramTestActivity> {
+        val document = fixture("all-kinds")
+        val diagram = document.copy(frames = listOf(document.frames.first().copy(
+            areas = listOf(DiagramSubArea("Zone", 1.0, 1.0, 5.0, 5.0)),
+        )))
+        val size = mutableStateOf(0f to 0f)
+        setContent {
+            Box(Modifier.requiredSize(320.dp, 400.dp).testTag("zero-root")) {
+                Box(Modifier.requiredSize(size.value.first.dp, size.value.second.dp)) {
+                    FootballDiagram(diagram, 0)
+                }
+            }
+        }
+        waitForIdle()
+        size.value = 320f to 320f
+        mainClock.advanceTimeBy(250)
+        waitForIdle()
+        val before = pixels(onNodeWithTag("zero-root").captureToImage().asAndroidBitmap())
+        for (next in listOf(0f to 0f, 0f to 1f, 1f to 0f, 320f to 1f, 1f to 320f)) {
+            size.value = next
+            waitForIdle()
+        }
+        size.value = 320f to 320f
+        mainClock.advanceTimeBy(250)
+        waitForIdle()
+        assertTrue(before.toSet().size > 40)
+        kotlin.test.assertContentEquals(before, pixels(onNodeWithTag("zero-root").captureToImage().asAndroidBitmap()))
     }
 
     private fun pixels(bitmap: Bitmap) = IntArray(bitmap.width * bitmap.height).also {

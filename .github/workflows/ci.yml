@@ -91,6 +91,7 @@ jobs:
         working-directory: kotlin
       - run: node scripts/assert-test-execution.mjs kotlin/library/build/test-results/jvmTest kotlin/library/build/test-results/testAndroidHostTest kotlin/library/build/test-results/iosSimulatorArm64Test
       - run: ./kotlin/gradlew -p examples/compose jvmTest linkDebugFrameworkIosSimulatorArm64
+      - run: node scripts/verify-ios-viewport.mjs "$SIMULATOR_UDID"
       - run: ./kotlin/gradlew -p examples/android assembleDebug
       - run: node scripts/verify-source-consumer.mjs "$PUBLIC_SOURCE_PIN" "$SIMULATOR_UDID"
         timeout-minutes: 20
@@ -104,6 +105,7 @@ jobs:
             kotlin/library/build/test-results/
             kotlin/library/build/reports/rendering/
             artifacts/source-consumer/
+            artifacts/ios-viewport/
           retention-days: 14
       - name: Remove owned simulator
         if: always() && env.SIMULATOR_UDID != ''

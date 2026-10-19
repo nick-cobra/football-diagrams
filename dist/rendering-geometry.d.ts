@@ -8,4 +8,6 @@ export interface RenderingViewport {
  * resize. The half-unit rounding error is covered by the four-unit padding. */
 export declare function renderingViewport(geometry: FrameGeometry, widthPx?: number, heightPx?: number): RenderingViewport;
 /** Renderer-only reduction; the public geometry helpers retain full paths. */
-export declare function renderArrowGeometry(arrow: DiagramArrow, geometry: FrameGeometry, viewport?: RenderingViewport): ArrowGeometry;
+export declare function renderArrowGeometry(arrow: DiagramArrow, geometry: FrameGeometry, viewport?: RenderingViewport, pointBudget?: number): ArrowGeometry;
+/** At most 30,000 wave vertices across the active frame, including unique paths. */
+export declare function renderFrameArrows(arrows: readonly DiagramArrow[], geometry: FrameGeometry, viewport?: RenderingViewport): ArrowGeometry[];
