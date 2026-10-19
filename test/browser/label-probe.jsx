@@ -45,6 +45,10 @@ export async function runLabelProbe() {
     check('font loaded');
     for(let i=0;i<5;i++)render('DiagramProbeFont,serif');
     check('parent updates');
+    host.style.fontFamily='Courier New,monospace';render('inherit');
+    host.style.fontFamily='Arial,sans-serif';
+    await new Promise(requestAnimationFrame);await new Promise(requestAnimationFrame);
+    check('inherited font changed without a React commit');
     const parentReads=reads-initialReads;
     // A late font-ready callback after unmount must be harmless.
     return {reports,parentReads,fontStatus:face.status};

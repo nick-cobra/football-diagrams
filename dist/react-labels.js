@@ -65,6 +65,10 @@ export function LabelLayer({ labels, presentation }) {
         const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(refresh);
         if (group.ownerSVGElement)
             observer?.observe(group.ownerSVGElement);
+        // Inherited CSS can change fonts without a React commit or SVG resize.
+        // Observe untransformed text bounds, not our fitted background/group bounds.
+        // One observer owns only the current label set and disconnects on replacement.
+        group.querySelectorAll("[data-label-kind] > text").forEach(text => observer?.observe(text));
         window.addEventListener("resize", refresh);
         const fonts = document.fonts;
         fonts?.addEventListener("loadingdone", refresh);

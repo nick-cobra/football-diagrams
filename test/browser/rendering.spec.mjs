@@ -137,7 +137,7 @@ test('letterboxed and resized SVGs retain the full wave pixels',async({page})=>{
 
 test('actual glyphs fit badges and every pill kind through font loading and resizing',async({page})=>{
   const report=await page.evaluate(()=>window.runDiagramLabelProbe());
-  expect(report.reports).toHaveLength(4);
+  expect(report.reports).toHaveLength(5);
   expect(report.fontStatus).toBe('loaded');
   for(const result of report.reports) {
     expect(result.rows.length).toBe(14);

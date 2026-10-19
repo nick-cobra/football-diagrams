@@ -70,7 +70,17 @@ parent updates (3 samples). These are observations, not timing assertions.
 React reads all SVG label bounds before one batched state update. Badge metrics
 use enlarged text coordinates mapped back to metres, avoiding SVG rounding of
 sub-unit font sizes and preserving ordinary number sizes. Font-loading events,
-viewport changes and host commits refresh measurements. SSR uses deterministic
+viewport changes, observed text-bound changes and host commits refresh measurements. SSR uses deterministic
 estimated boxes until hydration can measure the host font. The browser probe
 checks real transformed text bounds for all label kinds, including late-loaded
 fonts; these updates must not regenerate arrow geometry.
+
+A separate iOS Simulator release run of the Kotlin sources at `be0ec53` used
+the same diagnostic-only Canvas probe, iPhone 18 Pro profile, iOS 27.0, density
+3 and 1206 px width as the preceding assessment. The dense frame's warmed
+Canvas CPU median was **0.567 ms** (41 callbacks), compared with **3.267 ms**
+at `155f03a` before text-cache sizing. Maximum-frame arrows remained **0.037 ms**
+(9 callbacks). Unrelated parent updates caused zero actual Canvas callbacks
+in all five cases. A fifth case displayed the wide-labels fixture for UIKit
+visual inspection. Initial text preparation and GPU completion remain outside
+these warmed CPU timings; this is simulator evidence, not physical-device FPS.

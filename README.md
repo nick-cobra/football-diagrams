@@ -58,7 +58,7 @@ export function Example() {
 
 Treat renderer inputs as snapshots: replace changed areas, frames, arrows and point lists instead of mutating them in place. Both renderers reuse selected-frame arrow geometry and track their measured viewport; Compose retains only the most recent viewport and drawing scale. Host presentation and accessibility updates still apply normally. Compose sizes its text-layout cache for both the original and fitted text of the active frame; changing that frame releases the previous text cache.
 
-React fits badge text inside its circle and expands pill backgrounds using actual SVG font metrics. Measurements run together after host commits, viewport changes and web-font loading. Server markup uses deterministic estimated boxes until hydration can measure the host font; no browser globals or font cache are shared across server requests.
+React fits badge text inside its circle and expands pill backgrounds using actual SVG font metrics. Measurements run together after host commits, viewport/text-bound changes and web-font loading. Server markup uses deterministic estimated boxes until hydration can measure the host font; no browser globals or font cache are shared across server requests.
 
 The SVG defaults to `width="100%"` and derives its natural height from its viewBox. Host CSS (including a supplied class or a parent selector) overrides this presentation attribute; explicit `style` props take normal inline-style precedence. For a fixed-height thumbnail, size both the container and its SVG:
 
