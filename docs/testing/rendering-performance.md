@@ -40,3 +40,37 @@ Node 26 production assessment: three timed maximum-frame samples after two warmu
 Compose: Kotlin/Native release framework and Swift `-O`, iPhone 18 Pro profile on iOS 27.0 Simulator, density 3, 1206px Canvas width. A diagnostic-only timer/state read was inserted inside the actual Canvas callback in a temporary source copy. Nine timed maximum-frame callbacks followed warmup. Median frame-clock interval improved from 184.411 to 16.667 ms (eight intervals); 30 unrelated parent updates caused zero Canvas callbacks before and after. Ordinary callbacks changed from 0.098 to 0.053 ms; the dense 60-object/30-arrow/12-zone case from 4.259 to 3.942 ms (41 samples each).
 
 The Compose timer covers actual CPU draw-callback execution. In the fixed implementation, previously prepared arrow geometry is reused; initial composition/geometry preparation and GPU completion are outside that warmed measurement. Simulator scheduling is not physical-device FPS, and these are not Android-device measurements. Android host native-Skia images and tests provide separate regression evidence. Raw local reports, diagnostic patch/source identity, build logs and actual browser/UIKit captures are retained with this task's performance evidence. No release is performed by the benchmark or these fixes.
+
+## Label fitting and text-layout reuse
+
+The label fixes at `53c2d55` retain at most two text layouts per active Compose
+label (original and fitted). Replacing the label set releases its measurer;
+density, font scale, layout direction and font resolver remain Compose inputs.
+`TextLayoutTest` checks paragraph identity across repeated dense-frame passes,
+including long pills that require two measurements, and verifies invalidation.
+It also checks wide Latin, CJK, emoji and multiline badge bounds at two sizes
+and density/font-scale combinations. The wide-labels native and browser images
+record actual painting; existing native image baselines remain unchanged.
+
+A JDK 21 / Android API 36 native-Skia host diagnostic at 600 px and density/font
+scale 1 used 120 distinct player-number/name labels and the renderer's actual
+`measureDiagramLabel` function. Across 30 warm measurement passes, the default
+eight-entry control took a median **3.478 ms**, with **120 new paragraphs** per
+pass. The composition-owned renderer measurer took **0.063 ms**, with **zero new
+paragraphs** per unchanged pass. These timings cover text measurement CPU in a
+host test, not whole-Canvas drawing, GPU work or device FPS.
+
+The same production React/IAB probe described above measured a dense frame at
+**13.8 ms** mount/initial layout and **0.6 ms** median unchanged parent update
+(10 warm samples), with no observed long tasks. Font fitting adds initial DOM
+measurement work; repeated updates retain the earlier geometry optimisation.
+The maximum-arrow frame remained **475,880 SVG bytes**, with **0.2 ms** median
+parent updates (3 samples). These are observations, not timing assertions.
+
+React reads all SVG label bounds before one batched state update. Badge metrics
+use enlarged text coordinates mapped back to metres, avoiding SVG rounding of
+sub-unit font sizes and preserving ordinary number sizes. Font-loading events,
+viewport changes and host commits refresh measurements. SSR uses deterministic
+estimated boxes until hydration can measure the host font. The browser probe
+checks real transformed text bounds for all label kinds, including late-loaded
+fonts; these updates must not regenerate arrow geometry.
