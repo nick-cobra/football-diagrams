@@ -40,7 +40,7 @@ class JsonResourcesTest {
         val obj = DiagramObject(DiagramObjectKind.FlatMarker, n, n, DiagramColour.Orange,
             text.repeat(120), text.repeat(3), 99, n, -n, true)
         val arrow = DiagramArrow(DiagramArrowKind.Dribble, List(12) { point }, text.repeat(120), 20, point)
-        val zone = DiagramSubArea(text.repeat(120), n, n, -n, -n, DiagramColour.Orange, text.repeat(80))
+        val zone = DiagramSubArea(text.repeat(120), n, n, -n, -n, text.repeat(80), DiagramColour.Orange)
         val frame = DiagramFrame(text.repeat(80), text.repeat(160), List(60) { obj }, List(30) { arrow }, List(12) { zone }, text.repeat(400))
         val doc = Diagram(text.repeat(160), DiagramArea(-n, -n, text.repeat(120)), List(64) { frame })
         val encoded = Diagrams.stringify(doc)
