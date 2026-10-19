@@ -3,6 +3,9 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { INK } from "./geometry.js";
 const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+// SVG font metrics round at small user-unit sizes. Measure badge glyphs at
+// a larger font size, then map them back into metre space with one transform.
+const BADGE_TEXT_SCALE = 1000;
 const estimatedPaint = (label) => ({ x: label.x, y: label.y, width: label.width, height: label.height, scale: 1 });
 /** Font metrics are a DOM input. Read every label before committing one state
  * update; no per-label effects or interleaved layout reads/style writes. The
@@ -25,8 +28,8 @@ export function LabelLayer({ labels, presentation }) {
             const paint = estimatedPaint(label);
             if (label.kind === "number" || label.kind === "sequence") {
                 const radius = label.width / 2, cx = label.x + radius, cy = label.y + radius;
-                const dx = Math.max(Math.abs(box.x - cx), Math.abs(box.x + box.width - cx));
-                const dy = Math.max(Math.abs(box.y - cy), Math.abs(box.y + box.height - cy));
+                const dx = Math.max(Math.abs(box.x / BADGE_TEXT_SCALE - cx), Math.abs((box.x + box.width) / BADGE_TEXT_SCALE - cx));
+                const dy = Math.max(Math.abs(box.y / BADGE_TEXT_SCALE - cy), Math.abs((box.y + box.height) / BADGE_TEXT_SCALE - cy));
                 const corner = Math.hypot(dx, dy);
                 paint.scale = corner > 0 ? Math.min(1, radius * 0.86 / corner) : 1;
             }
@@ -80,5 +83,6 @@ export function LabelLayer({ labels, presentation }) {
 function LabelGlyph({ label, paint }) {
     const isBadge = label.kind === "number" || label.kind === "sequence";
     const radius = label.width / 2, cx = label.x + radius, cy = label.y + radius;
-    return (_jsxs("g", { "data-label-id": label.id, "data-label-kind": label.kind, children: [isBadge ? (_jsx("circle", { cx: cx, cy: cy, r: radius, fill: "#ffffff", stroke: INK, strokeWidth: radius * 0.14 })) : (_jsx("rect", { x: paint.x, y: paint.y, width: paint.width, height: paint.height, rx: paint.height / 2, fill: "rgba(255,255,255,0.93)" })), _jsx("text", { x: label.x + label.width / 2, y: label.y + label.height / 2, dy: isBadge ? radius * 0.42 : label.fontSize * 0.33, textAnchor: "middle", fontSize: isBadge ? label.fontSize : label.fontSize * 0.92, fontWeight: 700, fill: INK, textRendering: isBadge ? "geometricPrecision" : undefined, transform: isBadge && paint.scale < 1 ? `translate(${cx} ${cy}) scale(${paint.scale}) translate(${-cx} ${-cy})` : undefined, children: label.text })] }));
+    const textScale = isBadge ? BADGE_TEXT_SCALE : 1;
+    return (_jsxs("g", { "data-label-id": label.id, "data-label-kind": label.kind, children: [isBadge ? (_jsx("circle", { cx: cx, cy: cy, r: radius, fill: "#ffffff", stroke: INK, strokeWidth: radius * 0.14 })) : (_jsx("rect", { x: paint.x, y: paint.y, width: paint.width, height: paint.height, rx: paint.height / 2, fill: "rgba(255,255,255,0.93)" })), _jsx("text", { x: (label.x + label.width / 2) * textScale, y: (label.y + label.height / 2) * textScale, dy: (isBadge ? radius * 0.42 : label.fontSize * 0.33) * textScale, textAnchor: "middle", fontSize: (isBadge ? label.fontSize : label.fontSize * 0.92) * textScale, fontWeight: 700, fill: INK, textRendering: isBadge ? "geometricPrecision" : undefined, transform: isBadge ? `translate(${cx} ${cy}) scale(${paint.scale / textScale}) translate(${-cx * textScale} ${-cy * textScale})` : undefined, children: label.text })] }));
 }

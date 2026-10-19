@@ -140,7 +140,8 @@ test('actual glyphs fit badges and every pill kind through font loading and resi
   expect(report.reports).toHaveLength(4);
   expect(report.fontStatus).toBe('loaded');
   for(const result of report.reports) {
-    expect(result.rows.length).toBe(12);
+    expect(result.rows.length).toBe(14);
+    if(result.name==='Arial') expect(result.rows.filter(row=>!row.ordinarySizePreserved)).toEqual([]);
     expect(result.rows.filter(row=>!row.withinBackground),result.name).toEqual([]);
     expect(new Set(result.rows.map(row=>row.kind))).toEqual(new Set(['area','sub_area','number','sequence','object','arrow']));
   }

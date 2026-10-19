@@ -4,6 +4,9 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from
 import { INK, type LabelBox } from "./geometry.js";
 
 const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+// SVG font metrics round at small user-unit sizes. Measure badge glyphs at
+// a larger font size, then map them back into metre space with one transform.
+const BADGE_TEXT_SCALE = 1000;
 interface LabelPaint { x: number; y: number; width: number; height: number; scale: number }
 const estimatedPaint = (label: LabelBox): LabelPaint => ({ x: label.x, y: label.y, width: label.width, height: label.height, scale: 1 });
 
@@ -27,8 +30,8 @@ export function LabelLayer({ labels, presentation }: { labels: LabelBox[]; prese
       const paint = estimatedPaint(label);
       if (label.kind === "number" || label.kind === "sequence") {
         const radius = label.width / 2, cx = label.x + radius, cy = label.y + radius;
-        const dx = Math.max(Math.abs(box.x - cx), Math.abs(box.x + box.width - cx));
-        const dy = Math.max(Math.abs(box.y - cy), Math.abs(box.y + box.height - cy));
+        const dx = Math.max(Math.abs(box.x / BADGE_TEXT_SCALE - cx), Math.abs((box.x + box.width) / BADGE_TEXT_SCALE - cx));
+        const dy = Math.max(Math.abs(box.y / BADGE_TEXT_SCALE - cy), Math.abs((box.y + box.height) / BADGE_TEXT_SCALE - cy));
         const corner = Math.hypot(dx, dy);
         paint.scale = corner > 0 ? Math.min(1, radius * 0.86 / corner) : 1;
       } else {
@@ -86,6 +89,7 @@ export function LabelLayer({ labels, presentation }: { labels: LabelBox[]; prese
 function LabelGlyph({ label, paint }: { label: LabelBox; paint: LabelPaint }) {
   const isBadge = label.kind === "number" || label.kind === "sequence";
   const radius = label.width / 2, cx = label.x + radius, cy = label.y + radius;
+  const textScale = isBadge ? BADGE_TEXT_SCALE : 1;
   return (
     <g data-label-id={label.id} data-label-kind={label.kind}>
       {isBadge ? (
@@ -93,11 +97,11 @@ function LabelGlyph({ label, paint }: { label: LabelBox; paint: LabelPaint }) {
       ) : (
         <rect x={paint.x} y={paint.y} width={paint.width} height={paint.height} rx={paint.height / 2} fill="rgba(255,255,255,0.93)" />
       )}
-      <text x={label.x + label.width / 2} y={label.y + label.height / 2}
-        dy={isBadge ? radius * 0.42 : label.fontSize * 0.33}
-        textAnchor="middle" fontSize={isBadge ? label.fontSize : label.fontSize * 0.92}
+      <text x={(label.x + label.width / 2) * textScale} y={(label.y + label.height / 2) * textScale}
+        dy={(isBadge ? radius * 0.42 : label.fontSize * 0.33) * textScale}
+        textAnchor="middle" fontSize={(isBadge ? label.fontSize : label.fontSize * 0.92) * textScale}
         fontWeight={700} fill={INK} textRendering={isBadge ? "geometricPrecision" : undefined}
-        transform={isBadge && paint.scale < 1 ? `translate(${cx} ${cy}) scale(${paint.scale}) translate(${-cx} ${-cy})` : undefined}>
+        transform={isBadge ? `translate(${cx} ${cy}) scale(${paint.scale / textScale}) translate(${-cx * textScale} ${-cy * textScale})` : undefined}>
         {label.text}
       </text>
     </g>
