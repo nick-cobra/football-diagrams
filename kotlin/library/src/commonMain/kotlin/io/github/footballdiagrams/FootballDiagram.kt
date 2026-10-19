@@ -70,9 +70,15 @@ fun FootballDiagram(
     modifier: Modifier = Modifier,
 ) {
     val frame = diagram.frames.getOrNull(frameIndex) ?: return
+    // Painting and label placement depend on content, not frame metadata.
+    // Keep their captured frame stable through caption/title changes; accessibility
+    // below still uses the original titles.
+    val drawingFrame = remember(frame.objects, frame.arrows, frame.areas) {
+        frame.copy(id = "", title = "", caption = "")
+    }
     val geometry = remember(diagram.area) { diagramGeometry(diagram.area) }
-    val labels = remember(diagram.area, frame) { layoutDiagramLabels(diagram.area, frame, geometry) }
-    val arrows = remember(frame.arrows, geometry) { ArrowDrawingCache(frame.arrows, geometry) }
+    val labels = remember(diagram.area, drawingFrame) { layoutDiagramLabels(diagram.area, drawingFrame, geometry) }
+    val arrows = rememberArrowDrawingCache(frame.arrows, geometry)
     val textMeasurer = rememberDiagramTextMeasurer(labels)
     val description = "${diagram.title} — ${frame.title}"
 
@@ -89,10 +95,10 @@ fun FootballDiagram(
         translate(geometry.marginMetres * scale, geometry.marginMetres * scale) {
             drawGrass(geometry, scale)
             drawGrid(geometry, scale)
-            drawSubAreas(frame, geometry, scale)
-            frame.objects.forEach { drawEquipment(it, geometry, scale) }
+            drawSubAreas(drawingFrame, geometry, scale)
+            drawingFrame.objects.forEach { drawEquipment(it, geometry, scale) }
             arrows.atScale(scale, size.width / scale, size.height / scale).forEach { drawArrow(it, scale) }
-            frame.objects.forEach { drawPerson(it, frame, geometry, scale) }
+            drawingFrame.objects.forEach { drawPerson(it, drawingFrame, geometry, scale) }
             labels.forEach { drawLabel(it, geometry, scale, textMeasurer) }
         }
     }
@@ -418,9 +424,11 @@ internal fun DrawScope.drawArrow(arrow: ArrowDrawing, scale: Float) {
 }
 
 @Composable
-internal fun rememberDiagramTextMeasurer(labels: List<DiagramLabel>): TextMeasurer = key(labels) {
-    // One original and (at most) one fitted layout per label. A changed frame
-    // releases its text; the measurer also tracks density, direction and fonts.
+internal fun rememberDiagramTextMeasurer(labels: List<DiagramLabel>): TextMeasurer = key(labels.size) {
+    // Bound the LRU to one original and (at most) one fitted layout per active
+    // label. Position/content updates can reuse unchanged paragraphs; a changed
+    // label count resizes/replaces the cache. Density, direction and fonts remain
+    // inputs to rememberTextMeasurer, and text/style/size are measurement keys.
     rememberTextMeasurer(cacheSize = labels.size * 2)
 }
 

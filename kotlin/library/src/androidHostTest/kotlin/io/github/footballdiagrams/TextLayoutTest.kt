@@ -58,7 +58,11 @@ class TextLayoutTest {
         val original = measurer
         labels.value = labels.value.map { it.copy(text = "Changed ${it.text}") }
         waitForIdle()
-        assertNotSame(original, measurer, "Old frame text must not be retained by the active measurer")
+        assertSame(original, measurer, "Same-capacity content updates should retain the bounded LRU")
+        runOnIdle {
+            val changed = layouts(600f / g.viewportWidth)
+            changed.indices.forEach { assertEquals(labels.value[it].text, changed[it].layoutInput.text.text) }
+        }
         val beforeDensity = measurer
         density.value = Density(2f, 1.4f)
         waitForIdle()
@@ -71,6 +75,44 @@ class TextLayoutTest {
         resolver.value = createFontFamilyResolver(RuntimeEnvironment.getApplication())
         waitForIdle()
         assertNotSame(beforeFonts, measurer)
+    }
+
+    @Test fun textHistoryIsBoundedAndLabelCountChangesResizeTheCache() = runAndroidComposeUiTest<DiagramTestActivity> {
+        val area = DiagramArea(40.0, 30.0)
+        val geometry = diagramGeometry(area)
+        val frame = DiagramFrame("f", "Text", listOf(DiagramObject(DiagramObjectKind.Player, 20.0, 15.0, label = "First")), emptyList())
+        val initial = layoutDiagramLabels(area, frame, geometry)
+        val labels = mutableStateOf(initial)
+        lateinit var measurer: TextMeasurer
+        setContent { measurer = rememberDiagramTextMeasurer(labels.value) }
+        fun measure() = measureDiagramLabel(labels.value.single(), geometry, 600f / geometry.viewportWidth, 1f, 1f, measurer)
+        val bounded = measurer
+        val first = measure().multiParagraph
+        for (text in listOf("Second", "Third", "Fourth")) {
+            labels.value = initial.map { it.copy(text = text) }
+            waitForIdle()
+            runOnIdle {
+                assertSame(bounded, measurer)
+                assertEquals(text, measure().layoutInput.text.text)
+            }
+        }
+        labels.value = initial
+        waitForIdle()
+        runOnIdle {
+            assertNotSame(first, measure().multiParagraph, "The two-entry LRU must evict old frame text")
+        }
+        labels.value = initial + initial.single().copy(id = "second", text = "Second")
+        waitForIdle()
+        assertNotSame(bounded, measurer, "A new active label count must resize the cache")
+        val bigger = measurer
+        labels.value = emptyList()
+        waitForIdle()
+        assertNotSame(bigger, measurer)
+        val empty = measurer
+        labels.value = initial
+        waitForIdle()
+        assertNotSame(empty, measurer)
+        assertEquals("First", measure().layoutInput.text.text)
     }
 
     @Test fun wideUnicodeAndMultilineBadgeTextFitsTheInnerCircle() {
