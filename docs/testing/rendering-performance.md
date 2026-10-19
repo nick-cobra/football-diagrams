@@ -8,7 +8,7 @@ Renderer-only dribble sampling retains the original integer sample indices and p
 
 The maximum 30-arrow regression shrinks from 2,435,400 to 20,460 rendered points. Tests compare the actual visible polyline edges with full helper output across crossing/off-screen segments, bends, repeats, zero-length paths, subnormal pitches and extreme aspect ratios. Ordinary geometry and reviewed Android pixels remain unchanged.
 
-React memoises prepared paths by selected arrow-list, pitch geometry and measured viewport extents. Client layout and ResizeObserver account for SVG letterboxing and parent resizing. SSR uses explicit numeric/px inline dimensions when supplied, otherwise the natural viewBox aspect; external CSS dimensions are resolved on hydration. Presentation, accessible titles, thumbnails and invalid frame selection still update. Compose remembers metre-space points by selected arrows and pitch geometry; a composition-owned cache retains only the most recent scale's Paths, heads and strokes. A scale-only resize rebuilds scaled drawing; changed viewport extents (including a constrained Canvas aspect) also rebuild the metre-space samples. Frame/arrow/pitch replacement rebuilds the relevant geometry. Text measurement and host properties are outside the arrow cache. Treat inputs as snapshots and replace changed values/lists.
+React memoises prepared paths by selected arrow-list, pitch geometry and measured viewport extents. Client layout and ResizeObserver account for SVG letterboxing and parent resizing. SSR uses explicit numeric/px inline dimensions when supplied, otherwise the natural viewBox aspect; external CSS dimensions are resolved on hydration. Presentation, accessible titles, thumbnails and invalid frame selection still update. Compose remembers metre-space points by selected arrows and pitch geometry; a composition-owned cache retains only the most recent scale's Paths, heads and strokes. A scale-only resize rebuilds scaled drawing; changed viewport extents (including a constrained Canvas aspect) also rebuild the metre-space samples. Arrow kind/point, pitch and viewport changes rebuild the relevant geometry. Arrow text/sequence/badge changes retain unchanged prepared geometry. Text measurement and host properties are outside the arrow cache. Treat inputs as snapshots and replace changed values/lists.
 
 The Android native-Skia cache regression verifies Path identity on repeated draws, replacement on resize, reuse of metre-space points and eviction of an older scale. The installed React probe counts reads of authored points, including parent updates and invalidation cases. Both reuse regressions were observed failing before their fixes. Additional native-Skia pixel comparisons verify constrained Canvas dimensions against the full sampled reference; browser raster comparisons cover wide/tall/square SVGs and parent resizing. The letterbox regressions were also observed failing before viewport-aware sampling.
 
@@ -44,8 +44,10 @@ The Compose timer covers actual CPU draw-callback execution. In the fixed implem
 ## Label fitting and text-layout reuse
 
 The label fixes at `53c2d55` retain at most two text layouts per active Compose
-label (original and fitted). Replacing the label set releases its measurer;
-density, font scale, layout direction and font resolver remain Compose inputs.
+label (original and fitted). The composition-owned LRU is bounded to twice the active label count; changes
+to that count replace/resize the measurer. Position-only or same-capacity content
+updates retain it, with older text/size entries evicted within the fixed bound.
+Density, font scale, layout direction and font resolver remain Compose inputs.
 `TextLayoutTest` checks paragraph identity across repeated dense-frame passes,
 including long pills that require two measurements, and verifies invalidation.
 It also checks wide Latin, CJK, emoji and multiline badge bounds at two sizes

@@ -1,5 +1,7 @@
 package io.github.footballdiagrams
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -10,7 +12,7 @@ import kotlin.math.roundToInt
 
 internal data class ArrowDrawing(val path: Path, val head: Path, val stroke: Stroke, val shadowStroke: Stroke)
 
-/** Owned by one composition/selected frame. Retains only metre-space points and
+/** Owned by one composition/active arrow geometry. Retains only metre-space points and
  * the most recent scale's Paths; resizing cannot accumulate a frame/size history.
  * Text, host style and accessibility remain outside this geometry-only cache. */
 internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
@@ -69,4 +71,12 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         ArrowDrawing(path, head, Stroke(width = width * scale, pathEffect = dash),
             Stroke(width = (width + geometry.unit * 0.1f) * scale, pathEffect = dash))
     }
+}
+
+@Composable
+internal fun rememberArrowDrawingCache(arrows: List<DiagramArrow>, geometry: DiagramGeometry): ArrowDrawingCache {
+    // Labels, sequence numbers and badge positions are painted separately. Keep
+    // them out of both the drawing key and the data retained by this cache.
+    val shapes = remember(arrows) { arrows.map { DiagramArrow(it.kind, it.points) } }
+    return remember(shapes, geometry) { ArrowDrawingCache(shapes, geometry) }
 }
