@@ -8,9 +8,9 @@ Renderer-only dribble sampling retains the original integer sample indices and p
 
 The maximum 30-arrow regression shrinks from 2,435,400 to 20,460 rendered points. Tests compare the actual visible polyline edges with full helper output across crossing/off-screen segments, bends, repeats, zero-length paths, subnormal pitches and extreme aspect ratios. Ordinary geometry and reviewed Android pixels remain unchanged.
 
-React memoises prepared paths by selected arrow-list, pitch geometry and measured viewport extents. Client layout and ResizeObserver account for SVG letterboxing and parent resizing. SSR uses explicit numeric/px inline dimensions when supplied, otherwise the natural viewBox aspect; external CSS dimensions are resolved on hydration. Presentation, accessible titles, thumbnails and invalid frame selection still update. Compose remembers metre-space points by selected arrows and pitch geometry; a composition-owned cache retains only the most recent scale's Paths, heads and strokes. A scale-only resize rebuilds scaled drawing; changed viewport extents (including a constrained Canvas aspect) also rebuild the metre-space samples. Arrow kind/point, pitch and viewport changes rebuild the relevant geometry. Arrow text/sequence/badge changes retain unchanged prepared geometry. Text measurement and host properties are outside the arrow cache. Treat inputs as snapshots and replace changed values/lists.
+React memoises prepared paths by selected arrow-list, pitch geometry and measured viewport extents. Client layout and ResizeObserver account for SVG letterboxing and parent resizing. SSR uses explicit numeric/px inline dimensions when supplied, otherwise the natural viewBox aspect; external CSS dimensions are resolved on hydration. Presentation, accessible titles, thumbnails and invalid frame selection still update. Compose remembers metre-space Paths by selected arrow geometry and pitch; a composition-owned cache retains only the most recent scaled drawing. A scale-only resize copies/transforms Paths in the native graphics backend without a Kotlin vertex walk; changed viewport extents (including a constrained Canvas aspect) also rebuild the metre-space samples. Arrow kind/point, pitch and viewport changes rebuild the relevant geometry. Arrow text/sequence/badge changes retain unchanged prepared geometry. Text measurement and host properties are outside the arrow cache. Treat inputs as snapshots and replace changed values/lists.
 
-The Android native-Skia cache regression verifies Path identity on repeated draws, replacement on resize, reuse of metre-space points and eviction of an older scale. The installed React probe counts reads of authored points, including parent updates and invalidation cases. Both reuse regressions were observed failing before their fixes. Additional native-Skia pixel comparisons verify constrained Canvas dimensions against the full sampled reference; browser raster comparisons cover wide/tall/square SVGs and parent resizing. The letterbox regressions were also observed failing before viewport-aware sampling.
+The Android native-Skia cache regression verifies Path identity on repeated draws, replacement on resize, reuse of metre-space preparation and eviction of an older scale. The installed React probe counts reads of authored points, including parent updates and invalidation cases. Both reuse regressions were observed failing before their fixes. Additional native-Skia pixel comparisons verify constrained Canvas dimensions against the full sampled reference; browser raster comparisons cover wide/tall/square SVGs and parent resizing. The letterbox regressions were also observed failing before viewport-aware sampling.
 
 ## Manual measurements
 
@@ -130,3 +130,60 @@ These are Apple M5 Pro / iPhone 18 Pro profile / iOS 27.0 Simulator observations
 not device FPS or universal timing thresholds. Deterministic reuse/eviction and
 actual pixel tests are the regression gates. No production diagnostic API, global
 cache, release or version change is introduced.
+
+
+## Continuous resizing and paint-only changes
+
+Implementation `07a271e` uses a nearby reference text scale during continuous
+resize. After 120 ms without a size change, one draw measures text at the exact
+current scale. Scale ratios below 0.8 or above 1.25 remeasure immediately. The
+reference is composition-owned and retains no text/size history; TextMeasurer
+keeps the existing bounded LRU and font/density/direction invalidation. No text
+settling work is scheduled for diagrams without labels. Each size request has
+its own identity, so obsolete requests cannot settle after A → B → A round trips.
+Disposal cancels pending work. Transient text metrics can differ slightly from
+exact metrics; settled output must match a fresh composition pixel for pixel.
+
+Label candidates are derived from actual text/anchor inputs before memoised
+collision placement. This avoids a second, potentially stale whitelist of model
+properties. Colour, ball, object angle/width, zone paint/size and arrow-kind edits
+reuse unchanged placement while still updating paint. Real text, anchor, badge
+and pitch changes invalidate placement.
+
+Arrow preparation retains metre-space Paths instead of sampled Kotlin point
+lists. Scale-only updates copy/transform those Paths in the graphics backend,
+then update pixel strokes/dashes. This preserves the previous point-scaled
+rasterisation, unlike the faster experimental Canvas-transform control. Only
+one source viewport and the most recent scaled drawing are retained.
+
+All three regressions were observed failing before the fixes. Host checks cover
+paragraph reuse during animation, settled/fresh pixel equality, fitted badge/pill
+containment across the reuse range, stale/disposed requests, paint-only label
+identity, actual changed paint, and zero additional authored-point reads during
+scale-only updates. Arrow pixels match the old algorithm at six ordinary and
+constrained sizes across all kinds, bends, repeated/zero-length endpoints and
+an extreme crossing dribble. All seven reviewed static snapshots are unchanged.
+Actual moving, settled and fresh wide-labels captures were also inspected.
+
+The same M5 Pro / iPhone 18 Pro / iOS 27.0 Simulator release harness as the
+preceding assessment ran actual production `07a271e` sources, with counters and
+monotonic timers only. Each case has ten warm and 41 timed updates. A separate
+14-frame quiet window records exact settling; GPU completion and host snapshot
+construction are excluded. Baselines are the two current-main `db1afff` runs
+recorded in #52–54.
+
+| Case | Before | Fixed | Deterministic fixed result over 41 updates |
+| --- | ---: | ---: | --- |
+| Dense continuous resize, Canvas median | 6.984–7.028 ms | 0.707 ms | 0 placement/source/vertex passes |
+| Dense colour update, composable median | 0.687–1.131 ms | 0.061 ms | 0 collision-placement passes |
+| Dense ball update, composable median | 0.639–1.044 ms | 0.047 ms | 0 collision-placement passes |
+| Max-arrow resize, Canvas median | 0.502–0.520 ms | 0.327–0.329 ms | 0 source/vertex passes; native Path transforms remain |
+
+Dense resize composable CPU was 0.010 ms. After that animation stopped, exactly
+one additional Canvas callback measured exact text, taking 5.694 ms. This
+remaining one-off cost is intentional, rather than hidden inside the continuous
+resize median. The no-label maximum-arrow case scheduled no quiet-period draws.
+The exact-pixel arrow approach improves less than the experimental Canvas-scale
+control; it removes the Kotlin vertex walk without accepting its pixel changes.
+These are simulator CPU-callback observations, not physical-device FPS or
+hardware-independent thresholds. No release is performed by these changes.

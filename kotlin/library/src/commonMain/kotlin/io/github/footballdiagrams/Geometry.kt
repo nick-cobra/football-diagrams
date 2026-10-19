@@ -254,10 +254,12 @@ fun layoutDiagramLabels(
     frame: DiagramFrame,
     geometry: DiagramGeometry,
 ): List<DiagramLabel> {
-    // Ordering matters: badges are collected before pills because a sequence
-    // number is anchored to a point on an arrow and means the wrong thing if it
-    // drifts, while a name pill only has to stay near its glyph.
-    val wanted = buildList {
+    return placeDiagramLabels(diagramLabelCandidates(area, frame, geometry), geometry)
+}
+
+internal fun diagramLabelCandidates(area: DiagramArea, frame: DiagramFrame, geometry: DiagramGeometry): List<DiagramLabel> =
+    // Badges precede pills so the latter move around their anchored numbers.
+    buildList {
         addAll(areaLabels(area, geometry))
         addAll(subAreaLabels(frame, geometry))
         addAll(glyphBadges(frame, geometry))
@@ -265,10 +267,8 @@ fun layoutDiagramLabels(
         addAll(objectLabels(frame, geometry))
         addAll(arrowLabels(frame, geometry))
     }
-    return decollide(wanted, geometry)
-}
 
-private fun decollide(wanted: List<DiagramLabel>, geometry: DiagramGeometry): List<DiagramLabel> {
+internal fun placeDiagramLabels(wanted: List<DiagramLabel>, geometry: DiagramGeometry): List<DiagramLabel> {
     val gap = geometry.unit * Proportions.LABEL_GAP
     val step = geometry.unit * Proportions.LABEL_STEP
     val placed = mutableListOf<DiagramLabel>()

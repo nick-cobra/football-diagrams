@@ -15,6 +15,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.graphics.drawscope.scale as scaleDrawing
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -77,9 +79,10 @@ fun FootballDiagram(
         frame.copy(id = "", title = "", caption = "")
     }
     val geometry = remember(diagram.area) { diagramGeometry(diagram.area) }
-    val labels = remember(diagram.area, drawingFrame) { layoutDiagramLabels(diagram.area, drawingFrame, geometry) }
+    val labels = rememberDiagramLabels(diagram.area, drawingFrame, geometry)
     val arrows = rememberArrowDrawingCache(frame.arrows, geometry)
     val textMeasurer = rememberDiagramTextMeasurer(labels)
+    val textResize = if (labels.isNotEmpty()) rememberDiagramTextResizeState(geometry) else null
     val description = "${diagram.title} — ${frame.title}"
 
     Canvas(
@@ -87,6 +90,7 @@ fun FootballDiagram(
             .fillMaxWidth()
             .aspectRatio(geometry.aspectRatio)
             .clipToBounds()
+            .onSizeChanged { textResize?.onSizeChanged(it) }
             .semantics { contentDescription = description },
     ) {
         val scale = geometry.pixelsPerMetre(size.width, size.height)
@@ -99,7 +103,13 @@ fun FootballDiagram(
             drawingFrame.objects.forEach { drawEquipment(it, geometry, scale) }
             arrows.atScale(scale, size.width / scale, size.height / scale).forEach { drawArrow(it, scale) }
             drawingFrame.objects.forEach { drawPerson(it, drawingFrame, geometry, scale) }
-            labels.forEach { drawLabel(it, geometry, scale, textMeasurer) }
+            val textScale = textResize?.scaleForDraw(scale) ?: scale
+            if (scale > 0f && textScale > 0f) {
+                if (textScale == scale) labels.forEach { drawLabel(it, geometry, scale, textMeasurer) }
+                else scaleDrawing(scale / textScale, scale / textScale, Offset.Zero) {
+                    labels.forEach { drawLabel(it, geometry, textScale, textMeasurer) }
+                }
+            }
         }
     }
 }
