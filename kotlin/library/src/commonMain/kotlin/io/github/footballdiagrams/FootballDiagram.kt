@@ -94,6 +94,9 @@ fun FootballDiagram(
             .semantics { contentDescription = description },
     ) {
         val scale = geometry.pixelsPerMetre(size.width, size.height)
+        // A graphics layer can record its draw block even at 0x0. In particular,
+        // native Skia cannot construct the resulting zero-interval zone dashes.
+        if (!scale.isFinite() || scale <= 0f) return@Canvas
         // Metre space has its origin at the grid's corner; the margin sits
         // outside it, so the whole drawing is shifted by one margin.
         translate(geometry.marginMetres * scale, geometry.marginMetres * scale) {
