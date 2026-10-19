@@ -180,14 +180,17 @@ private fun waveSampleRanges(ax: Float, ay: Float, dx: Float, dy: Float, steps: 
     }
 }
 
-internal fun renderArrowPathPoints(arrow: DiagramArrow, geometry: DiagramGeometry): List<DiagramPoint> {
+internal fun renderArrowPathPoints(
+    arrow: DiagramArrow, geometry: DiagramGeometry,
+    viewportWidth: Float = geometry.viewportWidth, viewportHeight: Float = geometry.viewportHeight,
+): List<DiagramPoint> {
     if (arrow.kind != DiagramArrowKind.Dribble) return arrowPathPoints(arrow, geometry)
     val padding = geometry.unit * 4f // Amplitude, shadow/strokes and arrowhead.
     return sampledWavePoints(arrow.points, geometry.unit * Proportions.DRIBBLE_AMPLITUDE,
         geometry.unit * Proportions.DRIBBLE_WAVELENGTH,
         WaveBounds(-geometry.marginMetres - padding, -geometry.marginMetres - padding,
-            geometry.lengthMetres + geometry.marginMetres + padding,
-            geometry.widthMetres + geometry.marginMetres + padding))
+            viewportWidth - geometry.marginMetres + padding,
+            viewportHeight - geometry.marginMetres + padding))
 }
 
 internal fun waveStepCount(length: Float, wavelength: Float, generatedPoints: Int): Int {

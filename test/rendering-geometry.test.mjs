@@ -62,3 +62,25 @@ test('whole-frame rendering work is bounded by the viewport, not offscreen path 
  assert.ok(html.length<800_000,`Actual renderer emitted ${html.length} bytes`);
  assert.doesNotMatch(html,/NaN|Infinity/);
 });
+
+test('letterboxed SVGs retain waves throughout the measured viewport',()=>{
+ const g=frameGeometry({shape:'rectangle',length_m:1,width_m:1});
+ const arrow={kind:'dribble',points:[{x:-1000,y:0},{x:1000,y:0}]};
+ const viewport={widthM:39.6,heightM:6.6};
+ const extra=(viewport.widthM-g.lengthM-2*g.margin)/2;
+ const rect=[-g.margin-extra,-g.margin,g.lengthM+g.margin+extra,g.widthM+g.margin];
+ assert.deepEqual(visibleEdges(points(renderArrowGeometry(arrow,g,viewport).d),rect),visibleEdges(points(arrowGeometry(arrow,g).d),rect));
+});
+
+
+test('fixed numeric SVG dimensions also preserve letterboxed paths during SSR',()=>{
+ const g=frameGeometry({shape:'rectangle',length_m:1,width_m:1});
+ const arrow={kind:'dribble',points:[{x:-1000,y:0},{x:1000,y:0}]};
+ const doc={format_version:1,title:'SSR',area:{shape:'rectangle',length_m:1,width_m:1},frames:[{id:'ssr',title:'SSR',objects:[],arrows:[arrow]}]};
+ for(const style of [{width:600,height:100},{width:'600px',height:'100px'}]) {
+  const html=renderToStaticMarkup(React.createElement(DiagramSvg,{diagram:doc,style}));
+  const d=html.match(/<path d="([^"]+)" fill="none" stroke="rgba/)[1];
+  const rect=[-19.3,-2.8,20.3,3.8];
+  assert.deepEqual(visibleEdges(points(d),rect),visibleEdges(points(arrowGeometry(arrow,g).d),rect));
+ }
+});

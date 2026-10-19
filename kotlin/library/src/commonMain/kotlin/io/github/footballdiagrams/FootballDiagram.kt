@@ -88,7 +88,7 @@ fun FootballDiagram(
             drawGrid(geometry, scale)
             drawSubAreas(frame, geometry, scale)
             frame.objects.forEach { drawEquipment(it, geometry, scale) }
-            arrows.atScale(scale).forEach { drawArrow(it, scale) }
+            arrows.atScale(scale, size.width / scale, size.height / scale).forEach { drawArrow(it, scale) }
             frame.objects.forEach { drawPerson(it, frame, geometry, scale) }
             labels.forEach { drawLabel(it, geometry, scale, textMeasurer) }
         }
@@ -406,7 +406,7 @@ internal fun DrawScope.drawPerson(
     }
 }
 
-private fun DrawScope.drawArrow(arrow: ArrowDrawing, scale: Float) {
+internal fun DrawScope.drawArrow(arrow: ArrowDrawing, scale: Float) {
     translate(0.12f * scale, 0.16f * scale) {
         drawPath(arrow.path, Color(0x47000000), style = arrow.shadowStroke)
     }

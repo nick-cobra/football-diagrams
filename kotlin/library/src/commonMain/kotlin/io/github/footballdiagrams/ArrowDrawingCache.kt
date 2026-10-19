@@ -5,19 +5,36 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 internal data class ArrowDrawing(val path: Path, val head: Path, val stroke: Stroke, val shadowStroke: Stroke)
 
 /** Owned by one composition/selected frame. Retains only metre-space points and
  * the most recent scale's Paths; resizing cannot accumulate a frame/size history.
  * Text, host style and accessibility remain outside this geometry-only cache. */
-internal class ArrowDrawingCache(arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
-    private val sources = arrows.map { it.kind to renderArrowPathPoints(it, geometry) }
+internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
+    private var sources: List<Pair<DiagramArrowKind, List<DiagramPoint>>> = emptyList()
+    private var cachedWidth = Float.NaN
+    private var cachedHeight = Float.NaN
 
     private var cachedScale = Float.NaN
     private var drawings: List<ArrowDrawing> = emptyList()
 
-    fun atScale(scale: Float): List<ArrowDrawing> {
+    fun atScale(scale: Float, viewportWidth: Float = geometry.viewportWidth, viewportHeight: Float = geometry.viewportHeight): List<ArrowDrawing> {
+        if (scale <= 0f) return emptyList()
+        // The measured Canvas may have a different aspect under host constraints.
+        // Round excess extents to units; the half-unit error fits inside padding.
+        fun extent(actual: Float, nominal: Float) = nominal +
+            max(0f, (actual - nominal) / geometry.unit).roundToInt() * geometry.unit
+        val width = extent(viewportWidth, geometry.viewportWidth)
+        val height = extent(viewportHeight, geometry.viewportHeight)
+        if (cachedWidth != width || cachedHeight != height) {
+            sources = arrows.map { it.kind to renderArrowPathPoints(it, geometry, width, height) }
+            cachedWidth = width
+            cachedHeight = height
+            cachedScale = Float.NaN
+        }
         if (cachedScale != scale) {
             drawings = buildDrawings(scale)
             cachedScale = scale

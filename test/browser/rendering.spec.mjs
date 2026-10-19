@@ -127,3 +127,10 @@ test('unchanged arrow geometry is reused while all relevant inputs still invalid
   expect(report.checks.filter(check=>!check.pass)).toEqual([]);
   expect(report.parentReads).toBe(0);
 });
+
+test('letterboxed and resized SVGs retain the full wave pixels',async({page})=>{
+  const report=await page.evaluate(()=>window.runDiagramViewportProbe());
+  expect(report).toHaveLength(4);
+  expect(report.map(result=>result.changedChannels)).toEqual([0,0,0,0]);
+  expect(report[3].width).toBe(900);
+});

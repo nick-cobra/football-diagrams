@@ -1,21 +1,64 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-import { renderArrowGeometry } from "./rendering-geometry.js";
-import { useId, useMemo } from "react";
+import { renderArrowGeometry, renderingViewport } from "./rendering-geometry.js";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { INK, LINE_PAINT, OUTSIDE_WASH, PERSON_KINDS, frameGeometry, grassStripes, isMover, layoutLabels, objectColour, personFill, shade, } from "./geometry.js";
+// Server rendering has no measured viewport. The natural aspect is the initial
+// value; client layout/ResizeObserver expands it before painting letterboxes.
+const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+function useRenderingViewport(geometry, visible, inlineStyle) {
+    const element = useRef(null);
+    const [measured, setMeasured] = useState();
+    const latest = useRef();
+    const measure = () => {
+        const svg = element.current;
+        if (!svg)
+            return;
+        const style = window.getComputedStyle(svg);
+        const contentExtent = (axis) => {
+            const value = Number.parseFloat(style[axis]);
+            if (style.boxSizing !== "border-box")
+                return value;
+            const edges = axis === "width" ? ["Left", "Right"] : ["Top", "Bottom"];
+            return value - edges.reduce((sum, edge) => sum + Number.parseFloat(style.getPropertyValue(`border-${edge.toLowerCase()}-width`)) + Number.parseFloat(style.getPropertyValue(`padding-${edge.toLowerCase()}`)), 0);
+        };
+        const viewport = renderingViewport(geometry, contentExtent("width"), contentExtent("height"));
+        const previous = latest.current;
+        if (previous?.geometry === geometry && previous.viewport.widthM === viewport.widthM && previous.viewport.heightM === viewport.heightM)
+            return;
+        latest.current = { geometry, viewport };
+        setMeasured(latest.current);
+    };
+    useMeasuredLayoutEffect(() => { measure(); });
+    useMeasuredLayoutEffect(() => {
+        const svg = element.current;
+        if (!svg || typeof ResizeObserver === "undefined")
+            return;
+        let active = true;
+        const observer = new ResizeObserver(() => { if (active)
+            measure(); });
+        observer.observe(svg);
+        return () => { active = false; observer.disconnect(); };
+    }, [geometry, visible]);
+    const pixels = (value) => typeof value === "number" ? value
+        : typeof value === "string" && /^[+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?px$/i.test(value.trim()) ? Number.parseFloat(value.trim()) : undefined;
+    return { element, viewport: measured?.geometry === geometry ? measured.viewport
+            : renderingViewport(geometry, pixels(inlineStyle?.width), pixels(inlineStyle?.height)) };
+}
 export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, className, style, "data-testid": testId = "football-diagram" }) {
     const markerPrefix = useId();
     const geometry = useMemo(() => frameGeometry(diagram.area), [diagram.area]);
     const frame = diagram.frames[frameIndex];
+    const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
     const labels = useMemo(() => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }) : []), [diagram, frame, geometry, thumbnail]);
-    const arrows = useMemo(() => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry)) : [], [frame?.arrows, geometry]);
+    const arrows = useMemo(() => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry, viewport)) : [], [frame?.arrows, geometry, viewport.widthM, viewport.heightM]);
     if (!frame)
         return null;
     const grass = grassStripes(geometry);
     const { lengthM, widthM, margin, unit } = geometry;
     const arrowMarker = `${markerPrefix}-arrow`;
     const heavyMarker = `${markerPrefix}-arrow-heavy`;
-    return (_jsxs("svg", { viewBox: geometry.viewBox, role: "img", "aria-label": `${diagram.title} — ${frame.title}`, "data-testid": testId, "data-frame-id": frame.id, "data-thumbnail": thumbnail ? "true" : undefined, className: className, width: "100%", style: style, children: [_jsxs("defs", { children: [_jsx(ArrowMarker, { id: arrowMarker, size: 5.4 }), _jsx(ArrowMarker, { id: heavyMarker, size: 3.6 })] }), grass.stripes.map((stripe, index) => (_jsx("rect", { x: stripe.x, y: grass.y, width: stripe.width, height: grass.height, fill: stripe.fill }, `stripe-${index}`))), _jsx("path", { d: `M${-margin} ${-margin} H${lengthM + margin} V${widthM + margin} H${-margin} Z M0 0 V${widthM} H${lengthM} V0 Z`, fill: OUTSIDE_WASH, fillRule: "evenodd" }), _jsx("rect", { x: 0, y: 0, width: lengthM, height: widthM, fill: "none", stroke: LINE_PAINT, strokeWidth: unit * 0.16 }), (frame.areas ?? []).map((area, index) => (_jsx("rect", { x: area.x, y: area.y, width: area.width, height: area.height, fill: area.colour ? `${objectColour(area)}22` : "rgba(255,255,255,0.08)", stroke: area.colour ? objectColour(area) : LINE_PAINT, strokeWidth: unit * 0.1, strokeDasharray: `${unit * 0.5} ${unit * 0.4}` }, `sub-area-${index}`))), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(EquipmentGlyph, { object: object, geometry: geometry }, `equip-${index}`))) }), _jsx("g", { children: arrows.map((geo, index) => {
+    return (_jsxs("svg", { ref: element, viewBox: geometry.viewBox, role: "img", "aria-label": `${diagram.title} — ${frame.title}`, "data-testid": testId, "data-frame-id": frame.id, "data-thumbnail": thumbnail ? "true" : undefined, className: className, width: "100%", style: style, children: [_jsxs("defs", { children: [_jsx(ArrowMarker, { id: arrowMarker, size: 5.4 }), _jsx(ArrowMarker, { id: heavyMarker, size: 3.6 })] }), grass.stripes.map((stripe, index) => (_jsx("rect", { x: stripe.x, y: grass.y, width: stripe.width, height: grass.height, fill: stripe.fill }, `stripe-${index}`))), _jsx("path", { d: `M${-margin} ${-margin} H${lengthM + margin} V${widthM + margin} H${-margin} Z M0 0 V${widthM} H${lengthM} V0 Z`, fill: OUTSIDE_WASH, fillRule: "evenodd" }), _jsx("rect", { x: 0, y: 0, width: lengthM, height: widthM, fill: "none", stroke: LINE_PAINT, strokeWidth: unit * 0.16 }), (frame.areas ?? []).map((area, index) => (_jsx("rect", { x: area.x, y: area.y, width: area.width, height: area.height, fill: area.colour ? `${objectColour(area)}22` : "rgba(255,255,255,0.08)", stroke: area.colour ? objectColour(area) : LINE_PAINT, strokeWidth: unit * 0.1, strokeDasharray: `${unit * 0.5} ${unit * 0.4}` }, `sub-area-${index}`))), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(EquipmentGlyph, { object: object, geometry: geometry }, `equip-${index}`))) }), _jsx("g", { children: arrows.map((geo, index) => {
                     const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
                     return (_jsxs("g", { "data-arrow-kind": geo.kind, children: [_jsx("path", { d: geo.d, fill: "none", stroke: "rgba(0,0,0,0.28)", strokeWidth: geo.strokeWidth + unit * 0.1, strokeLinecap: "round", strokeLinejoin: "round", transform: "translate(0.12 0.16)" }), _jsx("path", { d: geo.d, fill: "none", stroke: "#ffffff", strokeWidth: geo.strokeWidth, strokeLinecap: "round", strokeLinejoin: "round", strokeDasharray: geo.dashArray, markerEnd: `url(#${markerEnd})` })] }, `arrow-${index}`));
                 }) }), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(PersonGlyph, { object: object, frame: frame, geometry: geometry }, `person-${index}`))) }), _jsx("g", { "data-testid": "drill-diagram-v2-labels", children: labels.map((label, index) => (_jsx(LabelGlyph, { label: label }, `${label.kind}-${index}`))) })] }));
