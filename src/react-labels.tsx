@@ -70,7 +70,6 @@ export function LabelLayer({ labels, presentation }: { labels: LabelBox[]; prese
     const fonts = document.fonts;
     fonts?.addEventListener("loadingdone", refresh);
     fonts?.addEventListener("loadingerror", refresh);
-    void fonts?.ready.then(refresh);
     return () => {
       active = false;
       observer?.disconnect();

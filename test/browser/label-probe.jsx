@@ -50,7 +50,7 @@ export async function runLabelProbe() {
     await new Promise(requestAnimationFrame);await new Promise(requestAnimationFrame);
     check('inherited font changed without a React commit');
     const parentReads=reads-initialReads;
-    // A late font-ready callback after unmount must be harmless.
+    // The root always releases its font listeners and text observers on exit.
     return {reports,parentReads,fontStatus:face.status};
   } finally {flushSync(()=>root.unmount());host.remove();if(face)document.fonts.delete(face);}
 }
