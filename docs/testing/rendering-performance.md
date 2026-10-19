@@ -86,3 +86,47 @@ at `155f03a` before text-cache sizing. Maximum-frame arrows remained **0.037 ms*
 in all five cases. A fifth case displayed the wide-labels fixture for UIKit
 visual inspection. Initial text preparation and GPU completion remain outside
 these warmed CPU timings; this is simulator evidence, not physical-device FPS.
+
+
+## Compose update invalidation
+
+At `bd67ce0`, Compose retains the text measurer across position-only and
+same-capacity content updates, with an LRU bound of twice the active label count.
+A count change replaces the cache. Arrow preparation keys only kind/points and
+pitch geometry; label/sequence/badge edits retain prepared paths. A remembered
+content-only frame keeps caption/identity edits out of label placement and paint,
+while accessibility still reads the original diagram/frame titles.
+
+`ComposeInvalidationTest` first failed on each of the three original behaviours.
+It verifies paragraph and Path reuse, required geometry invalidation, no paint-input
+reads on metadata-only updates, accessibility updates, and changed/restored actual
+pixels for label, badge, kind, point, object-text and zone edits. `TextLayoutTest`
+also proves bounded eviction, count-driven resizing, and font/density/direction
+invalidation. All seven reviewed native images remain unchanged.
+
+The release iOS Simulator harness above was extended to alternate two prebuilt
+immutable snapshots (or frame indices), after ten warm updates. Separate timers
+inside the composable body and actual Canvas callback cover 41 updates per case.
+GPU completion and host snapshot construction are excluded. The baseline is the
+current-main tree at `f7c7cf`; two baseline runs reversed diagnostic-control order.
+The fixed run uses actual `bd67ce0` sources with counters/timers only.
+
+| Update | Before: Canvas CPU median | Fixed: Canvas CPU median | Fixed reuse evidence, 41 updates |
+| --- | ---: | ---: | --- |
+| Move one player, dense frame | 3.336–3.893 ms | 0.689 ms | 0 measurer replacements |
+| Same-text frame navigation | 3.887–4.102 ms | 0.544 ms | 0 measurer replacements |
+| Change one arrow sequence, max frame | 0.831–0.840 ms | 0.048 ms | 0 arrow source/Path rebuilds |
+| Caption only, dense frame | 0.851–0.907 ms | No Canvas callbacks | 0 label placements |
+
+Caption-only composable-body CPU fell from 1.178–1.239 ms to 0.020 ms. Moving a
+player still needs label placement: fixed composable-body CPU was 0.795 ms,
+separate from its 0.689 ms Canvas callback. Dense arrow-label edits also retained
+arrow geometry and the text measurer, while still placing and painting the
+changed label (1.314 ms composition, 0.897 ms Canvas). A sequence toggle between
+absent/present changes the label count and therefore intentionally replaces the
+small text cache. Warm forced redraws remained 0.615 ms for the dense case.
+
+These are Apple M5 Pro / iPhone 18 Pro profile / iOS 27.0 Simulator observations,
+not device FPS or universal timing thresholds. Deterministic reuse/eviction and
+actual pixel tests are the regression gates. No production diagnostic API, global
+cache, release or version change is introduced.
