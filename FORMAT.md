@@ -83,3 +83,13 @@ kind and original endpoint neighbours (and therefore arrowhead direction) remain
 Ordinary diagrams retain their exact original samples. The public geometry helpers
 still return the complete authored waveform and keep their existing 100,000-point
 per-path guard. No schema or stored document is changed by rendering detail levels.
+
+Compose also clips distant Run centre lines before native dash expansion. Each
+visible re-entry carries an invisible phase prefix; interior vertices and joins
+are retained, and the arrowhead and translated shadow use the same geometry.
+Native Float distance quantisation can produce subpixel antialiasing differences
+on distant paths; ordinary in-bounds paths keep the original native path. At most
+30,000 dash intervals are allocated across the frame's Run arrows, counting
+contour prefixes. If an extreme constraint exposes more, dash on/off lengths
+increase together by powers of two until the allocation fits. The stored arrow
+and its endpoints remain unchanged.

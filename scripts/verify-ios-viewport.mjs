@@ -7,6 +7,7 @@ import {randomUUID} from 'node:crypto';
 const [device,output='artifacts/ios-viewport']=process.argv.slice(2);
 if(!device || device==='booted')throw Error('Supply an explicitly owned simulator UDID');
 const evidence=resolve(output);mkdirSync(evidence,{recursive:true});
+for(const file of ['result.json','viewport.json'])rmSync(join(evidence,file),{force:true});
 const root=mkdtempSync(join(tmpdir(),'football-viewport-'));
 const app=join(root,'Viewport.app'),bundle='io.github.footballdiagrams.viewport.t'+randomUUID().replaceAll('-','');
 const xr=(...args)=>execFileSync('xcrun',args,{encoding:'utf8',stdio:['ignore','pipe','pipe']}).trim();
