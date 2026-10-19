@@ -111,7 +111,7 @@ test('repeated terminal vertices preserve actual SVG arrow pixels',async({page},
   expect(after.equals(before),'Repeated vertices must preserve actual SVG pixels').toBe(true);
 });
 
-for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-pitch',3,960],['narrow',0,360]]) {
+for(const [name,document,width] of [['all-kinds',0,960],['square',2,960],['off-pitch',3,960],['narrow',0,360],['wide-labels',8,960]]) {
   test(`reviewed rendering: ${name}`,async({page})=>{
     await page.setViewportSize({width,height:900});
     const a=page.getByRole('region',{name:'Root a'});
@@ -133,4 +133,16 @@ test('letterboxed and resized SVGs retain the full wave pixels',async({page})=>{
   expect(report).toHaveLength(4);
   expect(report.map(result=>result.changedChannels)).toEqual([0,0,0,0]);
   expect(report[3].width).toBe(900);
+});
+
+test('actual glyphs fit badges and every pill kind through font loading and resizing',async({page})=>{
+  const report=await page.evaluate(()=>window.runDiagramLabelProbe());
+  expect(report.reports).toHaveLength(4);
+  expect(report.fontStatus).toBe('loaded');
+  for(const result of report.reports) {
+    expect(result.rows.length).toBe(12);
+    expect(result.rows.filter(row=>!row.withinBackground),result.name).toEqual([]);
+    expect(new Set(result.rows.map(row=>row.kind))).toEqual(new Set(['area','sub_area','number','sequence','object','arrow']));
+  }
+  expect(report.parentReads).toBe(0);
 });
