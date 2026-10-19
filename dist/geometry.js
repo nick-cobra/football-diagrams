@@ -20,10 +20,13 @@ export const KIND_FILL = {
     coach: "#223047",
 };
 export const PERSON_KINDS = ["player", "opponent", "neutral", "coach"];
-export function frameGeometry(area) {
+export function frameGeometry(area, marginMetres = 0) {
+    if (!Number.isFinite(marginMetres) || marginMetres < 0 || marginMetres > 120) {
+        throw new RangeError("Rendering margin must be finite and between 0 and 120 metres");
+    }
     const lengthM = area.length_m;
     const widthM = area.width_m;
-    const margin = Math.max(2.8, lengthM * 0.09);
+    const margin = Math.max(2.8, lengthM * 0.09, marginMetres);
     return {
         lengthM,
         widthM,

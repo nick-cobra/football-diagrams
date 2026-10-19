@@ -158,3 +158,10 @@ test('isolated maximum-length pills stay inside the viewport through fonts and r
   expect(reports).toHaveLength(49);
   expect(reports.filter(row=>!row.textRetained||!row.textInside||!row.backgroundInside)).toEqual([]);
 });
+
+test('explicit margin frames all four off-pitch actors under natural and letterboxed constraints',async({page})=>{
+  const reports=await page.evaluate(()=>window.runDiagramMarginProbe());
+  expect(reports).toHaveLength(30);
+  expect(reports.filter(row=>row.restored===false||row.inside===false||row.actorPaints===false)).toEqual([]);
+  expect(reports.filter(row=>row.viewBox&&row.viewBox!=='-16 -16 72 62')).toEqual([]);
+});

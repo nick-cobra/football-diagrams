@@ -34,3 +34,6 @@ window.runDiagramEquipmentProbe=runEquipmentProbe;
 
 import { runPillViewportProbe } from './pill-viewport-probe.jsx';
 window.runDiagramPillViewportProbe=runPillViewportProbe;
+
+import {runMarginProbe} from './margin-probe.jsx';
+window.runDiagramMarginProbe=runMarginProbe;

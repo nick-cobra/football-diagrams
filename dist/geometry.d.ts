@@ -16,7 +16,7 @@ export interface FrameGeometry {
     viewBox: string;
     stripeWidth: number;
 }
-export declare function frameGeometry(area: Diagram["area"]): FrameGeometry;
+export declare function frameGeometry(area: Diagram["area"], marginMetres?: number): FrameGeometry;
 export declare function grassStripes(geometry: FrameGeometry): {
     stripes: {
         x: number;

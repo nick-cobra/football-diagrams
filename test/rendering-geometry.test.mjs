@@ -88,12 +88,14 @@ test('fixed numeric SVG dimensions also preserve letterboxed paths during SSR',(
 test('a stretched frame with thirty distinct dribbles has a hard geometry and SVG budget',async()=>{
  const {renderFrameArrows,renderingViewport}=await import('../dist/rendering-geometry.js');
  const doc={format_version:1,title:'Budget',area:{shape:'rectangle',length_m:1,width_m:1},frames:[{id:'budget',title:'Budget',objects:[],arrows:Array.from({length:30},(_,a)=>({kind:'dribble',points:Array.from({length:12},(_,i)=>({x:i%2?1000:-1000,y:a/100}))}))}]};
- const g=frameGeometry(doc.area);
- for(const style of [{width:360,height:1},{width:1,height:360},{width:1e6,height:1},{width:1,height:1e6}]) {
-  const arrows=renderFrameArrows(doc.frames[0].arrows,g,renderingViewport(g,style.width,style.height));
-  assert.ok(arrows.reduce((n,a)=>n+points(a.d).length,0)<=30_000);
-  const html=renderToStaticMarkup(React.createElement(DiagramSvg,{diagram:parseDiagram(doc),style}));
-  assert.ok(html.length<1_500_000,`Renderer emitted ${html.length} bytes`);
-  assert.doesNotMatch(html,/NaN|Infinity/);
+ for(const margin of [0,120]) {
+  const g=frameGeometry(doc.area,margin);
+  for(const style of [{width:360,height:1},{width:1,height:360},{width:1e6,height:1},{width:1,height:1e6}]) {
+   const arrows=renderFrameArrows(doc.frames[0].arrows,g,renderingViewport(g,style.width,style.height));
+   assert.ok(arrows.reduce((n,a)=>n+points(a.d).length,0)<=30_000);
+   const html=renderToStaticMarkup(React.createElement(DiagramSvg,{diagram:parseDiagram(doc),style,marginMetres:margin}));
+   assert.ok(html.length<1_500_000,`Renderer emitted ${html.length} bytes`);
+   assert.doesNotMatch(html,/NaN|Infinity/);
+  }
  }
 });

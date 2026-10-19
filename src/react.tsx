@@ -28,6 +28,8 @@ export interface DiagramSvgProps {
   "data-testid"?: string;
   frameIndex?: number;
   thumbnail?: boolean;
+  /** Uniform grass margin in metres; finite 0..120, never smaller than the default. */
+  marginMetres?: number;
 }
 
 // Server rendering has no measured viewport. The natural aspect is the initial
@@ -69,9 +71,9 @@ function useRenderingViewport(geometry: FrameGeometry, visible: boolean, inlineS
     : renderingViewport(geometry, pixels(inlineStyle?.width), pixels(inlineStyle?.height)) };
 }
 
-export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, className, style, "data-testid": testId = "football-diagram" }: DiagramSvgProps) {
+export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginMetres, className, style, "data-testid": testId = "football-diagram" }: DiagramSvgProps) {
   const markerPrefix = useId();
-  const geometry = useMemo(() => frameGeometry(diagram.area), [diagram.area]);
+  const geometry = useMemo(() => frameGeometry(diagram.area, marginMetres), [diagram.area, marginMetres]);
   const frame = diagram.frames[frameIndex];
   const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
   const labels = useMemo(

@@ -37,6 +37,9 @@ try{
  const metadata=JSON.parse(readFileSync(join(payload,'package.json'),'utf8'));
  const packageVersion=metadata.version;
  const formatVersion=metadata.exports?.['./schema/v2']?2:1;
+ const hasMargin=readFileSync(join(payload,'dist/react.d.ts'),'utf8').includes('marginMetres');
+ const marginArgument=hasMargin?',marginMetres=16f':'';
+ const marginAssertion=hasMargin?'assertEquals(16f,diagramGeometry(sample.area,16f).marginMetres);':'';
  const gradle=join(payload,'kotlin/gradlew');
  const settings=`pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }\ndependencyResolutionManagement { repositories { google(); mavenCentral() } }\nrootProject.name = "ColdInstalledConsumer"\nincludeBuild(${quote(join(payload,'kotlin'))}) { dependencySubstitution { substitute(module("io.github.nick-cobra:football-diagrams")).using(project(":library")) } }\n`;
  const consumer=join(scratch,'consumer');mkdirSync(consumer);
@@ -45,9 +48,9 @@ try{
  writeFileSync(join(consumer,'build.gradle.kts'),`plugins { kotlin("multiplatform") version "2.4.20"; kotlin("plugin.compose") version "2.4.20" }\nkotlin { jvmToolchain(21); jvm(); iosSimulatorArm64 { binaries.framework { baseName = "ColdConsumer"; isStatic = true } }; sourceSets { commonMain.dependencies { implementation("io.github.nick-cobra:football-diagrams:${packageVersion}") }; commonTest.dependencies { implementation(kotlin("test")) } } }\n`);
  mkdirSync(join(consumer,'src/commonMain/kotlin'),{recursive:true});
  const document=JSON.stringify({format_version:formatVersion,title:'Cold source',area:{shape:'rectangle',length_m:30,width_m:20},frames:[{id:'f',title:'Frame',objects:[],arrows:[]}]});
- writeFileSync(join(consumer,'src/commonMain/kotlin/Consumer.kt'),`import androidx.compose.runtime.Composable\nimport io.github.footballdiagrams.*\nval sample = Diagrams.parse("""${document}""")\n@Composable fun Consumer() { FootballDiagram(sample,0) }\n`);
+ writeFileSync(join(consumer,'src/commonMain/kotlin/Consumer.kt'),`import androidx.compose.runtime.Composable\nimport io.github.footballdiagrams.*\nval sample = Diagrams.parse("""${document}""")\n@Composable fun Consumer() { FootballDiagram(sample,0${marginArgument}) }\n`);
  mkdirSync(join(consumer,'src/commonTest/kotlin'),{recursive:true});
- writeFileSync(join(consumer,'src/commonTest/kotlin/ConsumerTest.kt'),`import io.github.footballdiagrams.*\nimport kotlin.test.*\nclass ConsumerTest { @Test fun publicContractActuallyRuns() { assertEquals(${formatVersion},sample.formatVersion); assertEquals(30.0,sample.area.lengthMetres.toDouble()); assertEquals(sample,Diagrams.parse(Diagrams.stringify(sample))); assertTrue(diagramGeometry(sample.area).aspectRatio>1f) } }\n`);
+ writeFileSync(join(consumer,'src/commonTest/kotlin/ConsumerTest.kt'),`import io.github.footballdiagrams.*\nimport kotlin.test.*\nclass ConsumerTest { @Test fun publicContractActuallyRuns() { assertEquals(${formatVersion},sample.formatVersion); ${marginAssertion} assertEquals(30.0,sample.area.lengthMetres.toDouble()); assertEquals(sample,Diagrams.parse(Diagrams.stringify(sample))); assertTrue(diagramGeometry(sample.area).aspectRatio>1f) } }\n`);
  execute(gradle,['-p',consumer,'jvmTest','--rerun','linkDebugFrameworkIosSimulatorArm64','iosSimulatorArm64Test','--device',device,'--rerun','--console=plain'],scratch,'kotlin-consumer');
  const android=join(scratch,'android');mkdirSync(android);
  // Public example host is test input; its library dependency resolves exclusively
@@ -69,7 +72,7 @@ try{
   counts[target]=executedTests(directory);
  }
  for(const react of ['18.3.1','19.3.1'])execute(process.execPath,[fileURLToPath(new URL('./verify-js-consumer.mjs',import.meta.url)),source,join(evidence,`js-${react}`)],scratch,`js-${react}`,{...process.env,REACT_VERSION:react});
- const report={requestedPin:pin,commit:sha,packageSha256:manifest.sha256,consumerToolchain:{kotlin:"2.4.20",compose:"1.12.1",androidPlugin:"9.2.1",compileSdk:37,minSdk:26},node:process.version,java:run('java',['--version']).trim(),gradle:execute(gradle,['--version'],scratch,'gradle-version'),xcode:run('xcodebuild',['-version']).trim(),simulator:device,tests:counts,android:{assembled:true,sha256:hash(actualApk)},ios:{framework:true,sha256:hash(framework)}};
+ const report={requestedPin:pin,commit:sha,packageSha256:manifest.sha256,consumerToolchain:{kotlin:"2.4.20",compose:"1.12.1",androidPlugin:"9.2.1",compileSdk:37,minSdk:26},node:process.version,java:run('java',['--version']).trim(),gradle:execute(gradle,['--version'],scratch,'gradle-version'),xcode:run('xcodebuild',['-version']).trim(),simulator:device,tests:counts,displayMargin:hasMargin,android:{assembled:true,sha256:hash(actualApk)},ios:{framework:true,sha256:hash(framework)}};
  writeFileSync(join(evidence,'source-results.json'),JSON.stringify(report,null,2)+'\n');
  console.log(`Cold public source ${sha}: JVM/native tests, Android APK, iOS framework and installed JS passed. Evidence: ${evidence}`);
 }finally{rmSync(scratch,{recursive:true,force:true});}

@@ -6,9 +6,11 @@ import movement from '../../fixtures/valid/multi-frame.json';
 import equipment from '../../fixtures/valid/all-kinds.json';
 import authoredEquipment from '../../fixtures/valid/authored-equipment-v2.json';
 import longPill from '../../fixtures/valid/long-pill-viewport.json';
+import touchline from '../../fixtures/valid/bounded-margin.json';
 import './style.css';
 
-const documents = [parseDiagram(movement), parseDiagram(equipment), parseDiagram(authoredEquipment), parseDiagram(longPill)];
+const documents = [parseDiagram(movement), parseDiagram(equipment), parseDiagram(authoredEquipment), parseDiagram(longPill), parseDiagram(touchline)];
+const displayMargins = [0,0,0,0,16];
 
 function Example() {
   const [documentIndex, setDocumentIndex] = useState(0);
@@ -23,10 +25,10 @@ function Example() {
         </select></label>
         <div className="steps" aria-label="Frame selection">{diagram.frames.map((frame, index) => <button key={frame.id} aria-pressed={frameIndex === index} onClick={() => setFrameIndex(index)}>{frame.title}</button>)}</div>
       </div>
-      <DiagramSvg diagram={diagram} frameIndex={frameIndex} />
+      <DiagramSvg diagram={diagram} frameIndex={frameIndex} marginMetres={displayMargins[documentIndex]} />
       <p className="caption">{diagram.frames[frameIndex].caption}</p>
     </section>
-    <section className="small"><h2>The same frame as a thumbnail</h2><DiagramSvg diagram={diagram} frameIndex={frameIndex} thumbnail /></section>
+    <section className="small"><h2>The same frame as a thumbnail</h2><DiagramSvg diagram={diagram} frameIndex={frameIndex} marginMetres={displayMargins[documentIndex]} thumbnail /></section>
     <footer>Independent synthetic examples. The host owns its data and controls; the renderer draws the selected frame.</footer>
   </main>;
 }
