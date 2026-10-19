@@ -93,3 +93,45 @@ on distant paths; ordinary in-bounds paths keep the original native path. At mos
 contour prefixes. If an extreme constraint exposes more, dash on/off lengths
 increase together by powers of two until the allocation fits. The stored arrow
 and its endpoints remain unchanged.
+
+## Format 2: authored equipment geometry (unreleased)
+
+[`schema/diagram-v2.schema.json`](schema/diagram-v2.schema.json) defines format 2.
+It has the same fields, bounds, nullable defaults and resource envelope as format 1,
+with `format_version: 2`. The published format-1 schema and drawing meaning remain
+unchanged. The public `football-diagrams/schema` export continues to identify
+format 1; `football-diagrams/schema/v2` identifies format 2.
+
+For `goal` and `mini_goal`, `angle` is the goal-mouth axis, clockwise from positive
+x in the document's downwards-y coordinates. `0` and `180` are horizontal mouths;
+`90` and `270` are vertical. The complete mouth and net rotate around authored x/y.
+The old vertical mouth with a net extending towards positive x is rotated by
+`angle - 90` degrees. Consequently, nets point towards negative y at 0, positive x
+at 90, positive y at 180, and negative x at 270. Oblique angles work continuously.
+Omitted or null angles default to 90 and preserve the old appearance. Mouth widths
+still default to 6m for goals and 2.4m for mini goals; net depths remain 1.4m/0.9m.
+There is no inferred byline direction.
+
+For `gate`, `width` is the distance in metres between the two cone centres. The
+colour band ends at those same centres. Omitted or null width retains 2.1m. Gate
+angles retain their format-1 convention (0 horizontal, 90 vertical). Format 1
+continues to ignore explicit gate widths and goal angles. Other equipment,
+including ladders, retains its existing drawing meaning in both versions.
+
+The standalone [`authored-equipment-v2.json`](fixtures/valid/authored-equipment-v2.json)
+example includes horizontal, vertical and oblique goals and 2/3/4m gates. Set the
+explicit document version to 2 when authoring that geometry. Merely upgrading a
+library does not reinterpret existing version-1 documents. Host applications own
+any deliberate content/adaptor migration.
+
+| Reader / writer | Writes format 1 | Writes format 2 |
+| --- | --- | --- |
+| Released library 0.2.1 reader | Accepted; original geometry | Rejected as unsupported |
+| Unreleased 0.3.0-dev.1 reader | Accepted; original geometry | Accepted; authored equipment geometry |
+
+New parsers and serialisers retain the selected version and reject unknown
+versions. The default Kotlin constructor still selects format 1; explicit
+`formatVersion = 2` is required for new geometry. Existing `gateCones(target)`
+callers retain format-1 geometry; use `gateCones(target, formatVersion)` when
+inspecting a versioned document. This development version is an immutable-source
+integration prerequisite; it is not a tag, package publication or release.

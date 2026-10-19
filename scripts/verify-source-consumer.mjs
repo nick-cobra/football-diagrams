@@ -34,17 +34,20 @@ try{
  execute('tar',['-xf',archive,'-C',extracted],scratch,'extract');
  const payload=join(extracted,'package');
  for(const file of manifest.files)if(hash(join(payload,file.path))!==file.sha256)throw new Error(`Extracted asset hash mismatch: ${file.path}`);
+ const metadata=JSON.parse(readFileSync(join(payload,'package.json'),'utf8'));
+ const packageVersion=metadata.version;
+ const formatVersion=metadata.exports?.['./schema/v2']?2:1;
  const gradle=join(payload,'kotlin/gradlew');
  const settings=`pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }\ndependencyResolutionManagement { repositories { google(); mavenCentral() } }\nrootProject.name = "ColdInstalledConsumer"\nincludeBuild(${quote(join(payload,'kotlin'))}) { dependencySubstitution { substitute(module("io.github.nick-cobra:football-diagrams")).using(project(":library")) } }\n`;
  const consumer=join(scratch,'consumer');mkdirSync(consumer);
  writeFileSync(join(consumer,'settings.gradle.kts'),settings);
  writeFileSync(join(consumer,'gradle.properties'),'android.useAndroidX=true\norg.gradle.jvmargs=-Xmx3g\n');
- writeFileSync(join(consumer,'build.gradle.kts'),`plugins { kotlin("multiplatform") version "2.4.20"; kotlin("plugin.compose") version "2.4.20" }\nkotlin { jvmToolchain(21); jvm(); iosSimulatorArm64 { binaries.framework { baseName = "ColdConsumer"; isStatic = true } }; sourceSets { commonMain.dependencies { implementation("io.github.nick-cobra:football-diagrams:0.2.1") }; commonTest.dependencies { implementation(kotlin("test")) } } }\n`);
+ writeFileSync(join(consumer,'build.gradle.kts'),`plugins { kotlin("multiplatform") version "2.4.20"; kotlin("plugin.compose") version "2.4.20" }\nkotlin { jvmToolchain(21); jvm(); iosSimulatorArm64 { binaries.framework { baseName = "ColdConsumer"; isStatic = true } }; sourceSets { commonMain.dependencies { implementation("io.github.nick-cobra:football-diagrams:${packageVersion}") }; commonTest.dependencies { implementation(kotlin("test")) } } }\n`);
  mkdirSync(join(consumer,'src/commonMain/kotlin'),{recursive:true});
- const document=JSON.stringify({format_version:1,title:'Cold source',area:{shape:'rectangle',length_m:30,width_m:20},frames:[{id:'f',title:'Frame',objects:[],arrows:[]}]});
+ const document=JSON.stringify({format_version:formatVersion,title:'Cold source',area:{shape:'rectangle',length_m:30,width_m:20},frames:[{id:'f',title:'Frame',objects:[],arrows:[]}]});
  writeFileSync(join(consumer,'src/commonMain/kotlin/Consumer.kt'),`import androidx.compose.runtime.Composable\nimport io.github.footballdiagrams.*\nval sample = Diagrams.parse("""${document}""")\n@Composable fun Consumer() { FootballDiagram(sample,0) }\n`);
  mkdirSync(join(consumer,'src/commonTest/kotlin'),{recursive:true});
- writeFileSync(join(consumer,'src/commonTest/kotlin/ConsumerTest.kt'),`import io.github.footballdiagrams.*\nimport kotlin.test.*\nclass ConsumerTest { @Test fun publicContractActuallyRuns() { assertEquals(30.0,sample.area.lengthMetres.toDouble()); assertEquals(sample,Diagrams.parse(Diagrams.stringify(sample))); assertTrue(diagramGeometry(sample.area).aspectRatio>1f) } }\n`);
+ writeFileSync(join(consumer,'src/commonTest/kotlin/ConsumerTest.kt'),`import io.github.footballdiagrams.*\nimport kotlin.test.*\nclass ConsumerTest { @Test fun publicContractActuallyRuns() { assertEquals(${formatVersion},sample.formatVersion); assertEquals(30.0,sample.area.lengthMetres.toDouble()); assertEquals(sample,Diagrams.parse(Diagrams.stringify(sample))); assertTrue(diagramGeometry(sample.area).aspectRatio>1f) } }\n`);
  execute(gradle,['-p',consumer,'jvmTest','--rerun','linkDebugFrameworkIosSimulatorArm64','iosSimulatorArm64Test','--device',device,'--rerun','--console=plain'],scratch,'kotlin-consumer');
  const android=join(scratch,'android');mkdirSync(android);
  // Public example host is test input; its library dependency resolves exclusively

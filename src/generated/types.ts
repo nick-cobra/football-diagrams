@@ -1,9 +1,9 @@
-// Generated from schema/diagram.schema.json. Do not edit.
+// Generated from schema/diagram.schema.json and schema/diagram-v2.schema.json. Do not edit.
 
 export type ObjectColour = "red" | "blue" | "yellow" | "green" | "orange" | "white" | "teal";
 
 export interface Diagram {
-  format_version: 1;
+  format_version: 1 | 2;
   title: string;
   area: Area;
   /**

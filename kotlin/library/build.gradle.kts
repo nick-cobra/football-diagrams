@@ -18,11 +18,12 @@ tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
 }
 
 group = "io.github.nick-cobra"
-version = "0.2.1"
+version = "0.3.0-dev.1"
 
 val generatedMain = layout.buildDirectory.dir("generated/schema/commonMain")
 val generatedTest = layout.buildDirectory.dir("generated/schema/commonTest")
 val schemaFile = rootProject.layout.projectDirectory.file("../schema/diagram.schema.json")
+val schemaV2File = rootProject.layout.projectDirectory.file("../schema/diagram-v2.schema.json")
 val fixturesDirectory = rootProject.layout.projectDirectory.dir("../fixtures")
 
 fun quotedKotlin(value: String): String =
@@ -30,13 +31,15 @@ fun quotedKotlin(value: String): String =
 
 val generateContract by tasks.registering {
     inputs.file(schemaFile)
+    inputs.file(schemaV2File)
     inputs.dir(fixturesDirectory)
     outputs.dir(generatedMain)
     outputs.dir(generatedTest)
     doLast {
         generatedMain.get().file("SchemaDefinition.kt").asFile.apply {
             parentFile.mkdirs()
-            writeText("package io.github.footballdiagrams\n\ninternal val schemaDefinition = " + quotedKotlin(schemaFile.asFile.readText()) + "\n")
+            writeText("package io.github.footballdiagrams\n\ninternal val schemaDefinition = " + quotedKotlin(schemaFile.asFile.readText()) +
+                "\ninternal val schemaDefinitionV2 = " + quotedKotlin(schemaV2File.asFile.readText()) + "\n")
         }
         val fixtures = listOf("valid", "invalid").flatMap { kind ->
             fixturesDirectory.asFile.resolve(kind).listFiles().orEmpty().sortedBy { it.name }.map { file ->

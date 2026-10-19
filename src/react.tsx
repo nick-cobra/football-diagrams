@@ -152,7 +152,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
 
       <g>
         {frame.objects.map((object, index) => (
-          <EquipmentGlyph key={`equip-${index}`} object={object} geometry={geometry} />
+          <EquipmentGlyph key={`equip-${index}`} object={object} geometry={geometry} formatVersion={diagram.format_version} />
         ))}
       </g>
 
@@ -254,12 +254,12 @@ function Ball({ x, y, r, unit }: { x: number; y: number; r: number; unit: number
   );
 }
 
-function EquipmentGlyph({ object, geometry }: { object: DiagramObject; geometry: FrameGeometry }) {
+function EquipmentGlyph({ object, geometry, formatVersion }: { object: DiagramObject; geometry: FrameGeometry; formatVersion: Diagram["format_version"] }) {
   const { playerRadius: pr, unit } = geometry;
   const colour = objectColour(object);
 
   if (object.kind === "gate") {
-    const gap = 2.1;
+    const gap = formatVersion === 2 ? object.width ?? 2.1 : 2.1;
     const angle = ((object.angle ?? 0) * Math.PI) / 180;
     const ux = Math.cos(angle);
     const uy = Math.sin(angle);
@@ -384,7 +384,7 @@ function EquipmentGlyph({ object, geometry }: { object: DiagramObject; geometry:
     const mouth = object.width ?? (object.kind === "goal" ? 6 : 2.4);
     const depth = object.kind === "goal" ? 1.4 : 0.9;
     return (
-      <g data-object-kind={object.kind}>
+      <g data-object-kind={object.kind} transform={formatVersion === 2 ? `rotate(${(object.angle ?? 90) - 90} ${object.x} ${object.y})` : undefined}>
         <rect
           x={object.x}
           y={object.y - mouth / 2}

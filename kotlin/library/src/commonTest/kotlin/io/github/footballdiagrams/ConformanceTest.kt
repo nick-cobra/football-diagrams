@@ -16,7 +16,7 @@ class ConformanceTest {
                 val diagram = try { Diagrams.parse(fixture.json) } catch (error: Exception) {
                     fail("${fixture.name}: ${error.message}")
                 }
-                assertEquals(1, diagram.formatVersion, fixture.name)
+                assertEquals(Json.parseToJsonElement(fixture.json).jsonObject.getValue("format_version").jsonPrimitive.double.toInt(), diagram.formatVersion, fixture.name)
                 val encoded = Diagrams.stringify(diagram)
                 assertEquals(diagram, Diagrams.parse(encoded), fixture.name)
                 assertAuthoredValues(Json.parseToJsonElement(fixture.json), Json.parseToJsonElement(encoded), fixture.name)

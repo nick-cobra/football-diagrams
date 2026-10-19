@@ -216,8 +216,11 @@ internal fun waveStepCount(length: Float, wavelength: Float, generatedPoints: In
     return steps
 }
 
-fun gateCones(target: DiagramObject): Pair<DiagramPoint, DiagramPoint> {
-    val gap = Proportions.GATE_CONE_GAP
+/** Legacy helper retains format-1 geometry for existing callers. */
+fun gateCones(target: DiagramObject): Pair<DiagramPoint, DiagramPoint> = gateCones(target, 1)
+
+fun gateCones(target: DiagramObject, formatVersion: Int): Pair<DiagramPoint, DiagramPoint> {
+    val gap = if (formatVersion == 2) target.widthMetres?.toFloat() ?: Proportions.GATE_CONE_GAP else Proportions.GATE_CONE_GAP
     val angle = (target.angleDegrees?.toFloat() ?: 0f) * PI.toFloat() / Proportions.HALF_TURN_DEGREES
     val ux = cos(angle)
     val uy = sin(angle)

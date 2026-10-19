@@ -1,0 +1,84 @@
+{
+  "format_version": 2,
+  "title": "Authored equipment axes and widths",
+  "area": {
+    "shape": "rectangle",
+    "length_m": 40,
+    "width_m": 30
+  },
+  "frames": [
+    {
+      "id": "equipment",
+      "title": "Setup",
+      "objects": [
+        {
+          "kind": "mini_goal",
+          "x": 4,
+          "y": 5,
+          "width": 1.5,
+          "unknown": true
+        },
+        {
+          "kind": "mini_goal",
+          "x": 8,
+          "y": 5,
+          "width": 1.5,
+          "angle": 0
+        },
+        {
+          "kind": "mini_goal",
+          "x": 12,
+          "y": 5,
+          "width": 1.5,
+          "angle": 90
+        },
+        {
+          "kind": "mini_goal",
+          "x": 16,
+          "y": 5,
+          "width": 1.5,
+          "angle": 180
+        },
+        {
+          "kind": "mini_goal",
+          "x": 20,
+          "y": 5,
+          "width": 1.5,
+          "angle": 270
+        },
+        {
+          "kind": "mini_goal",
+          "x": 24,
+          "y": 5,
+          "width": 1.5,
+          "angle": 45
+        },
+        {
+          "kind": "gate",
+          "x": 5,
+          "y": 18,
+          "width": 2,
+          "angle": 90,
+          "colour": "yellow"
+        },
+        {
+          "kind": "gate",
+          "x": 15,
+          "y": 18,
+          "width": 3,
+          "angle": 90,
+          "colour": "yellow"
+        },
+        {
+          "kind": "gate",
+          "x": 25,
+          "y": 18,
+          "width": 4,
+          "angle": 90,
+          "colour": "yellow"
+        }
+      ],
+      "arrows": []
+    }
+  ]
+}
