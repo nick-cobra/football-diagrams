@@ -2,6 +2,7 @@ package io.github.footballdiagrams
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Matrix
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -12,11 +13,11 @@ import kotlin.math.roundToInt
 
 internal data class ArrowDrawing(val path: Path, val head: Path, val stroke: Stroke, val shadowStroke: Stroke)
 
-/** Owned by one composition/active arrow geometry. Retains only metre-space points and
- * the most recent scale's Paths; resizing cannot accumulate a frame/size history.
+/** Owned by one composition/active arrow geometry. Retains metre-space Paths and
+ * only the most recent scaled drawing; resizing cannot accumulate a size history.
  * Text, host style and accessibility remain outside this geometry-only cache. */
 internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
-    private var sources: List<Pair<DiagramArrowKind, List<DiagramPoint>>> = emptyList()
+    private var sources: List<ArrowSourceDrawing> = emptyList()
     private var cachedWidth = Float.NaN
     private var cachedHeight = Float.NaN
 
@@ -32,7 +33,7 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         val width = extent(viewportWidth, geometry.viewportWidth)
         val height = extent(viewportHeight, geometry.viewportHeight)
         if (cachedWidth != width || cachedHeight != height) {
-            sources = arrows.map { it.kind to renderArrowPathPoints(it, geometry, width, height) }
+            sources = arrows.mapNotNull { prepareSource(it, width, height) }
             cachedWidth = width
             cachedHeight = height
             cachedScale = Float.NaN
@@ -44,32 +45,53 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         return drawings
     }
 
-    private fun buildDrawings(scale: Float): List<ArrowDrawing> = sources.mapNotNull { (kind, points) ->
-        if (points.size < 2) return@mapNotNull null
-        val width = arrowStrokeWidth(kind, geometry)
+    private data class ArrowSourceDrawing(
+        val path: Path,
+        val head: Path,
+        val width: Float,
+        val shadowWidth: Float,
+        val dash: FloatArray?,
+    )
+
+    private fun prepareSource(arrow: DiagramArrow, viewportWidth: Float, viewportHeight: Float): ArrowSourceDrawing? {
+        val points = renderArrowPathPoints(arrow, geometry, viewportWidth, viewportHeight)
+        if (points.size < 2) return null
         val path = Path().apply {
-            moveTo(points.first().x.toFloat() * scale, points.first().y.toFloat() * scale)
+            moveTo(points.first().x.toFloat(), points.first().y.toFloat())
             for (index in 1 until points.size) {
                 val point = points[index]
-                lineTo(point.x.toFloat() * scale, point.y.toFloat() * scale)
+                lineTo(point.x.toFloat(), point.y.toFloat())
             }
         }
-        val dash = arrowDashIntervals(kind, geometry)
-            ?.map { it * scale }?.toFloatArray()?.let { PathEffect.dashPathEffect(it) }
         val tip = points.last()
         val angle = arrowHeadAngle(points)
-        val headLength = geometry.unit * (if (kind == DiagramArrowKind.Shot) 1.1f else 1.4f)
+        val headLength = geometry.unit * (if (arrow.kind == DiagramArrowKind.Shot) 1.1f else 1.4f)
         val spread = 0.42f
         val head = Path().apply {
-            moveTo(tip.x.toFloat() * scale, tip.y.toFloat() * scale)
-            lineTo((tip.x.toFloat() - cos(angle - spread) * headLength) * scale,
-                (tip.y.toFloat() - sin(angle - spread) * headLength) * scale)
-            lineTo((tip.x.toFloat() - cos(angle + spread) * headLength) * scale,
-                (tip.y.toFloat() - sin(angle + spread) * headLength) * scale)
+            moveTo(tip.x.toFloat(), tip.y.toFloat())
+            lineTo(tip.x.toFloat() - cos(angle - spread) * headLength,
+                tip.y.toFloat() - sin(angle - spread) * headLength)
+            lineTo(tip.x.toFloat() - cos(angle + spread) * headLength,
+                tip.y.toFloat() - sin(angle + spread) * headLength)
             close()
         }
-        ArrowDrawing(path, head, Stroke(width = width * scale, pathEffect = dash),
-            Stroke(width = (width + geometry.unit * 0.1f) * scale, pathEffect = dash))
+        val width = arrowStrokeWidth(arrow.kind, geometry)
+        return ArrowSourceDrawing(path, head, width, width + geometry.unit * 0.1f, arrowDashIntervals(arrow.kind, geometry))
+    }
+
+    private fun buildDrawings(scale: Float): List<ArrowDrawing> {
+        val matrix = Matrix().apply { scale(scale, scale) }
+        // Copy and transform in the graphics backend: no Kotlin walk over the
+        // sampled points. Fresh scaled Paths preserve previous draw identities.
+        fun scaled(path: Path) = Path().apply { addPath(path); transform(matrix) }
+        return sources.map { source ->
+            val dash = source.dash?.let { intervals ->
+                PathEffect.dashPathEffect(FloatArray(intervals.size) { intervals[it] * scale })
+            }
+            ArrowDrawing(scaled(source.path), scaled(source.head),
+                Stroke(width = source.width * scale, pathEffect = dash),
+                Stroke(width = source.shadowWidth * scale, pathEffect = dash))
+        }
     }
 }
 

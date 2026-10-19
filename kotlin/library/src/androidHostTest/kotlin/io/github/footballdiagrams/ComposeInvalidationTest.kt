@@ -134,6 +134,8 @@ class ComposeInvalidationTest {
             "badge position" to frame.copy(arrows = listOf(arrow.copy(badge = DiagramPoint(18.0, 14.0)))),
             "points" to frame.copy(arrows = listOf(arrow.copy(points = listOf(DiagramPoint(5.0, 25.0), DiagramPoint(25.0, 5.0))))),
             "kind" to frame.copy(arrows = listOf(arrow.copy(kind = DiagramArrowKind.Run))),
+            "object colour" to frame.copy(objects = listOf(frame.objects.single().copy(colour = DiagramColour.Red))),
+            "ball flag" to frame.copy(objects = listOf(frame.objects.single().copy(hasBall = true))),
             "object text" to frame.copy(objects = listOf(frame.objects.single().copy(label = "Alex"))),
             "zone" to frame.copy(areas = listOf(DiagramSubArea("Zone", 15.0, 10.0, 8.0, 5.0))),
         )
