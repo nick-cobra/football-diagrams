@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.scale as scaleDrawing
 import androidx.compose.ui.graphics.drawscope.translate
@@ -84,6 +85,7 @@ fun FootballDiagram(
     val textMeasurer = rememberDiagramTextMeasurer(labels)
     val textResize = if (labels.isNotEmpty()) rememberDiagramTextResizeState(geometry) else null
     val description = "${diagram.title} — ${frame.title}"
+    val formatVersion = diagram.formatVersion
 
     Canvas(
         modifier = modifier
@@ -103,7 +105,7 @@ fun FootballDiagram(
             drawGrass(geometry, scale)
             drawGrid(geometry, scale)
             drawSubAreas(drawingFrame, geometry, scale)
-            drawingFrame.objects.forEach { drawEquipment(it, geometry, scale) }
+            drawingFrame.objects.forEach { drawEquipment(it, geometry, scale, formatVersion) }
             arrows.atScale(scale, size.width / scale, size.height / scale).forEach { drawArrow(it, scale) }
             drawingFrame.objects.forEach { drawPerson(it, drawingFrame, geometry, scale) }
             val textScale = textResize?.scaleForDraw(scale) ?: scale
@@ -196,17 +198,23 @@ private fun DrawScope.drawCone(at: DiagramPoint, size: Float, colour: Color, uni
     drawPath(path, Color.White, style = Stroke(width = unit * 0.1f * scale))
 }
 
-internal fun DrawScope.drawEquipment(target: DiagramObject, geometry: DiagramGeometry, scale: Float) {
+internal fun DrawScope.drawEquipment(target: DiagramObject, geometry: DiagramGeometry, scale: Float, formatVersion: Int = 1) {
     val colour = target.colour?.let { ObjectColours[it] } ?: ObjectColours.getValue(DiagramColour.Orange)
     when (target.kind) {
-        DiagramObjectKind.Gate -> drawGate(target, colour, geometry, scale)
+        DiagramObjectKind.Gate -> drawGate(target, colour, geometry, scale, formatVersion)
         DiagramObjectKind.Cone ->
             drawCone(DiagramPoint(target.x.toFloat(), target.y.toFloat()), geometry.playerRadius * 0.8f, colour, geometry.unit, scale)
         DiagramObjectKind.FlatMarker -> drawFlatMarker(target, colour, geometry, scale)
         DiagramObjectKind.Mannequin -> drawMannequin(target, geometry, scale)
         DiagramObjectKind.Pole -> drawPole(target, geometry, scale)
         DiagramObjectKind.Ladder -> drawLadder(target, geometry, scale)
-        DiagramObjectKind.Goal, DiagramObjectKind.MiniGoal -> drawGoal(target, geometry, scale)
+        DiagramObjectKind.Goal, DiagramObjectKind.MiniGoal -> {
+            val rotation = if (formatVersion == 2) (target.angleDegrees ?: 90.0).toFloat() - 90f else 0f
+            if (rotation == 0f) drawGoal(target, geometry, scale)
+            else rotate(rotation, Offset(target.x.toFloat() * scale, target.y.toFloat() * scale)) {
+                drawGoal(target, geometry, scale)
+            }
+        }
         else -> Unit
     }
 }
@@ -231,10 +239,11 @@ private fun DrawScope.drawGate(
     colour: Color,
     geometry: DiagramGeometry,
     scale: Float,
+    formatVersion: Int,
 ) {
     val unit = geometry.unit
     val radius = geometry.playerRadius
-    val (first, second) = gateCones(target)
+    val (first, second) = gateCones(target, formatVersion)
     // The colour band appears only when the gate's colour is the call.
     if (target.colour != null && target.colour != DiagramColour.Orange) {
         val band = Path().apply {

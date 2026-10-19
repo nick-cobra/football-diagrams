@@ -147,3 +147,7 @@ test('actual glyphs fit badges and every pill kind through font loading and resi
   }
   expect(report.parentReads).toBe(0);
 });
+
+test('authored equipment preserves mouth axes, complete nets and gate endpoints in both versions',async({page})=>{
+  expect(await page.evaluate(()=>window.runDiagramEquipmentProbe())).toEqual([]);
+});

@@ -8,6 +8,8 @@ export function pack(source,evidence){
  mkdirSync(evidence,{recursive:true});
  const [result]=JSON.parse(run('npm',['pack','--ignore-scripts','--json','--pack-destination',evidence],{cwd:source}));
  const paths=result.files.map(file=>file.path);
+ const metadata=JSON.parse(readFileSync(join(source,'package.json'),'utf8'));
+ if(metadata.exports?.['./schema/v2'] && !paths.includes('schema/diagram-v2.schema.json'))throw new Error('Packed payload is missing the exported format-2 schema');
  for(const required of ['dist/index.js','dist/index.d.ts','dist/react.js','dist/react.d.ts','dist/geometry.js','dist/geometry.d.ts','schema/diagram.schema.json','fixtures/valid/all-kinds.json','kotlin/gradlew','kotlin/library/build.gradle.kts','LICENSE','LICENSES/Ajv-MIT.txt','LICENSES/Gradle-Apache-2.0.txt']){
   if(!paths.includes(required))throw new Error(`Packed payload is missing ${required}`);
  }

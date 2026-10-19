@@ -9,6 +9,7 @@ test('the source distribution contains Kotlin sources and no build caches', () =
   assert.ok(files.includes('kotlin/gradlew'));
   assert.ok(files.some(file => file.endsWith('/FootballDiagram.kt')));
   assert.ok(files.includes('schema/diagram.schema.json'));
+  assert.ok(files.includes('schema/diagram-v2.schema.json'));
   assert.ok(files.includes('fixtures/valid/all-kinds.json'));
   assert.ok(files.every(file => !/(^|\/)(build|node_modules|\.gradle|\.kotlin)(\/|$)/.test(file)));
 });

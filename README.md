@@ -114,7 +114,7 @@ Independent source examples are in [`examples/android`](examples/android) and [`
 
 ## The format
 
-[`schema/diagram.schema.json`](schema/diagram.schema.json) is the canonical JSON Schema Draft 2020-12 contract. See [FORMAT.md](FORMAT.md) for fields, units, versioning and rendering limits. TypeScript declarations and JavaScript validation are generated from it; the Kotlin parser validates the same schema before decoding its models. Both languages run the same [valid and invalid fixtures](fixtures).
+[`schema/diagram.schema.json`](schema/diagram.schema.json) is the immutable format-1 contract; [`schema/diagram-v2.schema.json`](schema/diagram-v2.schema.json) defines format 2. See [FORMAT.md](FORMAT.md) for fields, units, versioning, reader/writer compatibility and rendering limits. TypeScript declarations and JavaScript validators are generated from these schemas; Kotlin embeds and validates the selected schema before decoding its models. Both languages run the same [valid and invalid fixtures](fixtures).
 
 The format contains drawing data. Product taxonomies, subscriptions, permissions, publication records and database identifiers belong to the host application. The library performs no network requests for content or account access.
 
@@ -134,6 +134,8 @@ Native test execution uses the installed simulator tooling. On shared machines, 
 For a cold-consumer check, install the public Git pin in a new directory and use the exported entry points. For Kotlin, include the downloaded tagged project through the documented composite dependency. A sibling development checkout is not release-consumption evidence.
 
 ## Updating and rollback
+
+The current source identifies itself as **0.3.0-dev.1**, an unreleased build adding explicit format 2 for authored goal axes and gate widths. Format 1 retains its old geometry. See [the format-2 contract and compatibility matrix](FORMAT.md#format-2-authored-equipment-geometry-unreleased) and [standalone example](fixtures/valid/authored-equipment-v2.json). Integrations must pin a reviewed full source SHA and use Kotlin coordinate `io.github.nick-cobra:football-diagrams:0.3.0-dev.1`; the tagged installation examples above continue to describe released 0.2.1. No development tag or package publication is implied.
 
 Version 0.2.1 retains JSON format 1 and the 0.2.0 Kotlin model API. It adds parser transport limits and bounded renderer detail for extreme inputs/viewports, plus fixes zero-size native drawing. Ordinary diagrams retain their reviewed rendering. See [the release notes](https://github.com/nick-cobra/football-diagrams/releases/tag/v0.2.1) and [FORMAT.md](FORMAT.md) for the resource envelope and rendering detail policy.
 

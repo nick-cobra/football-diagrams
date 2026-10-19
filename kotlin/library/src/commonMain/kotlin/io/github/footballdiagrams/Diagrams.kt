@@ -3,6 +3,9 @@ package io.github.footballdiagrams
 import io.github.optimumcode.json.schema.JsonSchema
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.doubleOrNull
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
 
@@ -10,6 +13,7 @@ import kotlinx.serialization.json.encodeToJsonElement
 object Diagrams {
     private val codec = Json { encodeDefaults = true; explicitNulls = false }
     private val schema by lazy { JsonSchema.fromDefinition(schemaDefinition) }
+    private val schemaV2 by lazy { JsonSchema.fromDefinition(schemaDefinitionV2) }
 
     fun parse(json: String): Diagram {
         requireJsonTokens(json)
@@ -26,7 +30,13 @@ object Diagrams {
 
     @OptIn(io.github.optimumcode.json.schema.ExperimentalApi::class)
     private fun validate(element: JsonElement) {
-        require(schema.validate(element.schemaElement()) { }) { "Invalid Football Diagrams document" }
+        val version = ((element as? JsonObject)?.get("format_version") as? JsonPrimitive)?.doubleOrNull
+        val selectedSchema = when (version) {
+            1.0 -> schema
+            2.0 -> schemaV2
+            else -> throw IllegalArgumentException("Invalid Football Diagrams document")
+        }
+        require(selectedSchema.validate(element.schemaElement()) { }) { "Invalid Football Diagrams document" }
     }
 }
 

@@ -1,7 +1,17 @@
 import { checkJsonResources } from "./json-limits.js";
-import validate from "./generated/validate.js";
+import { validateFormat1, validateFormat2 } from "./generated/validate.js";
 export * from "./generated/types.js";
 export * from "./geometry.js";
+function validate(value) {
+    if (value === null || typeof value !== "object")
+        return false;
+    const version = value.format_version;
+    if (version === 1)
+        return validateFormat1(value);
+    if (version === 2)
+        return validateFormat2(value);
+    return false;
+}
 /** Copy JSON data without carrying custom prototypes or invoking toJSON hooks. */
 function ownData(value, parents = new WeakSet()) {
     if (value === null || typeof value !== "object")

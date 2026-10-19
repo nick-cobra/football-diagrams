@@ -28,3 +28,6 @@ const labelButton=document.createElement('button');labelButton.textContent='Chec
 const labelOutput=document.createElement('pre');labelOutput.dataset.testid='label-probe-report';
 labelButton.addEventListener('click',async()=>{labelOutput.textContent=JSON.stringify(await runLabelProbe(),null,2);});
 document.body.append(labelButton,labelOutput);
+
+import { runEquipmentProbe } from './equipment-probe.jsx';
+window.runDiagramEquipmentProbe=runEquipmentProbe;

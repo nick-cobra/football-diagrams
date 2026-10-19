@@ -1,6 +1,6 @@
 {
   "name": "football-diagrams",
-  "version": "0.2.1",
+  "version": "0.3.0-dev.1",
   "description": "An open football diagram format with independent React and Kotlin/Compose renderers.",
   "type": "module",
   "license": "MIT",
@@ -39,7 +39,8 @@
       "types": "./dist/geometry.d.ts",
       "import": "./dist/geometry.js"
     },
-    "./schema": "./schema/diagram.schema.json"
+    "./schema": "./schema/diagram.schema.json",
+    "./schema/v2": "./schema/diagram-v2.schema.json"
   },
   "scripts": {
     "generate": "node scripts/generate.mjs",

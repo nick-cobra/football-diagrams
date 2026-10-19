@@ -1,6 +1,6 @@
 export type ObjectColour = "red" | "blue" | "yellow" | "green" | "orange" | "white" | "teal";
 export interface Diagram {
-    format_version: 1;
+    format_version: 1 | 2;
     title: string;
     area: Area;
     /**

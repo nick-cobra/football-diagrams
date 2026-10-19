@@ -1,5 +1,7 @@
 import { readFile, writeFile, readdir, unlink } from 'node:fs/promises';
 const schema=JSON.parse(await readFile(new URL('../schema/diagram.schema.json',import.meta.url),'utf8'));
+const schemaV2=JSON.parse(await readFile(new URL('../schema/diagram-v2.schema.json',import.meta.url),'utf8'));
+const supportedVersions=new Set([schema.properties.format_version.const,schemaV2.properties.format_version.const]);
 const base={format_version:1,title:'Boundary',area:{shape:'rectangle',length_m:30,width_m:20,label:'Area'},frames:[{id:'frame',title:'Frame',caption:'',objects:[{kind:'player',x:5,y:6,colour:'blue',label:'Player',short:'P',number:1,angle:0,width:2,ball:true}],arrows:[{kind:'pass',points:[{x:1,y:2},{x:3,y:4}],label:'Pass',sequence:1,badge:{x:2,y:3}}],areas:[{id:'zone',label:'Zone',x:10,y:10,width:5,height:5,colour:'blue'}]}]};
 const cases=[];
 const constraints=new Map();
@@ -19,7 +21,12 @@ function walk(node,pointer,path,nullable=false){
  if(type){const wrong={object:[null,[],true,'object',1],array:[null,{},true,'array',1],string:[null,[],{},true,1],number:[null,[],{},true,'1'],integer:[null,[],{},true,'1',1.5],boolean:[null,[],{},'true',1]}[type];
  for(const [i,value]of wrong.entries())if(!(nullable&&value===null))add(pointer,'type',path,`wrong-${i}`,value,false);
  }
- if(node.const!==undefined){add(pointer,'const',path,'valid',node.const,true);add(pointer,'const',path,'invalid',type==='integer'?2:'unknown',false);}
+ if(node.const!==undefined){
+  add(pointer,'const',path,'valid',node.const,true);
+  let invalid=type==='integer'?node.const+1:'unknown';
+  while(supportedVersions.has(invalid))invalid++;
+  add(pointer,'const',path,'invalid',invalid,false);
+ }
  if(node.enum){for(const value of node.enum)add(pointer,'enum',path,value,value,true);add(pointer,'enum',path,'invalid','unknown',false);}
  if(type==='object'){
   if(node.additionalProperties===false)add(pointer,'additionalProperties',path,'unknown',{...at(path),unexpected:true},false);

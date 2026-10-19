@@ -149,6 +149,24 @@ class ComposeInvalidationTest {
         assertContentEquals(baseline, image(), "Returning to an earlier frame must restore its text and geometry")
     }
 
+    @Test fun formatVersionAloneInvalidatesEquipmentAndRestoresLegacyPixels() = runAndroidComposeUiTest<DiagramTestActivity> {
+        val frame = DiagramFrame("f", "Setup", listOf(
+            DiagramObject(DiagramObjectKind.MiniGoal, 10.0, 10.0, angleDegrees = 0.0, widthMetres = 4.0),
+            DiagramObject(DiagramObjectKind.Gate, 20.0, 15.0, colour = DiagramColour.Yellow, widthMetres = 4.0),
+        ), emptyList())
+        val original = Diagram("Version", DiagramArea(30.0, 24.0), listOf(frame))
+        val shown = mutableStateOf(original)
+        setContent { Box(Modifier.requiredWidth(640.dp)) { FootballDiagram(shown.value, 0) } }
+        fun image() = pixels(onNodeWithContentDescription("Version — Setup").captureToImage().asAndroidBitmap())
+        val legacy = image()
+        shown.value = original.copy(formatVersion = 2)
+        waitForIdle()
+        assertFalse(legacy.contentEquals(image()), "Changing only format version must repaint goal axes and gate widths")
+        shown.value = original
+        waitForIdle()
+        assertContentEquals(legacy, image(), "Restoring format 1 must restore its exact equipment pixels")
+    }
+
     private class ReadList<T>(private val values: List<T>) : AbstractList<T>() {
         var reads = 0
         override val size get() = values.size
