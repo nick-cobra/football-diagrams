@@ -8,7 +8,6 @@
 package io.github.footballdiagrams
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
@@ -90,7 +89,7 @@ fun FootballDiagram(
     Canvas(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(geometry.aspectRatio)
+            .diagramCanvasAspect(geometry.aspectRatio)
             .clipToBounds()
             .onSizeChanged { textResize?.onSizeChanged(it) }
             .semantics { contentDescription = description },
