@@ -1,5 +1,6 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { LabelLayer } from "./react-labels.js";
 import { renderArrowGeometry, renderingViewport } from "./rendering-geometry.js";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { INK, LINE_PAINT, OUTSIDE_WASH, PERSON_KINDS, frameGeometry, grassStripes, isMover, layoutLabels, objectColour, personFill, shade, } from "./geometry.js";
@@ -61,18 +62,10 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
     return (_jsxs("svg", { ref: element, viewBox: geometry.viewBox, role: "img", "aria-label": `${diagram.title} — ${frame.title}`, "data-testid": testId, "data-frame-id": frame.id, "data-thumbnail": thumbnail ? "true" : undefined, className: className, width: "100%", style: style, children: [_jsxs("defs", { children: [_jsx(ArrowMarker, { id: arrowMarker, size: 5.4 }), _jsx(ArrowMarker, { id: heavyMarker, size: 3.6 })] }), grass.stripes.map((stripe, index) => (_jsx("rect", { x: stripe.x, y: grass.y, width: stripe.width, height: grass.height, fill: stripe.fill }, `stripe-${index}`))), _jsx("path", { d: `M${-margin} ${-margin} H${lengthM + margin} V${widthM + margin} H${-margin} Z M0 0 V${widthM} H${lengthM} V0 Z`, fill: OUTSIDE_WASH, fillRule: "evenodd" }), _jsx("rect", { x: 0, y: 0, width: lengthM, height: widthM, fill: "none", stroke: LINE_PAINT, strokeWidth: unit * 0.16 }), (frame.areas ?? []).map((area, index) => (_jsx("rect", { x: area.x, y: area.y, width: area.width, height: area.height, fill: area.colour ? `${objectColour(area)}22` : "rgba(255,255,255,0.08)", stroke: area.colour ? objectColour(area) : LINE_PAINT, strokeWidth: unit * 0.1, strokeDasharray: `${unit * 0.5} ${unit * 0.4}` }, `sub-area-${index}`))), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(EquipmentGlyph, { object: object, geometry: geometry }, `equip-${index}`))) }), _jsx("g", { children: arrows.map((geo, index) => {
                     const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
                     return (_jsxs("g", { "data-arrow-kind": geo.kind, children: [_jsx("path", { d: geo.d, fill: "none", stroke: "rgba(0,0,0,0.28)", strokeWidth: geo.strokeWidth + unit * 0.1, strokeLinecap: "round", strokeLinejoin: "round", transform: "translate(0.12 0.16)" }), _jsx("path", { d: geo.d, fill: "none", stroke: "#ffffff", strokeWidth: geo.strokeWidth, strokeLinecap: "round", strokeLinejoin: "round", strokeDasharray: geo.dashArray, markerEnd: `url(#${markerEnd})` })] }, `arrow-${index}`));
-                }) }), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(PersonGlyph, { object: object, frame: frame, geometry: geometry }, `person-${index}`))) }), _jsx("g", { "data-testid": "drill-diagram-v2-labels", children: labels.map((label, index) => (_jsx(LabelGlyph, { label: label }, `${label.kind}-${index}`))) })] }));
+                }) }), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(PersonGlyph, { object: object, frame: frame, geometry: geometry }, `person-${index}`))) }), _jsx(LabelLayer, { labels: labels, presentation: { className, style } })] }));
 }
 function ArrowMarker({ id, size }) {
     return (_jsx("marker", { id: id, viewBox: "0 0 10 10", refX: 7.5, refY: 5, markerWidth: size, markerHeight: size, orient: "auto-start-reverse", children: _jsx("path", { d: "M0 0.6 L9.5 5 L0 9.4 z", fill: "#ffffff" }) }));
-}
-function LabelGlyph({ label }) {
-    const isBadge = label.kind === "number" || label.kind === "sequence";
-    if (isBadge) {
-        const radius = label.width / 2;
-        return (_jsxs("g", { "data-label-id": label.id, "data-label-kind": label.kind, children: [_jsx("circle", { cx: label.x + radius, cy: label.y + radius, r: radius, fill: "#ffffff", stroke: INK, strokeWidth: radius * 0.14 }), _jsx("text", { x: label.x + radius, y: label.y + radius, dy: radius * 0.42, textAnchor: "middle", fontSize: label.fontSize, fontWeight: 700, fill: INK, children: label.text })] }));
-    }
-    return (_jsxs("g", { "data-label-id": label.id, "data-label-kind": label.kind, children: [_jsx("rect", { x: label.x, y: label.y, width: label.width, height: label.height, rx: label.height / 2, fill: "rgba(255,255,255,0.93)" }), _jsx("text", { x: label.x + label.width / 2, y: label.y + label.height / 2, dy: label.fontSize * 0.33, textAnchor: "middle", fontSize: label.fontSize * 0.92, fontWeight: 700, fill: INK, children: label.text })] }));
 }
 function Cone({ x, y, size, fill, unit }) {
     return (_jsxs("g", { children: [_jsx("ellipse", { cx: x, cy: y + size * 0.62, rx: size * 0.78, ry: size * 0.3, fill: "rgba(0,0,0,0.22)" }), _jsx("path", { d: `M${x} ${y - size} L${x + size * 0.8} ${y + size * 0.62} L${x - size * 0.8} ${y + size * 0.62} Z`, fill: fill, stroke: "#ffffff", strokeWidth: unit * 0.1, strokeLinejoin: "round" })] }));

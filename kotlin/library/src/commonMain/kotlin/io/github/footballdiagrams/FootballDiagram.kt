@@ -11,6 +11,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextMeasurer
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import kotlin.math.PI
 import kotlin.math.cos
+import kotlin.math.hypot
 import kotlin.math.sin
 
 private val GrassLight = Color(0xFF5AA25A)
@@ -70,7 +73,7 @@ fun FootballDiagram(
     val geometry = remember(diagram.area) { diagramGeometry(diagram.area) }
     val labels = remember(diagram.area, frame) { layoutDiagramLabels(diagram.area, frame, geometry) }
     val arrows = remember(frame.arrows, geometry) { ArrowDrawingCache(frame.arrows, geometry) }
-    val textMeasurer = rememberTextMeasurer()
+    val textMeasurer = rememberDiagramTextMeasurer(labels)
     val description = "${diagram.title} — ${frame.title}"
 
     Canvas(
@@ -414,21 +417,49 @@ internal fun DrawScope.drawArrow(arrow: ArrowDrawing, scale: Float) {
     drawPath(arrow.head, Color.White)
 }
 
+@Composable
+internal fun rememberDiagramTextMeasurer(labels: List<DiagramLabel>): TextMeasurer = key(labels) {
+    // One original and (at most) one fitted layout per label. A changed frame
+    // releases its text; the measurer also tracks density, direction and fonts.
+    rememberTextMeasurer(cacheSize = labels.size * 2)
+}
+
+internal fun measureDiagramLabel(
+    label: DiagramLabel,
+    geometry: DiagramGeometry,
+    scale: Float,
+    density: Float,
+    fontScale: Float,
+    textMeasurer: TextMeasurer,
+): TextLayoutResult {
+    var style = TextStyle(
+        color = Ink,
+        fontSize = TextUnit(labelFontSizeSp(label.fontSize, scale, density, fontScale), TextUnitType.Sp),
+        fontWeight = FontWeight.Bold,
+    )
+    var measured = textMeasurer.measure(label.text, style)
+    val fitScale = if (label.isBadge) {
+        // Fit the text rectangle inside the circle, inset from its outline.
+        // Leave a pixel for integer text-layout rounding at the fitted size.
+        val diameter = (label.width * scale * 0.86f - 1f).coerceAtLeast(0f)
+        minOf(1f, diameter / hypot(measured.size.width.toFloat(), measured.size.height.toFloat()).coerceAtLeast(1f))
+    } else labelFitScale(
+        geometry, label, scale, measured.size.width.toFloat(), measured.size.height.toFloat(),
+    )
+    if (fitScale < 1f) {
+        style = style.copy(fontSize = TextUnit(style.fontSize.value * fitScale, TextUnitType.Sp))
+        measured = textMeasurer.measure(label.text, style)
+    }
+    return measured
+}
+
 private fun DrawScope.drawLabel(
     label: DiagramLabel,
     geometry: DiagramGeometry,
     scale: Float,
     textMeasurer: TextMeasurer,
 ) {
-    var style = TextStyle(
-        color = Ink,
-        fontSize = TextUnit(
-            labelFontSizeSp(label.fontSize, scale, density, fontScale),
-            TextUnitType.Sp,
-        ),
-        fontWeight = FontWeight.Bold,
-    )
-    var measured = textMeasurer.measure(label.text, style)
+    val measured = measureDiagramLabel(label, geometry, scale, density, fontScale, textMeasurer)
     if (label.isBadge) {
         val radius = label.width / 2f
         val centre = Offset((label.x + radius) * scale, (label.y + radius) * scale)
@@ -442,18 +473,6 @@ private fun DrawScope.drawLabel(
             ),
         )
         return
-    }
-
-    val fitScale = labelFitScale(
-        geometry = geometry,
-        label = label,
-        scale = scale,
-        measuredWidth = measured.size.width.toFloat(),
-        measuredHeight = measured.size.height.toFloat(),
-    )
-    if (fitScale < 1f) {
-        style = style.copy(fontSize = TextUnit(style.fontSize.value * fitScale, TextUnitType.Sp))
-        measured = textMeasurer.measure(label.text, style)
     }
 
     val bounds = labelPillBounds(

@@ -1,5 +1,7 @@
 "use client";
 
+import { LabelLayer } from "./react-labels.js";
+
 import { renderArrowGeometry, renderingViewport, type RenderingViewport } from "./rendering-geometry.js";
 
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
@@ -17,7 +19,6 @@ import {
   personFill,
   shade,
   type FrameGeometry,
-  type LabelBox,
 } from "./geometry.js";
 
 export interface DiagramSvgProps {
@@ -196,13 +197,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
         ))}
       </g>
 
-      <g data-testid="drill-diagram-v2-labels">
-        {/* Authored IDs may repeat or match generated IDs. These drawing-only
-            siblings use their layout positions for internal React identity. */}
-        {labels.map((label, index) => (
-          <LabelGlyph key={`${label.kind}-${index}`} label={label} />
-        ))}
-      </g>
+      <LabelLayer labels={labels} presentation={{ className, style }} />
     </svg>
   );
 }
@@ -220,60 +215,6 @@ function ArrowMarker({ id, size }: { id: string; size: number }) {
     >
       <path d="M0 0.6 L9.5 5 L0 9.4 z" fill="#ffffff" />
     </marker>
-  );
-}
-
-function LabelGlyph({ label }: { label: LabelBox }) {
-  const isBadge = label.kind === "number" || label.kind === "sequence";
-  if (isBadge) {
-    const radius = label.width / 2;
-    return (
-      <g data-label-id={label.id} data-label-kind={label.kind}>
-        <circle
-          cx={label.x + radius}
-          cy={label.y + radius}
-          r={radius}
-          fill="#ffffff"
-          stroke={INK}
-          strokeWidth={radius * 0.14}
-        />
-        <text
-          x={label.x + radius}
-          y={label.y + radius}
-          dy={radius * 0.42}
-          textAnchor="middle"
-          fontSize={label.fontSize}
-          fontWeight={700}
-          fill={INK}
-        >
-          {label.text}
-        </text>
-      </g>
-    );
-  }
-
-  return (
-    <g data-label-id={label.id} data-label-kind={label.kind}>
-      <rect
-        x={label.x}
-        y={label.y}
-        width={label.width}
-        height={label.height}
-        rx={label.height / 2}
-        fill="rgba(255,255,255,0.93)"
-      />
-      <text
-        x={label.x + label.width / 2}
-        y={label.y + label.height / 2}
-        dy={label.fontSize * 0.33}
-        textAnchor="middle"
-        fontSize={label.fontSize * 0.92}
-        fontWeight={700}
-        fill={INK}
-      >
-        {label.text}
-      </text>
-    </g>
   );
 }
 

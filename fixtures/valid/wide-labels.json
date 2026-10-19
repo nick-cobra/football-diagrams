@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "title": "Wide text fitting",
+  "area": {"shape": "rectangle", "length_m": 80, "width_m": 40, "label": "WWWWWWWWWWWW"},
+  "frames": [{"id": "wide", "title": "Badges and pills", "objects": [
+    {"kind": "player", "x": 10, "y": 12, "short": "WWW", "label": "WWWWWWWWWWWW"},
+    {"kind": "opponent", "x": 35, "y": 12, "short": "漢漢漢"},
+    {"kind": "neutral", "x": 60, "y": 12, "short": "😀😀😀"},
+    {"kind": "coach", "x": 65, "y": 30, "number": 99}
+  ], "arrows": [{"kind": "pass", "points": [{"x": 5, "y": 30}, {"x": 30, "y": 30}], "sequence": 20, "label": "WWWWWWWWWWWW"}], "areas": []}]
+}
