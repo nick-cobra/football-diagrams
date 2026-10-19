@@ -13,15 +13,20 @@ import kotlinx.coroutines.delay
 /** One reference scale during small continuous resizes, then exact settled text.
  * Large jumps remeasure immediately. No size/layout history or retained paragraphs. */
 internal class DiagramTextResizeState(private val geometry: DiagramGeometry) {
-    var size by mutableStateOf(IntSize.Zero)
+    class Request(val size: IntSize)
+    var request by mutableStateOf(Request(IntSize.Zero))
         private set
+    private var lastSize = IntSize.Zero
     private var referenceScale by mutableFloatStateOf(Float.NaN)
     // Read this plain value in the layout callback, avoiding a layout dependency
     // on the draw-phase state that the quiet-period effect updates.
     private var committedScale = Float.NaN
 
     fun onSizeChanged(size: IntSize) {
-        this.size = size
+        if (size != lastSize) {
+            lastSize = size
+            request = Request(size)
+        }
         val actual = scale(size)
         if (actual > 0f && (!committedScale.isFinite() || actual / committedScale !in 0.8f..1.25f)) commit(actual)
     }
@@ -31,9 +36,9 @@ internal class DiagramTextResizeState(private val geometry: DiagramGeometry) {
         return if (actual > 0f && reference.isFinite() && reference > 0f && actual / reference in 0.8f..1.25f) reference else actual
     }
 
-    fun settle(expectedSize: IntSize) {
-        // Also guard a stale effect before cancellation has reached its delay.
-        if (size == expectedSize) scale(expectedSize).takeIf { it > 0f }?.let(::commit)
+    fun settle(expected: Request) {
+        // Identity also rejects an obsolete A request after sizes A -> B -> A.
+        if (request === expected) scale(expected.size).takeIf { it > 0f }?.let(::commit)
     }
 
     private fun scale(size: IntSize) = geometry.pixelsPerMetre(size.width.toFloat(), size.height.toFloat())
@@ -48,11 +53,11 @@ internal class DiagramTextResizeState(private val geometry: DiagramGeometry) {
 @Composable
 internal fun rememberDiagramTextResizeState(geometry: DiagramGeometry): DiagramTextResizeState {
     val state = remember(geometry) { DiagramTextResizeState(geometry) }
-    val size = state.size
-    LaunchedEffect(state, size) {
-        if (size.width > 0 && size.height > 0) {
+    val request = state.request
+    LaunchedEffect(state, request) {
+        if (request.size.width > 0 && request.size.height > 0) {
             delay(120)
-            state.settle(size)
+            state.settle(request)
         }
     }
     return state
