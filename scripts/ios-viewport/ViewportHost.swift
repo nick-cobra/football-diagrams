@@ -28,7 +28,7 @@ class ViewportScene: UIResponder, UIWindowSceneDelegate {
         poll()
     }
     func run(_ mode: Int) {
-        if mode == 4 { save(["complete": true, "cases": 4]); return }
+        if mode == 6 { save(["complete": true, "cases": 6]); return }
         save(["mode": mode, "phase": "initial-zero"])
         let regression = ViewportRegression(mode: Int32(mode), width: 0, height: 0)
         let controller = regression.controller()

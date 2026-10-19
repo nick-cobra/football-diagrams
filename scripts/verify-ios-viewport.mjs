@@ -43,12 +43,12 @@ try {
   await new Promise(r=>setTimeout(r,500));
  }
  if(existsSync(join(container,'Documents')))cpSync(join(container,'Documents'),evidence,{recursive:true});
- if(rows.at(-1)?.complete!==true || captures.size!==8)throw Error(`Native viewport regression failed; inspect ${evidence}`);
- for(let mode=0;mode<4;mode++) {
+ if(rows.at(-1)?.complete!==true || captures.size!==12)throw Error(`Native viewport regression failed; inspect ${evidence}`);
+ for(let mode=0;mode<6;mode++) {
   execFileSync('swift',[resolve('scripts/ios-viewport/Compare.swift'),join(evidence,`before-${mode}.png`),join(evidence,`after-${mode}.png`)],{stdio:'inherit'});
  }
- writeFileSync(join(evidence,'result.json'),JSON.stringify({cases:4,restoredPixelsMatch:true})+'\n');
- console.log('Native viewport: four real-component cases survived initial/transition zero sizes and restored identical pixels.');
+ writeFileSync(join(evidence,'result.json'),JSON.stringify({cases:6,restoredPixelsMatch:true})+'\n');
+ console.log('Native viewport: six real-component cases survived initial/transition zero sizes and restored identical pixels.');
 } finally {
  try{xr('simctl','terminate',device,bundle)}catch{}
  if(child && child.exitCode===null && child.signalCode===null) {

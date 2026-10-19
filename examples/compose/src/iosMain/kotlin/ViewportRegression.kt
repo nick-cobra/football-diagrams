@@ -22,9 +22,11 @@ class ViewportRegression(mode: Int, width: Int, height: Int) {
             DiagramArrow(kind, listOf(DiagramPoint(5.0, 5.0 + i * 5), DiagramPoint(30.0, 5.0 + i * 5)),
                 label = if (mode == 1) kind.name else null)
         }
+        4, 5 -> List(30) { arrow -> DiagramArrow(if (mode == 4) DiagramArrowKind.Dribble else DiagramArrowKind.Run,
+            List(12) { DiagramPoint(if (it % 2 == 0) -1000.0 else 1000.0, arrow / 100.0) }) }
         else -> emptyList()
     }, if (mode == 0 || mode == 1) listOf(zone) else emptyList())
-    private val diagram = Diagrams.parse(Diagrams.stringify(Diagram("Viewport regression", DiagramArea(40.0, 30.0), listOf(frame))))
+    private val diagram = Diagrams.parse(Diagrams.stringify(Diagram("Viewport regression", if (mode >= 4) DiagramArea(1.0, 1.0) else DiagramArea(40.0, 30.0), listOf(frame))))
 
     fun resize(width: Int, height: Int) { size.value = IntSize(width, height) }
     fun controller(): UIViewController = ComposeUIViewController {
