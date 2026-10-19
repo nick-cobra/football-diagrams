@@ -48,7 +48,7 @@ Parsers retain drawing numbers as IEEE-754 binary64 (`Number` in JavaScript, `Do
 
 Geometry derives the playing grid from its authored metre dimensions and adds an external grass margin. SVG and Canvas are separate renderers with the same notation and proportions; their font rasterisation is platform-specific.
 
-Drawing is clipped to the renderer's measured viewport, including its grass margin. Off-pitch coordinates remain valid; content outside that viewport does not paint over neighbouring host UI.
+Drawing is clipped to the renderer's measured viewport, including its grass margin. Off-pitch coordinates remain valid; content outside that viewport does not paint over neighbouring host UI. Compose prefers the natural diagram aspect when the host permits it. Fixed or tighter bounded host dimensions take precedence: the Canvas stays inside those dimensions, and the existing metre-to-pixel scale fits the drawing without stretching it. Zero-size canvases defer native drawing until positive space is available.
 
 Renderers retain the original dribble sample phase and endpoints but omit intermediate samples far outside the viewport. A conservative padding includes waves, strokes, shadows and arrowheads; off-screen runs connect outside that padding. The public full-path geometry helpers continue returning the complete sampled paths. This bounds rendering work by the visible region without changing valid documents or clipping away visible arrow sections.
 
