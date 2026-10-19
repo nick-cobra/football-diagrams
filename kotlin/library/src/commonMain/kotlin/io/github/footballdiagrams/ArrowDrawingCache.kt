@@ -82,7 +82,7 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
         return ArrowSourceDrawing(path, head, width, width + geometry.unit * 0.1f, arrowDashIntervals(arrow.kind, geometry),
             if (arrow.kind == DiagramArrowKind.Run && arrow.points.any {
                 it.x < -geometry.marginMetres || it.y < -geometry.marginMetres ||
-                    it.x > viewportWidth - geometry.marginMetres || it.y > viewportHeight - geometry.marginMetres
+                    it.x > geometry.viewportWidth - geometry.marginMetres || it.y > geometry.viewportHeight - geometry.marginMetres
             }) arrow.points else null)
     }
 

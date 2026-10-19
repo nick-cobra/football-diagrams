@@ -67,6 +67,10 @@ class RunRasterTest {
             val bounds = actual.path.getBounds()
             assertTrue(bounds.width <= size * 4 && bounds.height <= size * 4)
         }
+        val positive = List(12) { DiagramPoint(if (it % 2 == 0) 0.0 else 1000.0, 0.0) }
+        val fullyVisible = clippedRunPath(positive, 1f, g, 1e8f, 1e8f, 1000)
+        assertTrue(fullyVisible.intervalFactor > 1f)
+        assertTrue(fullyVisible.dashCountBound <= 1000)
         for ((width, height) in listOf(6.6f to 6.6f, 2400f to 6.6f, 6.6f to 2400f, 1e8f to 6.6f)) {
             for (points in inputs) {
                 val result = clippedRunPath(points, 1f, g, width, height, 1000)
