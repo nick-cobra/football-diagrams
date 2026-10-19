@@ -110,45 +110,59 @@ fun wavyPoints(points: List<DiagramPoint>, amplitude: Float, wavelength: Float):
     sampledWavePoints(points, amplitude, wavelength)
 
 private fun sampledWavePoints(
-    points: List<DiagramPoint>, amplitude: Float, wavelength: Float, bounds: WaveBounds? = null,
+    points: List<DiagramPoint>, amplitude: Float, wavelength: Float, bounds: WaveBounds? = null, pointBudget: Int = Int.MAX_VALUE,
 ): List<DiagramPoint> {
     require(amplitude.isFinite() && wavelength.isFinite() && wavelength > 0f &&
         points.all { it.x.toFloat().isFinite() && it.y.toFloat().isFinite() }) {
         "Wave arguments must be finite at drawing precision and wavelength must be positive"
     }
-    val out = mutableListOf<DiagramPoint>()
+    data class Segment(val a: DiagramPoint, val dx: Float, val dy: Float, val length: Float, val steps: Int)
     var generatedPoints = 0
-    for (segment in 0 until points.size - 1) {
-        val a = points[segment]
-        val b = points[segment + 1]
+    val segments = points.zipWithNext().mapNotNull { (a, b) ->
         val dx = b.x.toFloat() - a.x.toFloat()
         val dy = b.y.toFloat() - a.y.toFloat()
         val length = hypot(dx, dy)
-        if (length == 0f) continue
+        if (length == 0f) null else {
+            val steps = waveStepCount(length, wavelength, generatedPoints)
+            generatedPoints += steps + 1
+            Segment(a, dx, dy, length, steps)
+        }
+    }
+    var factor = 1
+    fun stepCount(length: Float) = max(Proportions.MIN_WAVE_SAMPLES,
+        (length / (wavelength * factor / Proportions.WAVE_SAMPLES_PER_WAVELENGTH)).roundToInt())
+    while (segments.sumOf { segment ->
+        4 + waveSampleRanges(segment.a.x.toFloat(), segment.a.y.toFloat(), segment.dx, segment.dy,
+            stepCount(segment.length), bounds).sumOf { it.last - it.first + 1 }
+    } > pointBudget) {
+        require(factor < 1 shl 20) { "Wave point budget is too small" }
+        factor *= 2
+    }
+    val out = mutableListOf<DiagramPoint>()
+    for ((a, dx, dy, length, originalSteps) in segments) {
         val ux = dx / length
         val uy = dy / length
-        val px = -uy
-        val py = ux
-        val steps = waveStepCount(length, wavelength, generatedPoints)
-        generatedPoints += steps + 1
+        val steps = stepCount(length)
+        fun output(index: Int, count: Int, period: Float) {
+            val base = (index.toFloat() / count) * length
+            val offset = if (index == 0 || index == count) 0f else sin((base / period) * 2f * PI.toFloat()) * amplitude
+            val x = a.x.toFloat() + ux * base - uy * offset
+            val y = a.y.toFloat() + uy * base + ux * offset
+            require(x.isFinite() && y.isFinite()) { "Wave coordinates must remain finite" }
+            out += DiagramPoint(x, y)
+        }
+        if (factor > 1) { output(0, originalSteps, wavelength); output(1, originalSteps, wavelength) }
         var last = -1
         for (range in waveSampleRanges(a.x.toFloat(), a.y.toFloat(), dx, dy, steps, bounds)) {
             for (i in max(range.first, last + 1)..range.last) {
-                val base = (i.toFloat() / steps) * length
-                // Ends pinned flat so the arrow still starts and finishes on its
-                // stated point, however much the middle waves.
-                val offset = if (i == 0 || i == steps) {
-                    0f
-                } else {
-                    sin((base / wavelength) * 2f * PI.toFloat()) * amplitude
+                if (factor == 1 || (i.toDouble() / steps > 1.0 / originalSteps &&
+                    i.toDouble() / steps < (originalSteps - 1.0) / originalSteps)) {
+                    output(i, steps, wavelength * factor)
                 }
-                val x = a.x.toFloat() + ux * base + px * offset
-                val y = a.y.toFloat() + uy * base + py * offset
-                require(x.isFinite() && y.isFinite()) { "Wave coordinates must remain finite" }
-                out += DiagramPoint(x, y)
                 last = i
             }
         }
+        if (factor > 1) { output(originalSteps - 1, originalSteps, wavelength); output(originalSteps, originalSteps, wavelength) }
     }
     return out
 }
@@ -183,6 +197,7 @@ private fun waveSampleRanges(ax: Float, ay: Float, dx: Float, dy: Float, steps: 
 internal fun renderArrowPathPoints(
     arrow: DiagramArrow, geometry: DiagramGeometry,
     viewportWidth: Float = geometry.viewportWidth, viewportHeight: Float = geometry.viewportHeight,
+    pointBudget: Int = 30_000,
 ): List<DiagramPoint> {
     if (arrow.kind != DiagramArrowKind.Dribble) return arrowPathPoints(arrow, geometry)
     val padding = geometry.unit * 4f // Amplitude, shadow/strokes and arrowhead.
@@ -190,7 +205,7 @@ internal fun renderArrowPathPoints(
         geometry.unit * Proportions.DRIBBLE_WAVELENGTH,
         WaveBounds(-geometry.marginMetres - padding, -geometry.marginMetres - padding,
             viewportWidth - geometry.marginMetres + padding,
-            viewportHeight - geometry.marginMetres + padding))
+            viewportHeight - geometry.marginMetres + padding), pointBudget)
 }
 
 internal fun waveStepCount(length: Float, wavelength: Float, generatedPoints: Int): Int {

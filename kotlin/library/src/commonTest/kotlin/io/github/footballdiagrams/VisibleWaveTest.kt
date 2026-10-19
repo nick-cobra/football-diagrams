@@ -62,4 +62,20 @@ class VisibleWaveTest {
         assertEquals(emptyList(), renderArrowPathPoints(DiagramArrow(DiagramArrowKind.Dribble,
             listOf(DiagramPoint(1.0, 1.0), DiagramPoint(1.0, 1.0))), tiny))
     }
+    @Test fun stretchedDistinctFrameHasAHardPointBudgetAndOriginalHeadDirections() {
+        val g = diagramGeometry(DiagramArea(1.0, 1.0))
+        val arrows = List(30) { arrow -> DiagramArrow(DiagramArrowKind.Dribble, List(12) {
+            DiagramPoint(if (it % 2 == 0) -1000.0 else 1000.0, arrow / 100.0)
+        }) }
+        for ((width, height) in listOf(2400f to 6.6f, 6.6f to 2400f, 1e8f to 6.6f)) {
+            val paths = arrows.map { renderArrowPathPoints(it, g, width, height, 1000) }
+            assertTrue(paths.sumOf { it.size } <= 30_000)
+            for ((arrow, path) in arrows.zip(paths)) {
+                val full = arrowPathPoints(arrow, g)
+                assertEquals(full.take(2), path.take(2))
+                assertEquals(full.takeLast(2), path.takeLast(2))
+                assertEquals(arrowHeadAngle(full), arrowHeadAngle(path))
+            }
+        }
+    }
 }

@@ -1,7 +1,7 @@
 "use client";
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { LabelLayer } from "./react-labels.js";
-import { renderArrowGeometry, renderingViewport } from "./rendering-geometry.js";
+import { renderFrameArrows, renderingViewport } from "./rendering-geometry.js";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { INK, LINE_PAINT, OUTSIDE_WASH, PERSON_KINDS, frameGeometry, grassStripes, isMover, layoutLabels, objectColour, personFill, shade, } from "./geometry.js";
 // Server rendering has no measured viewport. The natural aspect is the initial
@@ -52,7 +52,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
     const frame = diagram.frames[frameIndex];
     const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
     const labels = useMemo(() => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }) : []), [diagram, frame, geometry, thumbnail]);
-    const arrows = useMemo(() => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry, viewport)) : [], [frame?.arrows, geometry, viewport.widthM, viewport.heightM]);
+    const arrows = useMemo(() => frame ? renderFrameArrows(frame.arrows, geometry, viewport) : [], [frame?.arrows, geometry, viewport.widthM, viewport.heightM]);
     if (!frame)
         return null;
     const grass = grassStripes(geometry);

@@ -2,7 +2,7 @@
 
 import { LabelLayer } from "./react-labels.js";
 
-import { renderArrowGeometry, renderingViewport, type RenderingViewport } from "./rendering-geometry.js";
+import { renderFrameArrows, renderingViewport, type RenderingViewport } from "./rendering-geometry.js";
 
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { Diagram, Frame, DiagramObject } from "./generated/types.js";
@@ -80,7 +80,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
   );
 
   const arrows = useMemo(
-    () => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry, viewport)) : [],
+    () => frame ? renderFrameArrows(frame.arrows, geometry, viewport) : [],
     [frame?.arrows, geometry, viewport.widthM, viewport.heightM],
   );
 

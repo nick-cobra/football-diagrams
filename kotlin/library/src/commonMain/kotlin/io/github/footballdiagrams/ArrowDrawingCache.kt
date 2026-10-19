@@ -17,6 +17,7 @@ internal data class ArrowDrawing(val path: Path, val head: Path, val stroke: Str
  * only the most recent scaled drawing; resizing cannot accumulate a size history.
  * Text, host style and accessibility remain outside this geometry-only cache. */
 internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private val geometry: DiagramGeometry) {
+    private val wavePointBudget = 30_000 / max(1, arrows.count { it.kind == DiagramArrowKind.Dribble })
     private var sources: List<ArrowSourceDrawing> = emptyList()
     private var cachedWidth = Float.NaN
     private var cachedHeight = Float.NaN
@@ -25,7 +26,7 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
     private var drawings: List<ArrowDrawing> = emptyList()
 
     fun atScale(scale: Float, viewportWidth: Float = geometry.viewportWidth, viewportHeight: Float = geometry.viewportHeight): List<ArrowDrawing> {
-        if (scale <= 0f) return emptyList()
+        if (!scale.isFinite() || scale <= 0f) return emptyList()
         // The measured Canvas may have a different aspect under host constraints.
         // Round excess extents to units; the half-unit error fits inside padding.
         fun extent(actual: Float, nominal: Float) = nominal +
@@ -54,7 +55,7 @@ internal class ArrowDrawingCache(private val arrows: List<DiagramArrow>, private
     )
 
     private fun prepareSource(arrow: DiagramArrow, viewportWidth: Float, viewportHeight: Float): ArrowSourceDrawing? {
-        val points = renderArrowPathPoints(arrow, geometry, viewportWidth, viewportHeight)
+        val points = renderArrowPathPoints(arrow, geometry, viewportWidth, viewportHeight, wavePointBudget)
         if (points.size < 2) return null
         val path = Path().apply {
             moveTo(points.first().x.toFloat(), points.first().y.toFloat())
