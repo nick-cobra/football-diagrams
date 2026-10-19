@@ -56,12 +56,16 @@ export function Example() {
 
 `thumbnail` omits shirt/sequence badges and the area label. `className` and `style` belong to the host. Text is rendered as text, with no HTML injection interface. Empty documents and out-of-range frame selections draw nothing. React marker IDs are unique within a shared React root; separate server roots should supply distinct React `identifierPrefix` values.
 
+Treat renderer inputs as snapshots: replace changed areas, frames, arrows and point lists instead of mutating them in place. Both renderers reuse selected-frame arrow geometry and track their measured viewport; Compose retains only the most recent viewport and drawing scale. Host presentation and accessibility updates still apply normally.
+
 The SVG defaults to `width="100%"` and derives its natural height from its viewBox. Host CSS (including a supplied class or a parent selector) overrides this presentation attribute; explicit `style` props take normal inline-style precedence. For a fixed-height thumbnail, size both the container and its SVG:
 
 ```css
 .thumbnail { width: 355px; height: 168px; }
 .thumbnail svg { display: block; width: 100%; height: 100%; }
 ```
+
+For static server-rendered SVGs with a fixed aspect, supply numeric or `px` inline `style.width` and `style.height`. Without explicit dimensions the initial server rendering uses the natural viewBox aspect; client layout observes external CSS and parent resizing after hydration.
 
 The default SVG `preserveAspectRatio` centres the drawing inside that box without stretching it.
 

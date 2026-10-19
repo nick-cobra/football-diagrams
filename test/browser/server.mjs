@@ -12,7 +12,7 @@ const [pack] = JSON.parse(execFileSync('npm', ['pack', '--json', '--pack-destina
 const react = process.env.REACT_VERSION || '18.3.1';
 await writeFile(join(consumer,'package.json'), JSON.stringify({name:'independent-browser-consumer',private:true,type:'module'}));
 execFileSync('npm', ['install','--ignore-scripts','--no-audit','--no-fund','--save-exact',join(consumer,pack.filename),`react@${react}`,`react-dom@${react}`], {cwd:consumer,stdio:'pipe'});
-for (const file of ['app.jsx','client.jsx','ssr.jsx']) await copyFile(new URL(file, import.meta.url), join(consumer,file));
+for (const file of ['app.jsx','client.jsx','ssr.jsx','cache-probe.jsx']) await copyFile(new URL(file, import.meta.url), join(consumer,file));
 const documents = await Promise.all(['all-kinds','multi-frame','square','off-pitch','empty','short-labels','key-collisions','repeated-arrows'].map(async name => JSON.parse(await readFile(join(root,`fixtures/valid/${name}.json`),'utf8'))));
 await writeFile(join(consumer,'documents.json'), JSON.stringify(documents));
 await build({absWorkingDir:consumer,entryPoints:['client.jsx'],bundle:true,format:'esm',outfile:join(consumer,'client.js'),jsx:'automatic'});

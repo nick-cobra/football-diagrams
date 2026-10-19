@@ -1,13 +1,14 @@
 "use client";
 
-import { useId, useMemo, type CSSProperties } from "react";
+import { renderArrowGeometry, renderingViewport, type RenderingViewport } from "./rendering-geometry.js";
+
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { Diagram, Frame, DiagramObject } from "./generated/types.js";
 import {
   INK,
   LINE_PAINT,
   OUTSIDE_WASH,
   PERSON_KINDS,
-  arrowGeometry,
   frameGeometry,
   grassStripes,
   isMover,
@@ -28,13 +29,58 @@ export interface DiagramSvgProps {
   thumbnail?: boolean;
 }
 
+// Server rendering has no measured viewport. The natural aspect is the initial
+// value; client layout/ResizeObserver expands it before painting letterboxes.
+const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+function useRenderingViewport(geometry: FrameGeometry, visible: boolean, inlineStyle?: CSSProperties) {
+  const element = useRef<SVGSVGElement>(null);
+  type Measurement = { geometry: FrameGeometry; viewport: RenderingViewport };
+  const [measured, setMeasured] = useState<Measurement>();
+  const latest = useRef<Measurement>();
+  const measure = () => {
+    const svg = element.current;
+    if (!svg) return;
+    const style = window.getComputedStyle(svg);
+    const contentExtent = (axis: "width" | "height") => {
+      const value = Number.parseFloat(style[axis]);
+      if (style.boxSizing !== "border-box") return value;
+      const edges = axis === "width" ? ["Left", "Right"] : ["Top", "Bottom"];
+      return value - edges.reduce((sum, edge) => sum + Number.parseFloat(style.getPropertyValue(`border-${edge.toLowerCase()}-width`)) + Number.parseFloat(style.getPropertyValue(`padding-${edge.toLowerCase()}`)), 0);
+    };
+    const viewport = renderingViewport(geometry, contentExtent("width"), contentExtent("height"));
+    const previous = latest.current;
+    if (previous?.geometry === geometry && previous.viewport.widthM === viewport.widthM && previous.viewport.heightM === viewport.heightM) return;
+    latest.current = { geometry, viewport };
+    setMeasured(latest.current);
+  };
+  useMeasuredLayoutEffect(() => { measure(); });
+  useMeasuredLayoutEffect(() => {
+    const svg = element.current;
+    if (!svg || typeof ResizeObserver === "undefined") return;
+    let active = true;
+    const observer = new ResizeObserver(() => { if (active) measure(); });
+    observer.observe(svg);
+    return () => { active = false; observer.disconnect(); };
+  }, [geometry, visible]);
+  const pixels = (value: CSSProperties["width"]) => typeof value === "number" ? value
+    : typeof value === "string" && /^[+]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?px$/i.test(value.trim()) ? Number.parseFloat(value.trim()) : undefined;
+  return { element, viewport: measured?.geometry === geometry ? measured.viewport
+    : renderingViewport(geometry, pixels(inlineStyle?.width), pixels(inlineStyle?.height)) };
+}
+
 export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, className, style, "data-testid": testId = "football-diagram" }: DiagramSvgProps) {
   const markerPrefix = useId();
   const geometry = useMemo(() => frameGeometry(diagram.area), [diagram.area]);
   const frame = diagram.frames[frameIndex];
+  const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
   const labels = useMemo(
     () => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }) : []),
     [diagram, frame, geometry, thumbnail],
+  );
+
+  const arrows = useMemo(
+    () => frame ? frame.arrows.map(arrow => renderArrowGeometry(arrow, geometry, viewport)) : [],
+    [frame?.arrows, geometry, viewport.widthM, viewport.heightM],
   );
 
   if (!frame) return null;
@@ -46,6 +92,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
 
   return (
     <svg
+      ref={element}
       viewBox={geometry.viewBox}
       role="img"
       aria-label={`${diagram.title} — ${frame.title}`}
@@ -109,8 +156,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, classNa
       </g>
 
       <g>
-        {frame.arrows.map((arrow, index) => {
-          const geo = arrowGeometry(arrow, geometry);
+        {arrows.map((geo, index) => {
           const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
           return (
             <g key={`arrow-${index}`} data-arrow-kind={geo.kind}>
