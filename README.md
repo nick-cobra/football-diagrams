@@ -71,6 +71,8 @@ The SVG defaults to `width="100%"` and derives its natural height from its viewB
 
 For static server-rendered SVGs with a fixed aspect, supply numeric or `px` inline `style.width` and `style.height`. Without explicit dimensions the initial server rendering uses the natural viewBox aspect; client layout observes external CSS and parent resizing after hydration.
 
+In SVG text and document-derived attributes, XML 1.0-forbidden characters (including isolated UTF-16 surrogates) display as U+FFFD replacement characters. Valid Unicode, surrogate pairs and XML-legal whitespace are retained in the markup. Parsing, serialising and rendering preserve the authored string values in the JSON document.
+
 The default SVG `preserveAspectRatio` centres the drawing inside that box without stretching it.
 
 Run the independent example with `npm ci && npm run demo`. The command prints its local URL and does not open a browser.

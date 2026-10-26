@@ -32,6 +32,14 @@ export interface DiagramSvgProps {
   marginMetres?: number;
 }
 
+// XML 1.0 forbids these code points even in character references. Replace them
+// only in SVG output, preserving the document and its JSON round-trip. Unicode
+// mode leaves valid surrogate pairs intact; each replacement keeps UTF-16
+// length unchanged, so the deterministic label estimates still match the text.
+function svgText(text: string): string {
+  return text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uD800-\uDFFF\uFFFE\uFFFF]/gu, "\uFFFD");
+}
+
 // Server rendering has no measured viewport. The natural aspect is the initial
 // value; client layout/ResizeObserver expands it before painting letterboxes.
 const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -77,7 +85,9 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginM
   const frame = diagram.frames[frameIndex];
   const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
   const labels = useMemo(
-    () => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }) : []),
+    () => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }).map(label => ({
+      ...label, id: svgText(label.id), text: svgText(label.text),
+    })) : []),
     [diagram, frame, geometry, thumbnail],
   );
 
@@ -98,9 +108,9 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginM
       ref={element}
       viewBox={geometry.viewBox}
       role="img"
-      aria-label={`${diagram.title} — ${frame.title}`}
+      aria-label={svgText(`${diagram.title} — ${frame.title}`)}
       data-testid={testId}
-      data-frame-id={frame.id}
+      data-frame-id={svgText(frame.id)}
       data-thumbnail={thumbnail ? "true" : undefined}
       className={className}
       width="100%"

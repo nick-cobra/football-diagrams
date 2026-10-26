@@ -4,6 +4,13 @@ import { LabelLayer } from "./react-labels.js";
 import { renderFrameArrows, renderingViewport } from "./rendering-geometry.js";
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { INK, LINE_PAINT, OUTSIDE_WASH, PERSON_KINDS, frameGeometry, grassStripes, isMover, layoutLabels, objectColour, personFill, shade, } from "./geometry.js";
+// XML 1.0 forbids these code points even in character references. Replace them
+// only in SVG output, preserving the document and its JSON round-trip. Unicode
+// mode leaves valid surrogate pairs intact; each replacement keeps UTF-16
+// length unchanged, so the deterministic label estimates still match the text.
+function svgText(text) {
+    return text.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\uD800-\uDFFF\uFFFE\uFFFF]/gu, "\uFFFD");
+}
 // Server rendering has no measured viewport. The natural aspect is the initial
 // value; client layout/ResizeObserver expands it before painting letterboxes.
 const useMeasuredLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -51,7 +58,9 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginM
     const geometry = useMemo(() => frameGeometry(diagram.area, marginMetres), [diagram.area, marginMetres]);
     const frame = diagram.frames[frameIndex];
     const { element, viewport } = useRenderingViewport(geometry, Boolean(frame), style);
-    const labels = useMemo(() => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }) : []), [diagram, frame, geometry, thumbnail]);
+    const labels = useMemo(() => (frame ? layoutLabels(diagram, frame, geometry, { thumbnail }).map(label => ({
+        ...label, id: svgText(label.id), text: svgText(label.text),
+    })) : []), [diagram, frame, geometry, thumbnail]);
     const arrows = useMemo(() => frame ? renderFrameArrows(frame.arrows, geometry, viewport) : [], [frame?.arrows, geometry, viewport.widthM, viewport.heightM]);
     if (!frame)
         return null;
@@ -59,7 +68,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginM
     const { lengthM, widthM, margin, unit } = geometry;
     const arrowMarker = `${markerPrefix}-arrow`;
     const heavyMarker = `${markerPrefix}-arrow-heavy`;
-    return (_jsxs("svg", { ref: element, viewBox: geometry.viewBox, role: "img", "aria-label": `${diagram.title} — ${frame.title}`, "data-testid": testId, "data-frame-id": frame.id, "data-thumbnail": thumbnail ? "true" : undefined, className: className, width: "100%", style: style, children: [_jsxs("defs", { children: [_jsx(ArrowMarker, { id: arrowMarker, size: 5.4 }), _jsx(ArrowMarker, { id: heavyMarker, size: 3.6 })] }), grass.stripes.map((stripe, index) => (_jsx("rect", { x: stripe.x, y: grass.y, width: stripe.width, height: grass.height, fill: stripe.fill }, `stripe-${index}`))), _jsx("path", { d: `M${-margin} ${-margin} H${lengthM + margin} V${widthM + margin} H${-margin} Z M0 0 V${widthM} H${lengthM} V0 Z`, fill: OUTSIDE_WASH, fillRule: "evenodd" }), _jsx("rect", { x: 0, y: 0, width: lengthM, height: widthM, fill: "none", stroke: LINE_PAINT, strokeWidth: unit * 0.16 }), (frame.areas ?? []).map((area, index) => (_jsx("rect", { x: area.x, y: area.y, width: area.width, height: area.height, fill: area.colour ? `${objectColour(area)}22` : "rgba(255,255,255,0.08)", stroke: area.colour ? objectColour(area) : LINE_PAINT, strokeWidth: unit * 0.1, strokeDasharray: `${unit * 0.5} ${unit * 0.4}` }, `sub-area-${index}`))), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(EquipmentGlyph, { object: object, geometry: geometry, formatVersion: diagram.format_version }, `equip-${index}`))) }), _jsx("g", { children: arrows.map((geo, index) => {
+    return (_jsxs("svg", { ref: element, viewBox: geometry.viewBox, role: "img", "aria-label": svgText(`${diagram.title} — ${frame.title}`), "data-testid": testId, "data-frame-id": svgText(frame.id), "data-thumbnail": thumbnail ? "true" : undefined, className: className, width: "100%", style: style, children: [_jsxs("defs", { children: [_jsx(ArrowMarker, { id: arrowMarker, size: 5.4 }), _jsx(ArrowMarker, { id: heavyMarker, size: 3.6 })] }), grass.stripes.map((stripe, index) => (_jsx("rect", { x: stripe.x, y: grass.y, width: stripe.width, height: grass.height, fill: stripe.fill }, `stripe-${index}`))), _jsx("path", { d: `M${-margin} ${-margin} H${lengthM + margin} V${widthM + margin} H${-margin} Z M0 0 V${widthM} H${lengthM} V0 Z`, fill: OUTSIDE_WASH, fillRule: "evenodd" }), _jsx("rect", { x: 0, y: 0, width: lengthM, height: widthM, fill: "none", stroke: LINE_PAINT, strokeWidth: unit * 0.16 }), (frame.areas ?? []).map((area, index) => (_jsx("rect", { x: area.x, y: area.y, width: area.width, height: area.height, fill: area.colour ? `${objectColour(area)}22` : "rgba(255,255,255,0.08)", stroke: area.colour ? objectColour(area) : LINE_PAINT, strokeWidth: unit * 0.1, strokeDasharray: `${unit * 0.5} ${unit * 0.4}` }, `sub-area-${index}`))), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(EquipmentGlyph, { object: object, geometry: geometry, formatVersion: diagram.format_version }, `equip-${index}`))) }), _jsx("g", { children: arrows.map((geo, index) => {
                     const markerEnd = geo.markerEnd === "arrow-heavy" ? heavyMarker : arrowMarker;
                     return (_jsxs("g", { "data-arrow-kind": geo.kind, children: [_jsx("path", { d: geo.d, fill: "none", stroke: "rgba(0,0,0,0.28)", strokeWidth: geo.strokeWidth + unit * 0.1, strokeLinecap: "round", strokeLinejoin: "round", transform: "translate(0.12 0.16)" }), _jsx("path", { d: geo.d, fill: "none", stroke: "#ffffff", strokeWidth: geo.strokeWidth, strokeLinecap: "round", strokeLinejoin: "round", strokeDasharray: geo.dashArray, markerEnd: `url(#${markerEnd})` })] }, `arrow-${index}`));
                 }) }), _jsx("g", { children: frame.objects.map((object, index) => (_jsx(PersonGlyph, { object: object, frame: frame, geometry: geometry }, `person-${index}`))) }), _jsx(LabelLayer, { labels: labels, geometry: geometry, presentation: { className, style } })] }));
