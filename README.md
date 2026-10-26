@@ -24,10 +24,10 @@ Captured on an Android emulator and iPhone simulator. `FootballDiagram` draws th
 
 ## Source release
 
-The `v0.2.1` distribution is tagged source. JavaScript includes built ESM and TypeScript declarations; Kotlin is a standalone Gradle project. This release does not require a private repository, application backend, account or application stylesheet. npm-registry and Maven Central publication are separate distribution options, not prerequisites for these instructions.
+The `v0.3.0` distribution is tagged source. JavaScript includes built ESM and TypeScript declarations; Kotlin is a standalone Gradle project. This release does not require a private repository, application backend, account or application stylesheet. npm-registry and Maven Central publication are separate distribution options, not prerequisites for these instructions.
 
 ```sh
-npm install github:nick-cobra/football-diagrams#v0.2.1 react
+npm install github:nick-cobra/football-diagrams#v0.3.0 react
 ```
 
 Applications should resolve and pin the full commit in their lockfile. Review the release and dependency update before changing that pin.
@@ -82,7 +82,7 @@ Run the independent example with `npm ci && npm run demo`. The command prints it
 Download the tagged source or check out the exact release commit:
 
 ```sh
-git clone --branch v0.2.1 --depth 1 https://github.com/nick-cobra/football-diagrams.git
+git clone --branch v0.3.0 --depth 1 https://github.com/nick-cobra/football-diagrams.git
 ```
 
 Include its independent Gradle project in the consumer's `settings.gradle.kts`:
@@ -96,7 +96,7 @@ includeBuild("../football-diagrams/kotlin") {
 }
 ```
 
-Add `implementation("io.github.nick-cobra:football-diagrams:0.2.1")` to `commonMain`.
+Add `implementation("io.github.nick-cobra:football-diagrams:0.3.0")` to `commonMain`.
 
 ```kotlin
 import io.github.footballdiagrams.Diagrams
@@ -137,7 +137,7 @@ For a cold-consumer check, install the public Git pin in a new directory and use
 
 ## Updating and rollback
 
-The current source identifies itself as **0.3.0-dev.1**, an unreleased build adding explicit format 2 for authored goal axes and gate widths. Format 1 retains its old geometry. See [the format-2 contract and compatibility matrix](FORMAT.md#format-2-authored-equipment-geometry-unreleased) and [standalone example](fixtures/valid/authored-equipment-v2.json). Integrations must pin a reviewed full source SHA and use Kotlin coordinate `io.github.nick-cobra:football-diagrams:0.3.0-dev.1`; the tagged installation examples above continue to describe released 0.2.1. No development tag or package publication is implied.
+Version **0.3.0** adds explicit format 2 for authored goal axes and gate widths, a bounded display-margin option, constrained Compose Canvas sizing, long-pill containment and valid standalone React SVG exports. Format 1 retains its original equipment geometry. See [the format-2 contract and compatibility matrix](FORMAT.md#format-2-authored-equipment-geometry) and [standalone example](fixtures/valid/authored-equipment-v2.json). Use the `v0.3.0` source tag and Kotlin coordinate `io.github.nick-cobra:football-diagrams:0.3.0`. Readers from 0.2.1 reject format 2; keep a format-2 reader for those documents, or deliberately author format 1 before rolling back. Upgrading the package does not rewrite stored diagrams.
 
 Version 0.2.1 retains JSON format 1 and the 0.2.0 Kotlin model API. It adds parser transport limits and bounded renderer detail for extreme inputs/viewports, plus fixes zero-size native drawing. Ordinary diagrams retain their reviewed rendering. See [the release notes](https://github.com/nick-cobra/football-diagrams/releases/tag/v0.2.1) and [FORMAT.md](FORMAT.md) for the resource envelope and rendering detail policy.
 

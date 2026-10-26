@@ -18,7 +18,7 @@ tasks.withType<org.gradle.api.tasks.testing.Test>().configureEach {
 }
 
 group = "io.github.nick-cobra"
-version = "0.3.0-dev.1"
+version = "0.3.0"
 
 val generatedMain = layout.buildDirectory.dir("generated/schema/commonMain")
 val generatedTest = layout.buildDirectory.dir("generated/schema/commonTest")
