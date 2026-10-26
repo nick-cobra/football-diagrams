@@ -69,3 +69,22 @@ export function svgTextCases() {
   }
   return cases;
 }
+
+export function svgImageCases() {
+  const cases = [];
+  for (const format_version of [1, 2]) for (const thumbnail of [false, true]) {
+    for (const label of ['Coach A', `Coach${String.fromCharCode(1)}A`, '教练🚀']) {
+      const diagram = freeze(parseDiagram({ format_version, title: 'Standalone image',
+        area: { shape: 'rectangle', length_m: 40, width_m: 30 },
+        frames: [{ id: 'step', title: 'Step', objects: [{ kind: 'player', x: 20, y: 15, label }], arrows: [] }],
+      }));
+      const original = stringifyDiagram(diagram);
+      const svg = renderToStaticMarkup(React.createElement(DiagramSvg, {
+        diagram, thumbnail, style: { width: 240, height: 180 },
+      }));
+      assert.equal(stringifyDiagram(diagram), original);
+      cases.push({ name: `v${format_version} thumbnail=${thumbnail} ${JSON.stringify(label)}`, svg });
+    }
+  }
+  return cases;
+}

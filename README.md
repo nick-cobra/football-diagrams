@@ -69,7 +69,7 @@ The SVG defaults to `width="100%"` and derives its natural height from its viewB
 .thumbnail svg { display: block; width: 100%; height: 100%; }
 ```
 
-For static server-rendered SVGs with a fixed aspect, supply numeric or `px` inline `style.width` and `style.height`. Without explicit dimensions the initial server rendering uses the natural viewBox aspect; client layout observes external CSS and parent resizing after hydration.
+For static server-rendered SVGs with a fixed aspect, supply numeric or `px` inline `style.width` and `style.height`. The root declares the SVG namespace so the raw markup can also load as a standalone SVG image. Without explicit dimensions the initial server rendering uses the natural viewBox aspect; client layout observes external CSS and parent resizing after hydration.
 
 In SVG text and document-derived attributes, XML 1.0-forbidden characters (including isolated UTF-16 surrogates) display as U+FFFD replacement characters. Valid Unicode, surrogate pairs and XML-legal whitespace are retained in the markup. Parsing, serialising and rendering preserve the authored string values in the JSON document.
 

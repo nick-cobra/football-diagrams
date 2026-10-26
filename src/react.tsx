@@ -106,6 +106,7 @@ export function DiagramSvg({ diagram, frameIndex = 0, thumbnail = false, marginM
   return (
     <svg
       ref={element}
+      xmlns="http://www.w3.org/2000/svg"
       viewBox={geometry.viewBox}
       role="img"
       aria-label={svgText(`${diagram.title} — ${frame.title}`)}

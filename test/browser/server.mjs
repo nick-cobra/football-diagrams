@@ -14,8 +14,8 @@ await writeFile(join(consumer,'package.json'), JSON.stringify({name:'independent
 execFileSync('npm', ['install','--ignore-scripts','--no-audit','--no-fund','--save-exact',join(consumer,pack.filename),`react@${react}`,`react-dom@${react}`], {cwd:consumer,stdio:'pipe'});
 for (const file of ['app.jsx','client.jsx','ssr.jsx','cache-probe.jsx','label-probe.jsx','equipment-probe.jsx','pill-viewport-probe.jsx','margin-probe.jsx']) await copyFile(new URL(file, import.meta.url), join(consumer,file));
 await copyFile(new URL('../svg-text-cases.mjs', import.meta.url), join(consumer,'svg-text-cases.mjs'));
-const svgTextCases = execFileSync(process.execPath, ['--input-type=module','-e',
-  "import {svgTextCases} from './svg-text-cases.mjs'; console.log(JSON.stringify(svgTextCases()));"], {cwd:consumer,encoding:'utf8',maxBuffer:16*1024*1024});
+const svgCases = JSON.parse(execFileSync(process.execPath, ['--input-type=module','-e',
+  "import {svgTextCases,svgImageCases} from './svg-text-cases.mjs'; console.log(JSON.stringify({text:svgTextCases(),images:svgImageCases()}));"], {cwd:consumer,encoding:'utf8',maxBuffer:16*1024*1024}));
 const documents = await Promise.all(['all-kinds','multi-frame','square','off-pitch','empty','short-labels','key-collisions','repeated-arrows','wide-labels','authored-equipment-v2','long-pill-viewport'].map(async name => JSON.parse(await readFile(join(root,`fixtures/valid/${name}.json`),'utf8'))));
 await writeFile(join(consumer,'documents.json'), JSON.stringify(documents));
 await build({absWorkingDir:consumer,entryPoints:['client.jsx'],bundle:true,format:'esm',outfile:join(consumer,'client.js'),jsx:'automatic'});
@@ -24,7 +24,8 @@ const html = execFileSync(process.execPath, ['ssr.mjs'], {cwd:consumer,encoding:
 const client = await readFile(join(consumer,'client.js'));
 const server = createServer((req,res) => {
   if (req.url==='/favicon.ico') {res.writeHead(204);res.end();return;}
-  if (req.url==='/svg-text-cases.json') {res.setHeader('Content-Type','application/json');res.end(svgTextCases);return;}
+  if (req.url==='/svg-text-cases.json') {res.setHeader('Content-Type','application/json');res.end(JSON.stringify(svgCases.text));return;}
+  if (req.url==='/svg-image-cases.json') {res.setHeader('Content-Type','application/json');res.end(JSON.stringify(svgCases.images));return;}
   res.setHeader('Content-Type',req.url==='/client.js' ? 'text/javascript' : 'text/html; charset=utf-8');
   res.end(req.url==='/client.js' ? client : html);
 });

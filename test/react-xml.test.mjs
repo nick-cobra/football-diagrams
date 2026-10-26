@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { svgTextCases } from './svg-text-cases.mjs';
+import { svgTextCases, svgImageCases } from './svg-text-cases.mjs';
+
+test('public SSR declares the SVG namespace for standalone images', () => {
+  for (const { name, svg } of svgImageCases()) {
+    assert.match(svg, /^<svg\b[^>]* xmlns="http:\/\/www\.w3\.org\/2000\/svg"/, name);
+  }
+});
 
 test('public SSR replaces XML-forbidden code points in every emitted carrier without changing JSON', () => {
   const cases = svgTextCases();
