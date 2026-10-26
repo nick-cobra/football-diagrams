@@ -94,7 +94,7 @@ contour prefixes. If an extreme constraint exposes more, dash on/off lengths
 increase together by powers of two until the allocation fits. The stored arrow
 and its endpoints remain unchanged.
 
-## Format 2: authored equipment geometry (unreleased)
+## Format 2: authored equipment geometry
 
 [`schema/diagram-v2.schema.json`](schema/diagram-v2.schema.json) defines format 2.
 It has the same fields, bounds, nullable defaults and resource envelope as format 1,
@@ -127,14 +127,15 @@ any deliberate content/adaptor migration.
 | Reader / writer | Writes format 1 | Writes format 2 |
 | --- | --- | --- |
 | Released library 0.2.1 reader | Accepted; original geometry | Rejected as unsupported |
-| Unreleased 0.3.0-dev.1 reader | Accepted; original geometry | Accepted; authored equipment geometry |
+| Released library 0.3.0 reader | Accepted; original geometry | Accepted; authored equipment geometry |
 
 New parsers and serialisers retain the selected version and reject unknown
 versions. The default Kotlin constructor still selects format 1; explicit
 `formatVersion = 2` is required for new geometry. Existing `gateCones(target)`
 callers retain format-1 geometry; use `gateCones(target, formatVersion)` when
-inspecting a versioned document. This development version is an immutable-source
-integration prerequisite; it is not a tag, package publication or release.
+inspecting a versioned document. Library 0.3.0 is distributed as tagged source
+(`v0.3.0`) and an npm-format archive. npm-registry and Maven Central publication are separate distribution
+options; consumers use the documented source composite.
 
 ## Explicit display margin
 
@@ -155,5 +156,5 @@ This presentation option retains component clipping, at most 256 grass stripes
 and the active-frame geometry/dash budgets above. Larger margins reveal more of
 the existing scene within the host's measured pixel bounds; they do not allocate
 a canvas or path proportional to arbitrary remote coordinates. Source consumers
-must pin an immutable reviewed revision of the unreleased development build;
-this option does not imply a release or a stored-document migration.
+can use the `v0.3.0` tag and pin its resolved immutable commit. The display
+margin is a presentation option and does not migrate stored documents.

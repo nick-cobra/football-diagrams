@@ -9,13 +9,13 @@ android {
         applicationId = "io.github.footballdiagrams.demo"
         minSdk = 26
         targetSdk = 37
-        versionCode = 3
-        versionName = "0.3.0-dev.1"
+        versionCode = 4
+        versionName = "0.3.0"
     }
     buildFeatures { compose = true }
 }
 dependencies {
-    implementation("io.github.nick-cobra:football-diagrams:0.3.0-dev.1")
+    implementation("io.github.nick-cobra:football-diagrams:0.3.0")
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("androidx.compose.foundation:foundation:1.12.1")
 }
