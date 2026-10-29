@@ -4,6 +4,8 @@ An open JSON format for football diagrams, with React SVG and Kotlin/Compose Can
 
 Describe a rectangular playing area, positioned players and equipment, arrows, labels and frames. Use the same document on a website, Android or iOS. The host supplies its own content, storage and controls.
 
+Read why and how we built it in [One football diagram, from JSON to web and mobile](https://www.cobrahq.app/blog/engineering/football-diagrams) on CobraHQ's engineering notes.
+
 ## See it rendered
 
 The same synthetic [equipment and movement document](fixtures/valid/all-kinds.json) rendered on the web and mobile: 13 player/equipment symbols and four movement notations (`pass`, `run`, `dribble`, `shot`). These are real captures from the independent v0.1.0 examples.
